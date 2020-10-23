@@ -4169,9 +4169,12 @@ static int cfg80211_rtw_get_txpower(struct wiphy *wiphy,
 #endif
 	int *dbm)
 {
+	_adapter *padapter = wiphy_to_adapter(wiphy);
+	HAL_DATA_TYPE *pHalData = GET_HAL_DATA(padapter);
+
 	RTW_INFO("%s\n", __func__);
 
-	*dbm = (12);
+	*dbm = pHalData->CurrentTxPwrIdx;
 
 	return 0;
 }
