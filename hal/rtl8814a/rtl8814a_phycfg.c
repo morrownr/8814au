@@ -593,6 +593,46 @@ PHY_RFConfig8814A(
 /* 1 5. Tx  Power setting API */
 
 void
+phy_TxPwrAdjInPercentage(
+	PADAPTER		Adapter,
+	s16*			pTxPwrIdx)
+{
+	HAL_DATA_TYPE	*pHalData = GET_HAL_DATA(Adapter);
+	int txPower = *pTxPwrIdx + pHalData->CurrentTxPwrIdx - 18;
+
+	*pTxPwrIdx = txPower > RF6052_MAX_TX_PWR ? RF6052_MAX_TX_PWR : txPower;
+}
+
+
+#if 0 //unused?
+void
+PHY_GetTxPowerLevel8814(
+	IN	PADAPTER		Adapter,
+	OUT s32*    		powerlevel
+	)
+{
+	HAL_DATA_TYPE	*pHalData = GET_HAL_DATA(Adapter);
+	*powerlevel = pHalData->CurrentTxPwrIdx;
+#if 0
+	HAL_DATA_TYPE	*pHalData = GET_HAL_DATA(Adapter);
+	PMGNT_INFO		pMgntInfo = &(Adapter->MgntInfo);
+	s4Byte			TxPwrDbm = 13;
+
+	if ( pMgntInfo->ClientConfigPwrInDbm != UNSPECIFIED_PWR_DBM )
+		*powerlevel = pMgntInfo->ClientConfigPwrInDbm;
+	else
+		*powerlevel = TxPwrDbm;
+#endif //0
+/*
+	//PMPT_CONTEXT            pMptCtx = &(Adapter->mppriv.mpt_ctx);
+	//u8 mgn_rate = mpt_to_mgnt_rate(HwRateToMPTRate(Adapter->mppriv.rateidx));
+	*powerlevel=PHY_GetTxPowerIndex8814A(Adapter,RF_PATH_A ,MGN_MCS7, pHalData->current_channel_bw, pHalData->current_channel, NULL);
+	*powerlevel/=2;
+*/
+}
+#endif
+
+void
 PHY_SetTxPowerLevel8814(
 		PADAPTER		Adapter,
 		u8			Channel
@@ -675,6 +715,9 @@ PHY_GetTxPowerIndex8814A(
 	CCX_CellPowerLimit(pAdapter, Channel, Rate, &power_idx);
 #endif
 #endif
+
+
+	phy_TxPwrAdjInPercentage(pAdapter, &power_idx);
 
 	if (power_idx < 0)
 		power_idx = 0;
