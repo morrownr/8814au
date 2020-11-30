@@ -1,0 +1,58 @@
+All patches for up to and including kernel 5.9 are in place and are tested.
+
+Patch for k5.10 in progress:
+
+-----
+
+Work notes:
+----------
+
+#!/bin/bash
+
+grep -r "mm_segment_t" *
+
+grep -r "oldfs" *
+
+grep -r "get_fs()" *
+
+grep -r "set_fs(KERNEL_DS)" *
+
+grep -r "set_fs(oldfs)" *
+
+#grep -r "fs" *
+
+grep -r "set_fs(fs)" *
+
+-----
+
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+
+#endif
+
+
+core/rtw_ieee80211.c:	mm_segment_t oldfs;
+
+core/efuse/rtw_efuse.c:	mm_segment_t oldfs;
+
+core/rtw_btcoex.c:	mm_segment_t	oldfs;
+core/rtw_btcoex.c:	oldfs = get_fs();
+core/rtw_btcoex.c:	set_fs(oldfs);
+core/rtw_btcoex.c:	set_fs(KERNEL_DS);
+
+core/rtw_wlan_util.c:	mm_segment_t fs;
+core/rtw_wlan_util.c:	fs = get_fs();
+core/rtw_wlan_util.c:	set_fs(KERNEL_DS);
+core/rtw_wlan_util.c:	set_fs(fs);
+
+
+os_dep/osdep_service.c:	mm_segment_t oldfs;
+os_dep/osdep_service.c:		oldfs = get_fs();
+os_dep/osdep_service.c:		set_fs(oldfs);
+os_dep/osdep_service.c:		set_fs(KERNEL_DS);
+
+os_dep/linux/os_intfs.c:	mm_segment_t oldfs;
+os_dep/linux/os_intfs.c:	oldfs = get_fs();
+os_dep/linux/os_intfs.c:	set_fs(oldfs);
+os_dep/linux/os_intfs.c:	set_fs(KERNEL_DS);
+
+Have to get rid of the old set_fs and its buddies.
