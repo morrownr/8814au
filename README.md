@@ -28,7 +28,6 @@
 - Log level control
 - LED control
 
-
 ### Compatible Kernels:
 
 - Kernels: 2.6.24 ~ 5.8 (Realtek)
@@ -57,7 +56,6 @@
 
 - Wireless USB WiFi Adapter, 1900Mbps Dual Band 2.4GHz/600Mbps 5.8GHz/1300Mbps High Gain 5dBi Antennas USB 3.0
   ( https://www.amazon.com/gp/product/B07VCKN83P )
-
 
 ### Compatible Devices:
 
@@ -109,11 +107,11 @@ $ cd ~/src
 ```
 Step 6: Download the driver:
 ```
-$ git clone https://github.com/morrownr/88x2bu.git
+$ git clone https://github.com/morrownr/8814au.git
 ```
 Step 7: Move to the newly created driver directory:
 ```
-$ cd ~/src/88x2bu
+$ cd ~/src/8814au
 ```
 Step 8: Run the installation script and reboot: (select the option for the OS you are using)
 
@@ -153,7 +151,7 @@ Step 1: Open a terminal (Ctrl+Alt+T)
 
 Step 2: Move to the driver directory:
 ```
-$ cd ~/src/88x2bu
+$ cd ~/src/8814au
 ```
 Step 3: Run the removal script and reboot:
 ```
