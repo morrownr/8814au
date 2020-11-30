@@ -30,12 +30,12 @@
 
 ### Compatible Kernels:
 
-- Kernels: 2.6.24 ~ 5.8 (Realtek)
-- Kernels: 5.9
+- Kernels: 2.6.24 - 5.2 (Realtek)
+- Kernels: 5.3 - 5.9
 
 ### Tested Linux Distributions:
 
-- Raspberry Pi OS (08-20-2020) (ARM 32 bit and ARM 64 bit)
+- Raspberry Pi OS (08-20-2020) (ARM 32 bit)
 
 - LMDE 4 (Linux Mint based on Debian)
 
