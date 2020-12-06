@@ -14,7 +14,7 @@ fi
 
 if [ -d "/usr/lib/dkms" ]
 then
-	echo "dkms appears to be installed."
+	echo "Installing ${DRV_NAME}-${DRV_VERSION}"
 else
 	echo "dkms does not appear to be installed."
 	echo "Try: \"sudo apt install dkms\""
@@ -58,4 +58,7 @@ then
 	exit 1
 else
 	echo "dkms install was successful."
+	echo "${DRV_NAME}-${DRV_VERSION} was installed successfully."
 fi
+
+exit 0
