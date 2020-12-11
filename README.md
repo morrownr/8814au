@@ -46,16 +46,20 @@
 - Ubuntu 20.04
 - Ubuntu 18.04
 
+- Manjaro 20.2
+
 ### Download Locations for Tested Linux Distributions:
 
 - Raspberry Pi OS - https://www.raspberrypi.org/
 - Linux Mint - https://linuxmint.com/
 - Ubuntu - https://ubuntu.com/
+- Manjaro - https://manjaro.org/
 
 ### Tested Hardware:
 
 - Wireless USB WiFi Adapter, 1900Mbps Dual Band 2.4GHz/600Mbps 5.8GHz/1300Mbps High Gain 5dBi Antennas USB 3.0
   ( https://www.amazon.com/gp/product/B07VCKN83P )
+- ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter ( https://www.amazon.com/dp/B01I7QFR10 )
 
 ### Compatible Devices:
 
@@ -95,6 +99,10 @@ Option for Linux Mint or Ubuntu:
 ```
 $ sudo apt-get install -y dkms git
 ```
+Option for Manjaro:
+```
+$ sudo pacman -S --noconfirm linux-headers dkms git 
+```
 Step 4: Create a directory to hold the downloaded driver:
 
 Note: The technique used in this document is to create a directory in the home directory called `src`.
@@ -122,7 +130,7 @@ Run installation script and reboot:
 $ sudo ./install-driver.sh
 $ sudo reboot
 ```
-Note: The installation for LMDE, Linux Mint or Ubuntu is complete.
+Note: The installation for LMDE, Linux Mint, Ubuntu or Manjaro is complete.
 
 Option for Raspberry Pi OS: (select either Option 1 or Option 2 but not both)
 
