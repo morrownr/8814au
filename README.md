@@ -8,43 +8,54 @@
 ### Features:
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
-
-- Supported Ciphers:
-	* WEP40 (00-0f-ac:1)
-	* WEP104 (00-0f-ac:5)
-	* TKIP (00-0f-ac:2)
-	* CCMP-128 (00-0f-ac:4)
-	* CMAC (00-0f-ac:6)
-
+- 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
+- WPA3-SAE (Personal)
+- WPS - PIN and PBC Methods
+- IEEE 802.11b/g/n/ac Client mode
+  * Support wireless security for WEP, WPA TKIP and WPA2 AES PSK
+  * Support site survey scan and manual connect
+  * Support WPA/WPA2 TLS client
+  * Support power saving mode
+- Soft AP mode
+- WiFi-Direct
+- MU-MIMO
+- Mesh
+- Wake on WLAN
 - Supported interface modes:
-	* IBSS
-	* Managed
-	* AP (WiFi Hotspot) (Master mode)
-	* Monitor
-	* P2P-client
-	* P2P-GO
-
+  * IBSS
+  * Managed
+  * AP (WiFi Hotspot) (Master mode)
+  * Monitor
+  * P2P-client
+  * P2P-GO
 - USB mode control
 - Log level control
 - LED control
+- Power saving control
+- VHT Control ( to allow 80 MHz channel width in AP mode)
+
+### Compatible CPUs:
+
+- x86, amd64
+- ARM, ARM64
 
 ### Compatible Kernels:
 
 - Kernels: 2.6.24 - 5.2 (Realtek)
-- Kernels: 5.3 - 5.9
+- Kernels: 5.3 - 5.10
 
 ### Tested Linux Distributions:
 
-- Raspberry Pi OS (08-20-2020) (ARM 32 bit)
+- Raspberry Pi OS (12-02-2020) (ARM 32 bit) (kernel 5.4)
 
-- LMDE 4 (Linux Mint based on Debian)
+- LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
 
-- Linux Mint 20 (Linux Mint based on Ubuntu)
-- Linux Mint 19.3 (Linux Mint based on Ubuntu)
+- Linux Mint 20 (Linux Mint based on Ubuntu) (kernel 5.4)
+- Linux Mint 19.3 (Linux Mint based on Ubuntu) (kernel 5.4)
 
-- Ubuntu 20.10
-- Ubuntu 20.04
-- Ubuntu 18.04
+- Ubuntu 20.10 (kernel 5.8)
+- Ubuntu 20.04 (kernel 5.4)
+- Ubuntu 18.04 (kernel 5.4)
 
 - Manjaro 20.2
 
@@ -64,20 +75,25 @@
 ### Compatible Devices:
 
 * D-Link DWA-192 AC1900 Ultra Wi-Fi USB 3.0 Adapter
+* ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter
+* Edimax EW-7833 UAC AC1750 Dual-Band Wi-Fi USB 3.0 Adapter
 * Numerous products that are based on the supported chipset
 
+### Installation Information:
 
-### Installation of the Driver:
+The installation instructions that are provided are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
 
-Note: The installation instructions that are provided are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
+The installation instructions require that your system has access to the internet. There are numerous ways to enable temporary internet access depending on your hardware and situation. One method is to use tethering from a phone. Another method is to keep an ultra cheap adapter in your toolkit that uses an in-kernel (plug and play) driver. Here is one:
+```
+https://www.canakit.com/raspberry-pi-wifi.html
+```
+The installation instructions require the use of the terminal. The quick way to open a terminal: Ctrl+Alt+T (hold down on the Ctrl and Alt keys then press the T key.)
 
-Note: The installation instructions require that your system has access to the internet. There are numerous ways to enable temporary internet access depending on your hardware and situation.
+The installation instructions make use of DKMS. DKMS is a system utility which will automatically recompile and install this kernel module when a new kernel is installed. DKMS is provided by and maintained by Dell.
 
-Note: The installation instructions require the use of the terminal. The quick way to open a terminal: Ctrl+Alt+T (hold down on the Ctrl and Alt keys then press the T key.)
+It is recommended that you do not delete the driver directory after installation as the directory contains documentation (README.md) and scripts that you may need in the future.
 
-Note: The installation instructions make use of DKMS. DKMS is a system utility which will automatically recompile and install this kernel module when a new kernel is installed. DKMS is provided by and maintained by Dell.
-
-Note: It is recommended that you do not delete the driver directory after installation as the directory contains documentation (README.md) and scripts that you may need in the future.
+### Installation Steps:
 
 Step 1: Open a terminal (Ctrl+Alt+T)
 
@@ -95,13 +111,13 @@ Option for LMDE (Debian based):
 ```
 $ sudo apt-get install -y linux-headers-$(uname -r) build-essential dkms git
 ```
-Option for Linux Mint or Ubuntu:
+Option for Linux Mint (Ubuntu based) or Ubuntu (all flavors):
 ```
 $ sudo apt-get install -y dkms git
 ```
 Option for Manjaro:
 ```
-$ sudo pacman -S --noconfirm linux-headers dkms git 
+$ sudo pacman -S --noconfirm linux-headers dkms git
 ```
 Step 4: Create a directory to hold the downloaded driver:
 
@@ -121,37 +137,30 @@ Step 7: Move to the newly created driver directory:
 ```
 $ cd ~/src/8814au
 ```
-Step 8: Run the installation script and reboot: (select the option for the OS you are using)
+Step 8: Run a preparation script if needed:
 
-Option for LMDE, Linux Mint or Ubuntu:
+The Raspberry Pi OS requires a preparation script.
 
-Run installation script and reboot:
+For 32 bit Raspberry Pi OS: (Please skip this step if you are not installing to Raspberry Pi 32 bit)
+```
+$ sudo ./raspi32.sh
+
+```
+For 64 bit Raspberry Pi OS: (Please skip this step if you are not installing to Raspberry Pi 64 bit)
+```
+$ sudo ./raspi64.sh
+
+```
+Step 9: Run the installation script:
 ```
 $ sudo ./install-driver.sh
+```
+Step 10: Reboot:
+```
 $ sudo reboot
 ```
-Note: The installation for LMDE, Linux Mint, Ubuntu or Manjaro is complete.
+Note: The installation is complete.
 
-Option for Raspberry Pi OS: (select either Option 1 or Option 2 but not both)
-
-Turn off I386 support:
-```
-$ sed -i 's/CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/g' Makefile
-```
-Option 1: for Raspberry Pi OS (32 bit), turn on ARM support:
-```
-$ sed -i 's/CONFIG_PLATFORM_ARM_RPI = n/CONFIG_PLATFORM_ARM_RPI = y/g' Makefile
-```
-Option 2: for Raspberry Pi OS (64 bit), turn on ARM64 support:
-```
-$ sed -i 's/CONFIG_PLATFORM_ARM64_RPI = n/CONFIG_PLATFORM_ARM64_RPI = y/g' Makefile
-```
-Run installation script and reboot:
-```
-$ sudo ./install-driver.sh
-$ sudo reboot
-```
-Note: The installation for Raspberry Pi OS is complete.
 
 ### Removal of the Driver:
 
@@ -161,9 +170,12 @@ Step 2: Move to the driver directory:
 ```
 $ cd ~/src/8814au
 ```
-Step 3: Run the removal script and reboot:
+Step 3: Run the removal script:
 ```
 $ sudo ./remove-driver.sh
+```
+Step 4: Reboot:
+```
 $ sudo reboot
 ```
 
@@ -189,38 +201,73 @@ $ sudo ./edit-options.sh
 ```
 The driver options are as follows:
 
+ -----
 
-USB mode options: ( rtw_switch_usb_mode )
+ Log level options: ( rtw_drv_log_level )
 ```
-  0 = no switch (default)
-  1 = switch from usb 2.0 to usb 3.0
-  2 = switch from usb 3.0 to usb 2.0
+ 0 = NONE (default)
+ 1 = ALWAYS
+ 2 = ERROR
+ 3 = WARNING
+ 4 = INFO
+ 5 = DEBUG
+ 6 = MAX
 ```
-  Note: When changing USB options, a cold boot is recommended.
+ Note: You can save a log of RTW log entries by running the following in a terminal:
 
+ $ sudo ./save-log.sh
 
-Log level options: ( rtw_drv_log_level )
-```
-  0 = NONE (default)
-  1 = ALWAYS
-  2 = ERRORS
-  3 = WARNINGS
-  4 = INFO
-  5 = DEBUG
-  6 = MAX
-```
-  Note: View RTW log entries by running the following in a terminal:
-  ```
-  $ sudo dmesg
-  ```
+ -----
 
+ LED control options: ( rtw_led_ctrl )
+```
+ 0 = Always off
+ 1 = Normal blink (default)
+ 2 = Always on
+```
+ -----
 
-LED control options: ( rtw_led_ctrl )
+ VHT enable options: ( rtw_vht_enable )
 ```
-  0 = Always off
-  1 = Normal blink (default)
-  2 = Always on
+  0 = Disable
+  1 = Enable (default)
+  2 = Force auto enable (use caution)
 ```
+ Notes:
+ - Unless you know what you are doing, don't change the default for rtw_vht_enable.
+ - A non-default setting can degrade performance greatly in some operational modes.
+ - For AP mode, such as when you are using Hostapd, setting this option to 2 will
+   allow 80 MHz channel width.
+
+ -----
+
+ Notes:
+ - To turn power saving off, set the two options below to 0.
+ - These options may be useful in server setups and also if dropouts are experienced.
+
+ Power saving options: ( rtw_power_mgnt )
+```
+ 0 = Disable power saving
+ 1 = Power saving on, minPS (default)
+ 2 = Power saving on, maxPS
+```
+
+ IPS mode options: ( rtw_ips_mode )
+```
+ 0 = Low power
+ 1 = High power (default)
+```
+ -----
+
+ USB mode options: ( rtw_switch_usb_mode )
+```
+ 0 = No switch (default)
+ 1 = Switch from usb 2.0 to usb 3.0
+ 2 = Switch from usb 3.0 to usb 2.0
+```
+ Note: When changing USB options, a cold boot is recommended.
+
+ -----
 
 ### Information about USB 3 support:
 
@@ -232,8 +279,8 @@ See what your USB mode is:
 $ lsusb -t
 ```
 ```
-USB 2 =  480M
-USB 3 = 5000M
+USB 2 =  480 Mb/s
+USB 3 = 5000 Mb/s
 ```
 ### iperf3 test results with USB 3 mode on:
 ```
@@ -252,12 +299,12 @@ Bitrate
 
 ### Entering Monitor Mode with 'iw' and 'ip':
 
-Start by making sure the system recognizes the Wi-Fi interface:
+Start by making sure the system recognizes the WiFi interface:
 ```
 $ sudo iw dev
 ```
 
-Note: The output shows the Wi-Fi interface name and the current mode among other things. The interface name may be something like `wlx00c0cafre8ba` and is required for the below commands. The interface name `wlan0` will be used in the instructions below but you need to substitute your interface name.
+Note: The output shows the WiFi interface name and the current mode among other things. The interface name may be something like `wlx00c0cafre8ba` and is required for the below commands. The interface name `wlan0` will be used in the instructions below but you need to substitute your interface name.
 
 Take the interface down:
 ```
@@ -312,13 +359,13 @@ dtoverlay=disable-wifi
 ```
 
 
-### How to forget a saved wifi network on a Raspberry Pi
+### How to forget a saved WiFi network on a Raspberry Pi
 
 1. Edit wpa_supplicant.conf:
 ```
 $ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 ```
-2. Delete the relevant wifi network block (including the 'network=' and opening/closing braces.
+2. Delete the relevant WiFi network block (including the 'network=' and opening/closing braces.
 
 3. Press ctrl-x followed by 'y' and enter to save the file.
 
@@ -331,13 +378,15 @@ Note: These are general recommendations based on years of experience but may not
 
 Security: Use WPA2-AES. Do not use WPA or WPA2 mixed mode or TKIP.
 
-Channel Width for 2.4G: Use 20 MHz. Do not use 40 MHz or 20/40 automatic.
+Channel Width for 2.4G: Use 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
+
+Channel width for 5G: Using a 40 MHz fixed width may help in some situations.
 
 Channels for 2.4G: Use 1 or 6 or 11. Do not use automatic channel selection.
 
 Mode for 2.4G: Use G/N or B/G/N. Do not use N only.
 
-Network names: Do not set the 2.4G Network and the 5G Network to the same name. Many routers come with both networks set to the same name.
+Network names: Do not set the 2.4G Network and the 5G Network to the same name. Note: Many routers come with both networks set to the same name.
 
 Power Saving: Set to off. This can help in some situations. If you try turning it off and you see no improvement then set it back to on so as to save electricity.
 
