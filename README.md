@@ -2,7 +2,7 @@
 
 ### Linux Driver for the RealTek RTL8814AU Chipset.
 
-- Driver Version: v5.8.5.1 (Realtek) (2019-10-29)
+- v5.8.5.1 (Realtek) (2019-10-29)
 - Plus updates from the Linux community
 
 ### Features:
@@ -32,7 +32,7 @@
 - Log level control
 - LED control
 - Power saving control
-- VHT Control ( to allow 80 MHz channel width in AP mode)
+- VHT control (allows 80 MHz channel width in AP mode)
 
 ### Compatible CPUs:
 
@@ -73,6 +73,8 @@
 - ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter ( https://www.amazon.com/dp/B01I7QFR10 )
 
 ### Compatible Devices:
+
+Note: Some adapter makers change the chipsets in their products while keeping the same model number so please check to confirm that the product you plan to buy has the chipset you are expecting.
 
 * D-Link DWA-192 AC1900 Ultra Wi-Fi USB 3.0 Adapter
 * ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter
@@ -159,8 +161,6 @@ Step 10: Reboot:
 ```
 $ sudo reboot
 ```
-Note: The installation is complete.
-
 
 ### Removal of the Driver:
 
@@ -241,22 +241,14 @@ The driver options are as follows:
 
  -----
 
- Notes:
- - To turn power saving off, set the two options below to 0.
- - These options may be useful in server setups and also if dropouts are experienced.
-
- Power saving options: ( rtw_power_mgnt )
+  Power saving options: ( rtw_power_mgnt )
 ```
  0 = Disable power saving
  1 = Power saving on, minPS (default)
  2 = Power saving on, maxPS
 ```
+ Note: 0 may be useful in unattended server setups or if dropouts are experienced.
 
- IPS mode options: ( rtw_ips_mode )
-```
- 0 = Low power
- 1 = High power (default)
-```
  -----
 
  USB mode options: ( rtw_switch_usb_mode )
@@ -282,6 +274,7 @@ $ lsusb -t
 USB 2 =  480 Mb/s
 USB 3 = 5000 Mb/s
 ```
+
 ### iperf3 test results with USB 3 mode on:
 ```
 Bitrate
