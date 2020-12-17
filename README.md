@@ -57,7 +57,7 @@
 - Ubuntu 20.04 (kernel 5.4)
 - Ubuntu 18.04 (kernel 5.4)
 
-- Manjaro 20.2
+- Manjaro 20.2 (kernel 5.9)
 
 ### Download Locations for Tested Linux Distributions:
 
