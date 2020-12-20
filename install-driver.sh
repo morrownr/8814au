@@ -3,11 +3,12 @@
 DRV_NAME=rtl8814au
 DRV_VERSION=5.8.5.1
 OPTIONS_FILE=8814au.conf
+
 SCRIPT_NAME=install-driver.sh
 
 if [ $EUID -ne 0 ]
 then
-	echo "You must run ${SCRIPT_NAME} with superuser priviliges."
+	echo "You must run ${SCRIPT_NAME} with superuser (root) privileges."
 	echo "Try: \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
@@ -32,8 +33,8 @@ RESULT=$?
 
 if [ "$RESULT" != "0" ]
 then
-	echo "An error occurred while running: dkms add"
-	exit 1
+	echo "An error occurred while running: dkms add : ${RESULT}"
+	exit $RESULT
 else
 	echo "dkms add was successful."
 fi
@@ -43,8 +44,8 @@ RESULT=$?
 
 if [ "$RESULT" != "0" ]
 then
-	echo "An error occurred while running: dkms build"
-	exit 1
+	echo "An error occurred while running: dkms build : ${RESULT}"
+	exit $RESULT
 else
 	echo "dkms build was successful."
 fi
@@ -54,11 +55,12 @@ RESULT=$?
 
 if [ "$RESULT" != "0" ]
 then
-	echo "An error occurred while running: dkms install"
-	exit 1
+	echo "An error occurred while running: dkms install : ${RESULT}"
+	exit $RESULT
 else
 	echo "dkms install was successful."
 	echo "${DRV_NAME}-${DRV_VERSION} was installed successfully."
+	exit 0
 fi
 
 exit 0

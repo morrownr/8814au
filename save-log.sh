@@ -28,6 +28,7 @@ RESULT=$?
 if [ "$RESULT" != "0" ]
 then
 	echo "An error occurred while running: ${SCRIPT_NAME}"
+	echo "Did you set a log level > 0 ?"
 	exit 1
 else
 	echo "rtw.log saved successfully."
