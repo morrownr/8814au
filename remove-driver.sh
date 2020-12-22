@@ -13,16 +13,15 @@ if [[ $EUID -ne 0 ]]; then
 	exit 1
 fi
 
-rm -f /etc/modprobe.d/${OPTIONS_FILE}
-rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
-
-dkms remove ${DRV_NAME}/${DRV_VERSION} --all
+dkms remove ${DRV_NAME}/${DRV_VERSION} -k ${KRNL_VERSION}
 RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
 	echo "An error occurred while running: dkms remove : ${RESULT}"
 	exit $RESULT
 else
+	rm -f /etc/modprobe.d/${OPTIONS_FILE}
+	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	echo "The driver was removed successfully."
 	exit 0
 fi
