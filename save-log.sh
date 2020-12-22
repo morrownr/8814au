@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-SCRIPT_NAME=save-log.sh
+SCRIPT_NAME="save-log.sh"
 #
 # Purpose: Save a log file with RTW lines only.
 #
