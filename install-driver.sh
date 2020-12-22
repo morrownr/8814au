@@ -4,7 +4,8 @@ DRV_NAME=rtl8814au
 DRV_VERSION=5.8.5.1
 OPTIONS_FILE=8814au.conf
 
-SCRIPT_NAME=install-driver.sh
+DRV_DIR="$(pwd)"
+SCRIPT_NAME="install-driver.sh"
 
 if [ $EUID -ne 0 ]
 then
@@ -18,12 +19,12 @@ then
 	echo "Installing ${DRV_NAME}-${DRV_VERSION}"
 else
 	echo "dkms does not appear to be installed."
-	echo "Try: \"sudo apt install dkms\""
+	echo "Please install dkms and try again."
 	exit 1
 fi
 
-echo "Copying driver source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
-cp -r $(pwd) /usr/src/${DRV_NAME}-${DRV_VERSION}
+echo "Copying source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
+cp -r ${DRV_DIR} /usr/src/${DRV_NAME}-${DRV_VERSION}
 
 echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
 cp -r ${OPTIONS_FILE} /etc/modprobe.d
