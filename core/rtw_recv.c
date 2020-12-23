@@ -3961,11 +3961,25 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	rt_len += 2;
 
 	/* channel flags */
-	tmp_16bit = 0;
-	if (pHalData->current_band_type == BAND_ON_2_4G)
-		tmp_16bit |= cpu_to_le16(IEEE80211_CHAN_2GHZ);
-	else /*BAND_ON_5G*/
-		tmp_16bit |= cpu_to_le16(IEEE80211_CHAN_5GHZ);
+//	tmp_16bit = 0;
+//	if (pHalData->current_band_type == BAND_ON_2_4G)
+//		tmp_16bit |= cpu_to_le16(IEEE80211_CHAN_2GHZ);
+//	else /*BAND_ON_5G*/
+//		tmp_16bit |= cpu_to_le16(IEEE80211_CHAN_5GHZ);
+	// NOTE: tmp_16bit currently contains channel freq; we overwrite the value
+	// to reflect channel flags.
+	if (pHalData->current_band_type == BAND_ON_2_4G){
+		tmp_16bit = cpu_to_le16(IEEE80211_CHAN_2GHZ);
+	}
+	else if (pHalData->current_band_type == BAND_ON_5G)
+		tmp_16bit = cpu_to_le16(IEEE80211_CHAN_5GHZ);
+	else { // BAND_ON_BOTH; decide based on frequency
+		if (tmp_16bit >= 5000) {
+			tmp_16bit = cpu_to_le16(IEEE80211_CHAN_5GHZ);
+		} else {
+			tmp_16bit = cpu_to_le16(IEEE80211_CHAN_2GHZ);
+		}
+	}
 
 	if (pattrib->data_rate <= DESC_RATE54M) {
 		if (pattrib->data_rate <= DESC_RATE11M) {
