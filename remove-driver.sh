@@ -4,7 +4,7 @@ DRV_NAME="rtl8814au"
 DRV_VERSION="5.8.5.1"
 OPTIONS_FILE="8814au.conf"
 
-KRNL_VERSION=$(uname -r)
+KRNL_VERSION="$(uname -r)"
 SCRIPT_NAME="remove-driver.sh"
 
 if [[ $EUID -ne 0 ]]; then
