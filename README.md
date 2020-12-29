@@ -183,11 +183,9 @@ Location: `/etc/modprobe.d/8814au.conf`
 
 This file will be read and applied to the driver on each system boot.
 
-To change the driver options, there are two options:
+Here are two options to edit the driver options file:
 
 Option 1: Edit `8814au.conf` with a text editor using a terminal interface.
-
-Example:
 ```bash
 $ sudo nano /etc/modprobe.d/8814au.conf
 ```
@@ -407,3 +405,13 @@ Change the last line to read:
 
 REGDOMAIN=US
 ```
+
+### Recommendations regarding USB
+
+- If connecting your USB WiFi adapter to a desktop computer, use the USB ports on the rear of the computer. Why? The ports on the rear are directly connected to the motherboard which will reduce problems with interference and disconnection that can happen with front ports that use cables.
+
+- If your USB WiFi adapter is USB 3 capable then you need to plug it into a USB 3 port.
+
+- If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable.
+
+- Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is devices that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.

@@ -28,7 +28,7 @@ cp -r ${DRV_DIR} /usr/src/${DRV_NAME}-${DRV_VERSION}
 echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
 cp -r ${OPTIONS_FILE} /etc/modprobe.d
 
-dkms add ${DRV_NAME}/${DRV_VERSION} /usr/src/${DRV_NAME}-${DRV_VERSION}
+dkms add ${DRV_NAME}/${DRV_VERSION}
 RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
@@ -36,7 +36,7 @@ if [[ "$RESULT" != "0" ]]; then
 	exit $RESULT
 fi
 
-dkms build ${DRV_NAME}/${DRV_VERSION} -k ${KRNL_VERSION}
+dkms build ${DRV_NAME}/${DRV_VERSION}
 RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
@@ -44,7 +44,7 @@ if [[ "$RESULT" != "0" ]]; then
 	exit $RESULT
 fi
 
-dkms install ${DRV_NAME}/${DRV_VERSION} -k ${KRNL_VERSION}
+dkms install ${DRV_NAME}/${DRV_VERSION}
 RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
