@@ -23,7 +23,7 @@ else
 fi
 
 echo "Copying source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
-cp -r ${DRV_DIR} /usr/src/${DRV_NAME}-${DRV_VERSION}
+cp -r "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
 
 echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
 cp -r ${OPTIONS_FILE} /etc/modprobe.d
