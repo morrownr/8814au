@@ -1,11 +1,11 @@
-### 8814au ( 8814au.ko )
+### 8814au ( 8814au.ko ) :rocket:
 
-### Linux Driver for the RealTek RTL8814AU Chipset.
+### Linux Driver for USB WiFi Adapters that use the RTL8814AU Chipset
 
 - v5.8.5.1 (Realtek) (2019-10-29)
 - Plus updates from the Linux community
 
-### Features:
+### Features
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
@@ -34,17 +34,17 @@
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
 
-### Compatible CPUs:
+### Compatible CPUs
 
 - x86, amd64
 - ARM, ARM64
 
-### Compatible Kernels:
+### Compatible Kernels
 
 - Kernels: 2.6.24 - 5.2 (Realtek)
 - Kernels: 5.3 - 5.10
 
-### Tested Linux Distributions:
+### Tested Linux Distributions
 
 - Arch Linux (kernel 5.4)
 - Arch Linux (kernel 5.9)
@@ -56,28 +56,26 @@
 
 - Manjaro 20.1 (kernel 5.9)
 
+- Raspberry Pi OS (12-02-2020) (ARM 32 bit) (kernel 5.4)
+
 - Ubuntu 20.10 (kernel 5.8)
 - Ubuntu 20.04 (kernel 5.4)
 - Ubuntu 18.04 (kernel 5.4)
 
-- Raspberry Pi OS (12-02-2020) (ARM 32 bit) (kernel 5.4)
+### Download Locations for Tested Linux Distributions
 
-### Download Locations for Tested Linux Distributions:
+- [Arch Linux](https://www.archlinux.org)
+- [Linux Mint](https://www.linuxmint.com)
+- [Manjaro](https://manjaro.org)
+- [Raspberry Pi OS](https://www.raspberrypi.org)
+- [Ubuntu](https://www.ubuntu.com)
 
-- Arch Linux - https://www.archlinux.org/
-- Linux Mint - https://www.linuxmint.com/
-- Manjaro - https://manjaro.org/
-- Raspberry Pi OS - https://www.raspberrypi.org/
-- Ubuntu - https://ubuntu.com/
+### Tested Hardware
 
+- [Wireless USB WiFi Adapter, 1900Mbps Dual Band 2.4GHz/600Mbps 5.8GHz/1300Mbps High Gain 5dBi Antennas USB 3.0]( https://www.amazon.com/gp/product/B07VCKN83P )
+- [ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter](https://www.amazon.com/dp/B01I7QFR10)
 
-### Tested Hardware:
-
-- Wireless USB WiFi Adapter, 1900Mbps Dual Band 2.4GHz/600Mbps 5.8GHz/1300Mbps High Gain 5dBi Antennas USB 3.0
-  ( https://www.amazon.com/gp/product/B07VCKN83P )
-- ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter ( https://www.amazon.com/dp/B01I7QFR10 )
-
-### Compatible Devices:
+### Compatible Devices
 
 Note: Some adapter makers change the chipsets in their products while keeping the same model number so please check to confirm that the product you plan to buy has the chipset you are expecting.
 
@@ -86,129 +84,125 @@ Note: Some adapter makers change the chipsets in their products while keeping th
 * Edimax EW-7833 UAC AC1750 Dual-Band Wi-Fi USB 3.0 Adapter
 * Numerous products that are based on the supported chipset
 
-### Installation Information:
+### Installation Information
 
-The installation instructions that are provided are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
+The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
 
-The installation instructions require that your system has access to the internet. There are numerous ways to enable temporary internet access depending on your hardware and situation. One method is to use tethering from a phone. Another method is to keep an ultra cheap adapter in your toolkit that uses an in-kernel (plug and play) driver. Here is one: https://www.canakit.com/raspberry-pi-wifi.html
+Temporary internet access is required for installation. There are numerous ways to enable temporary internet access depending on your hardware and situation. [One method is to use tethering from a phone.](https://www.makeuseof.com/tag/how-to-tether-your-smartphone-in-linux)
 
-The installation instructions require the use of the terminal. The quick way to open a terminal: Ctrl+Alt+T (hold down on the Ctrl and Alt keys then press the T key)
+Another method to enable temporary internet access is to keep an [ultra cheap wifi adapter that uses an in-kernel driver](https://www.canakit.com/raspberry-pi-wifi.html) in your toolkit.
 
-The installation instructions make use of DKMS. DKMS is a system utility which will automatically recompile and install this kernel module when a new kernel is installed. DKMS is provided by and maintained by Dell.
+You will need to use the terminal interface. The quick way to open a terminal: Ctrl+Alt+T (hold down on the Ctrl and Alt keys then press the T key)
 
-It is recommended that you do not delete the driver directory after installation as the directory contains documentation (README.md) and scripts that you may need in the future.
+DKMS is used for the installation. DKMS is a system utility which will automatically recompile and install this driver when a new kernel is installed. DKMS is provided by and maintained by Dell.
 
-### Installation Steps:
+It is recommended that you do not delete the driver directory after installation as the directory contains information and scripts that you may need in the future.
+
+### Installation Steps
 
 Step 1: Open a terminal (Ctrl+Alt+T)
 
-Step 2: Update the system (select the option for the OS you are using):
+Step 2: Update the system (select the option for the OS you are using)
+```
+    Option for Debian based distributions such as Ubuntu, Linux Mint and the Raspberry Pi OS:
+    
+    $ sudo apt-get update
+```
+``` 
+    Option for Arch based distributions such as Manjaro:
 
-Option for all Debian based distributions such as Ubuntu, Linux Mint and the Raspberry Pi OS:
-```bash
-$ sudo apt-get update
+    $ sudo pacman -Syu
 ```
-Option for Arch-based distributions such as Manjaro:
-```bash
-$ sudo pacman -Syu
+Step 3: Install the required packages (select the option for the OS you are using)
 ```
-Step 3: Install the required packages (select the option for the OS you are using):
+    Option for Raspberry Pi OS:
 
-Option for Raspberry Pi OS:
-```bash
-$ sudo apt-get install -y raspberrypi-kernel-headers bc build-essential dkms git
+    $ sudo apt-get install -y raspberrypi-kernel-headers bc build-essential dkms git
 ```
-Option for LMDE (Debian based):
-```bash
-$ sudo apt-get install -y linux-headers-$(uname -r) build-essential dkms git
 ```
-Option for Linux Mint or Ubuntu (all flavors):
-```bash
-$ sudo apt-get install -y dkms git
-```
-Option for Arch-based distributions such as Manjaro:
-```bash
-$ sudo pacman -S --noconfirm linux-headers dkms git
-```
-Step 4: Create a directory to hold the downloaded driver:
+    Option for LMDE (Debian based):
 
-Note: The technique used in this document is to create a directory in the home directory called `src`.
+    $ sudo apt-get install -y linux-headers-$(uname -r) build-essential dkms git
+```
+```
+    Option for Linux Mint or Ubuntu (all flavors):
+
+    $ sudo apt-get install -y dkms git
+```
+```
+    Option for Arch based distributions such as Manjaro:
+
+    $ sudo pacman -S --noconfirm linux-headers dkms git
+```
+Step 4: Create a directory to hold the downloaded driver
+
 ```bash
 $ mkdir src
 ```
-Step 5: Move to the newly created directory:
+Step 5: Move to the newly created directory
 ```bash
 $ cd ~/src
 ```
-Step 6: Download the driver:
+Step 6: Download the driver
 ```bash
 $ git clone https://github.com/morrownr/8814au.git
 ```
-Step 7: Move to the newly created driver directory:
+Step 7: Move to the newly created driver directory
 ```bash
 $ cd ~/src/8814au
 ```
-Step 8: Run a preparation script if required:
-
-Note: The Raspberry Pi OS and other ARM based systems require a preparation script.
-
-Option for 32 bit Raspberry Pi OS:
-```bash
-$ sudo ./raspi32.sh
-
+Step 8: Run a preparation script if required (The Raspberry Pi OS requires a preparation script)
 ```
-Option for 64 bit Raspberry Pi OS or 64 bit Ubuntu 20.10 for Raspberry Pi:
-```bash
-$ sudo ./raspi64.sh
+    Option for 32 bit Raspberry Pi OS:
 
+    $ sudo ./raspi32.sh
 ```
-Step 9: Run the installation script:
+```
+    Option for 64 bit Raspberry Pi OS or 64 bit Ubuntu 20.10 for Raspberry Pi:
+
+    $ sudo ./raspi64.sh
+```
+Step 9: Run the installation script
 ```bash
 $ sudo ./install-driver.sh
 ```
-Step 10: Reboot:
+Step 10: Reboot
 ```bash
 $ sudo reboot
 ```
-### Removal of the Driver:
+### Removal of the Driver
 
 Step 1: Open a terminal (Ctrl+Alt+T)
 
-Step 2: Move to the driver directory:
+Step 2: Move to the driver directory
 ```bash
 $ cd ~/src/8814au
 ```
-Step 3: Run the removal script:
+Step 3: Run the removal script
 ```bash
 $ sudo ./remove-driver.sh
 ```
-Step 4: Reboot:
+Step 4: Reboot
 ```bash
 $ sudo reboot
 ```
-### Driver Options:
+### Driver Options
 
 A file called `8814au.conf` will be installed in `/etc/modeprob.d` by default.
 
-Location: `/etc/modprobe.d/8814au.conf`
+`/etc/modprobe.d/8814au.conf`
 
 This file will be read and applied to the driver on each system boot.
 
-Here are two options to edit the driver options file:
-
-Option 1: Edit `8814au.conf` with a text editor using a terminal interface.
-```bash
-$ sudo nano /etc/modprobe.d/8814au.conf
-```
-Option 2: From the driver directory, run the `./edit-options.sh` script:
+To edit the driver options file, run the `edit-options.sh` script.
 ```bash
 $ sudo ./edit-options.sh
 ```
-The driver options are as follows:
+The driver options are as follows
 
  -----
 
- Log level options: ( rtw_drv_log_level )
+ Log level options ( rtw_drv_log_level )
 ```
  0 = NONE (default)
  1 = ALWAYS
@@ -224,7 +218,7 @@ The driver options are as follows:
 
  -----
 
- LED control options: ( rtw_led_ctrl )
+ LED control options ( rtw_led_ctrl )
 ```
  0 = Always off
  1 = Normal blink (default)
@@ -232,7 +226,7 @@ The driver options are as follows:
 ```
  -----
 
- VHT enable options: ( rtw_vht_enable )
+ VHT enable options ( rtw_vht_enable )
 ```
   0 = Disable
   1 = Enable (default)
@@ -246,7 +240,7 @@ The driver options are as follows:
 
  -----
 
-  Power saving options: ( rtw_power_mgnt )
+  Power saving options ( rtw_power_mgnt )
 ```
  0 = Disable power saving
  1 = Power saving on, minPS (default)
@@ -256,7 +250,7 @@ The driver options are as follows:
 
  -----
 
- USB mode options: ( rtw_switch_usb_mode )
+ USB mode options ( rtw_switch_usb_mode )
 ```
  0 = No switch (default)
  1 = Switch from usb 2.0 to usb 3.0
@@ -266,7 +260,7 @@ The driver options are as follows:
 
  -----
 
-### Information about USB 3 support:
+### Information about USB 3 support
 
 USB 3 support is off by default as there can be problems with older USB 3 ports, however, almost all USB 3 ports on modern systems work well so turning USB 3 support on should work fine for almost everyone and the difference in performance can be large.
 
@@ -280,7 +274,7 @@ USB 2 =  480 Mb/s
 USB 3 = 5000 Mb/s
 ```
 
-### iperf3 test results with USB 3 mode on:
+### iperf3 test results with USB 3 mode on
 ```
 Bitrate
 -------------
@@ -295,82 +289,7 @@ Bitrate
 611 Mbits/sec
 ```
 
-### Entering Monitor Mode with 'iw' and 'ip':
-
-Start by making sure the system recognizes the WiFi interface:
-```bash
-$ sudo iw dev
-```
-
-Note: The output shows the WiFi interface name and the current mode among other things. The interface name may be something like `wlx00c0cafre8ba` and is required for the below commands. The interface name `wlan0` will be used in the instructions below but you need to substitute your interface name.
-
-Take the interface down:
-```bash
-$ sudo ip link set wlan0 down
-```
-
-Set monitor mode:
-```bash
-$ sudo iw wlan0 set monitor control
-```
-
-Bring the interface up:
-```bash
-$ sudo ip link set wlan0 up
-```
-
-Verify the mode has changed:
-```bash
-$ sudo iw dev
-```
-
-### Reverting to Managed Mode with 'iw' and 'ip':
-
-Take the interface down:
-```bash
-$ sudo ip link set wlan0 down
-```
-
-Set managed mode:
-```bash
-$ sudo iw wlan0 set type managed
-```
-
-Bring the interface up:
-```bash
-$ sudo ip link set wlan0 up
-```
-
-Verify the mode has changed:
-```bash
-$ sudo iw dev
-```
-
-### ----------------------------- Various Tidbits of Information -----------------------------
-
-
-### How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W.
-
-Add the following line to /boot/config.txt:
-```
-dtoverlay=disable-wifi
-```
-
-
-### How to forget a saved WiFi network on a Raspberry Pi
-
-1. Edit wpa_supplicant.conf:
-```bash
-$ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
-```
-2. Delete the relevant WiFi network block (including the 'network=' and opening/closing braces.
-
-3. Press ctrl-x followed by 'y' and enter to save the file.
-
-4. Reboot
-
-
-### Recommended Router Settings for WiFi:
+### Recommended Router Settings for WiFi
 
 Note: These are general recommendations based on years of experience but may not apply to your situation so testing to see if any help fix your problem is recommended.
 
@@ -391,9 +310,9 @@ Power Saving: Set to off. This can help in some situations. If you try turning i
 After making these changes, reboot the router.
 
 
-### Set regulatory domain to correct setting in OS:
+### Set regulatory domain to correct setting in OS
 
-Check the current setting:
+Check the current setting
 ```bash
 $ sudo iw reg get
 ```
@@ -402,13 +321,13 @@ If you get 00, that is the default and may not provide optimal performance.
 
 Find the correct setting here: http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
-Set it temporarily:
+Set it temporarily
 ```bash
 $ sudo iw reg set US
 ```
 Note: Substitute your country code if you are not in the United States.
 
-Set it permanently:
+Set it permanently
 ```bash
 $ sudo nano /etc/default/crda
 
@@ -426,3 +345,24 @@ REGDOMAIN=US
 - If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable.
 
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is devices that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
+
+
+### How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W.
+
+Add the following line to /boot/config.txt
+```
+dtoverlay=disable-wifi
+```
+
+### How to forget a saved WiFi network on a Raspberry Pi
+
+1. Edit wpa_supplicant.conf
+```bash
+$ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+```
+2. Delete the relevant WiFi network block (including the 'network=' and opening/closing braces.
+
+3. Press ctrl-x followed by 'y' and enter to save the file.
+
+4. Reboot
+

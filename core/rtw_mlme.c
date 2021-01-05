@@ -1565,7 +1565,7 @@ u8 _rtw_sitesurvey_condition_check(const char *caller, _adapter *adapter, bool c
 		goto _exit;
 	}
 
-_exit :
+_exit:
 	return ss_condition;
 }
 

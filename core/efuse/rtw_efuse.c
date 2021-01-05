@@ -1055,7 +1055,7 @@ void EFUSE_GetEfuseDefinition(PADAPTER adapter, u8 efusetype, u8 type, void *out
 			*(u16 *)out = (u16)v32;
 			return;
 
-		case TYPE_EFUSE_REAL_CONTENT_LEN:	
+		case TYPE_EFUSE_REAL_CONTENT_LEN:
 			rtw_halmac_get_physical_efuse_size(d, &v32);
 			*(u16 *)out = (u16)v32;
 			return;
@@ -1161,7 +1161,7 @@ u8 rtw_efuse_bt_access(PADAPTER adapter, u8 write, u16 addr, u16 cnts, u8 *data)
 
 		if (efuse) {
 			err = rtw_halmac_read_bt_physical_efuse_map(d, efuse, size);
-			
+
 			if (err == -1) {
 				RTW_ERR("%s: rtw_halmac_read_bt_physical_efuse_map fail!\n", __FUNCTION__);
 				rtw_mfree(efuse, size);
@@ -1476,7 +1476,7 @@ void hal_ReadEFuse_BT_logic_map(
 
 	if (rtw_efuse_bt_access(padapter, _FALSE, 0, EFUSE_BT_REAL_CONTENT_LEN, phyefuse))
 		dump_buf(phyefuse, EFUSE_BT_REAL_BANK_CONTENT_LEN);
-	
+
 	total = BANK_NUM;
 	for (bank = 1; bank <= total; bank++) { /* 8723d Max bake 0~2 */
 		eFuse_Addr = 0;
@@ -1637,7 +1637,7 @@ static u8 hal_EfusePgPacketWrite2ByteHeader(
 	/*	RTW_INFO("%s: pg_header=0x%x\n", __FUNCTION__, pg_header); */
 
 	do {
-		
+
 		rtw_efuse_bt_access(padapter, _TRUE, efuse_addr, 1, &pg_header);
 		rtw_efuse_bt_access(padapter, _FALSE, efuse_addr, 1, &tmp_header);
 
@@ -3249,21 +3249,19 @@ u8 rtw_efuse_file_read(PADAPTER padapter, u8 *filepatch, u8 *buf, u32 len)
 		RTW_ERR("%s, filepatch %s, size=%d, FAIL!!\n", __FUNCTION__, filepatch, count);
 		return _FALSE;
 	}
-
 	i = 0;
 	j = 0;
 	ptr = ptmpbuf;
 	while ((j < len) && (i < count)) {
 		if (ptmpbuf[i] == '\0')
 			break;
-	
+
 		ptr = strpbrk(&ptmpbuf[i], " \t\n\r");
 		if (ptr) {
 			if (ptr == &ptmpbuf[i]) {
 				i++;
 				continue;
 			}
-
 			/* Add string terminating null */
 			*ptr = 0;
 		} else {
@@ -3278,10 +3276,8 @@ u8 rtw_efuse_file_read(PADAPTER padapter, u8 *filepatch, u8 *buf, u32 len)
 			RTW_DBG("i=%d, j=%d, 0x%02x\n", i, j, buf[j]);
 			j++;
 		}
-
 		i = ptr - ptmpbuf + 1;
 	}
-
 	rtw_mfree(ptmpbuf, bufsize);
 	RTW_INFO("%s, filepatch %s, size=%d, done\n", __FUNCTION__, filepatch, count);
 	return _TRUE;

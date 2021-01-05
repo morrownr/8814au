@@ -223,7 +223,6 @@ int rtw_bss_is_candidate_mesh_peer(WLAN_BSSID_EX *self, WLAN_BSSID_EX *target, u
 		}
 	}
 
-
 	/* BSSBasicMCSSet */
 
 	/* 802.1X connected to AS ? */

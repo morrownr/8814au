@@ -427,8 +427,6 @@ release_mlme_lock:
 	_exit_critical_bh(&pmlmepriv->lock, &irqL);
 
 exit:
-
-
 	return status;
 }
 
