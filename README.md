@@ -39,7 +39,7 @@ I have been unable to determine the cause. We need an updated release from Realt
 
 If you see a more recent version of the source code that is available, please let me know.
 
-If you need good AP mode support, the drivers on this site for the 8812au and 8821au work very well.
+If you need good AP mode support, the drivers on this site for the 8812au and 8821au work well.
 
 ```
 ### Compatible CPUs
