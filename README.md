@@ -113,33 +113,33 @@ Step 1: Open a terminal (Ctrl+Alt+T)
 
 Step 2: Update the system (select the option for the OS you are using)
 ```
-    Option for Debian based distributions such as Ubuntu, Linux Mint and the Raspberry Pi OS:
+    Option for Debian based distributions such as Ubuntu, Linux Mint and the Raspberry Pi OS
     
     $ sudo apt-get update
 ```
-``` 
-    Option for Arch based distributions such as Manjaro:
+```
+    Option for Arch based distributions such as Manjaro
 
     $ sudo pacman -Syu
 ```
 Step 3: Install the required packages (select the option for the OS you are using)
 ```
-    Option for Raspberry Pi OS:
+    Option for Raspberry Pi OS
 
     $ sudo apt-get install -y raspberrypi-kernel-headers bc build-essential dkms git
 ```
 ```
-    Option for LMDE (Debian based):
+    Option for LMDE (Debian based)
 
     $ sudo apt-get install -y linux-headers-$(uname -r) build-essential dkms git
 ```
 ```
-    Option for Linux Mint or Ubuntu (all flavors):
+    Option for Linux Mint or Ubuntu (all flavors)
 
     $ sudo apt-get install -y dkms git
 ```
 ```
-    Option for Arch based distributions such as Manjaro:
+    Option for Arch based distributions such as Manjaro
 
     $ sudo pacman -S --noconfirm linux-headers dkms git
 ```
@@ -160,14 +160,14 @@ Step 7: Move to the newly created driver directory
 ```bash
 $ cd ~/src/8814au
 ```
-Step 8: Run a preparation script if required (The Raspberry Pi OS requires a preparation script)
+Step 8: Run a preparation script if required (Raspberry Pi *hardware* requires a preparation script)
 ```
-    Option for 32 bit Raspberry Pi OS:
+    Option for 32 bit operating systems to be installed to Raspberry Pi hardware
 
     $ sudo ./raspi32.sh
 ```
 ```
-    Option for 64 bit Raspberry Pi OS or 64 bit Ubuntu 20.10 for Raspberry Pi:
+    Option for 64 bit operating systems to be installed to Raspberry Pi hardware
 
     $ sudo ./raspi64.sh
 ```
