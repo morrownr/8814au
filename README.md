@@ -28,6 +28,7 @@
 - Supported interface modes:
   * IBSS
   * Managed
+  * AP (WiFi Hotspot) (Master mode)
   * Monitor
   * P2P-client
   * P2P-GO
@@ -36,16 +37,7 @@
 - LED control
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
-```
-Note: This driver does not support AP mode very well at all. Use with hostapd will fail.
 
-I have been unable to determine the cause. We need an updated release from Realtek.
-
-If you see a more recent version of the source code that is available, please let me know.
-
-If you need good AP mode support, the drivers on this site for the 8812au and 8821au work well.
-
-```
 ### Compatible CPUs
 
 - x86, amd64
