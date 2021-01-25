@@ -27,8 +27,8 @@
 - Wake on WLAN
 - Supported interface modes:
   * IBSS
-  * Managed
-  * AP (WiFi Hotspot) (Master mode)
+  * Managed (client)
+  * AP (see *Bridged Wireless Access Point* located in the main directory of this repo.)
   * Monitor
   * P2P-client
   * P2P-GO
@@ -37,8 +37,6 @@
 - LED control
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
-
-Note: *Bridged Wireless Access Point* provides bridged AP setup information and is located in the main directory of this repo.
 
 ### Compatible CPUs
 
