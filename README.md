@@ -38,6 +38,8 @@
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
 
+Note: *Bridged Wireless Access Point* provides bridged AP setup information and is located in the main directory of this repo.
+
 ### Compatible CPUs
 
 - x86, amd64
