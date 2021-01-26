@@ -5060,13 +5060,13 @@ static int cfg80211_rtw_change_beacon(struct wiphy *wiphy, struct net_device *nd
 
 	// In cases like WPS, the proberesp and assocresp IEs vary from the beacon, and need to be explicitly set
 	if(ret == 0) {
-		if(settings->beacon.proberesp_ies && settings->beacon.proberesp_ies_len > 0) {
-			rtw_cfg80211_set_mgnt_wpsp2pie(ndev, (char *)settings->beacon.proberesp_ies,
-				settings->beacon.proberesp_ies_len, 0x2/*PROBE_RESP*/);
+		if(info->proberesp_ies && info->proberesp_ies_len > 0) {
+			rtw_cfg80211_set_mgnt_wpsp2pie(ndev, (char *)info->proberesp_ies,
+				info->proberesp_ies_len, 0x2/*PROBE_RESP*/);
 		}
-		if(settings->beacon.assocresp_ies && settings->beacon.assocresp_ies_len < 0) {
-			rtw_cfg80211_set_mgnt_wpsp2pie(ndev, (char *)settings->beacon.assocresp_ies,
-				settings->beacon.assocresp_ies_len, 0x4/*ASSOC_RESP*/);
+		if(info->assocresp_ies && info->assocresp_ies_len > 0) {
+			rtw_cfg80211_set_mgnt_wpsp2pie(ndev, (char *)info->assocresp_ies,
+				info->assocresp_ies_len, 0x4/*ASSOC_RESP*/);
 		}
 	}
 
