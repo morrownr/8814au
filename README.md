@@ -28,8 +28,8 @@
 - Supported interface modes:
   * IBSS
   * Managed (client)
-  * AP (see *Bridged Wireless Access Point* located in the main directory of this repo.)
-  * Monitor
+  * AP (see *Bridged Wireless Access Point* located in the main directory of this repo)
+  * Monitor (see *Monitor_Mode.md* located in the main directory of this repo)
   * P2P-client
   * P2P-GO
 - USB mode control
@@ -46,7 +46,7 @@
 ### Compatible Kernels
 
 - Kernels: 2.6.24 - 5.2 (Realtek)
-- Kernels: 5.3 - 5.11
+- Kernels: 5.3 - 5.12
 
 ### Tested Linux Distributions
 
@@ -61,7 +61,8 @@
 
 - Manjaro 20.1 (kernel 5.9)
 
-- Raspberry Pi OS (2021-01-11) (ARM 32 bit) (kernel 5.4)
+- Raspberry Pi OS (2021-01-11) (ARM 32 bit) (kernel 5.10)
+- Raspberry Pi Desktop (x86 32 bit) (kernel 4.9)
 
 - Ubuntu 20.10 (kernel 5.8)
 - Ubuntu 20.04 (kernel 5.4)
@@ -78,6 +79,7 @@
 ### Tested Hardware
 
 - [Wireless USB WiFi Adapter, 1900Mbps Dual Band 2.4GHz/600Mbps 5.8GHz/1300Mbps High Gain 5dBi Antennas USB 3.0]( https://www.amazon.com/gp/product/B07VCKN83P )
+
 - [ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter](https://www.amazon.com/dp/B01I7QFR10)
 
 ### Compatible Devices
@@ -296,23 +298,25 @@ $ sudo reboot
 ```
 ### Recommended Router Settings for WiFi
 
-Note: These are general recommendations based on years of experience but may not apply to your situation so testing to see if any help fix your problem is recommended.
+Note: These are general recommendations, some of which may not apply to your specific situation.
 
-Security: Use WPA2-AES. Do not use WPA or WPA2 mixed mode or TKIP.
+Security: Set WPA2-AES (or WPA2-AES/WPA3-SAE mixed mode if available.) Do not set WPA2 mixed mode or WPA or TKIP.
 
-Channel Width for 2.4G: Use 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
+Channel width for 2.4G: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
 
-Channel width for 5G: Using a 40 MHz fixed width may help in some situations.
+Channels for 2.4G: Set channel 1 or 6 or 11 depending on the congestion at your location. Do not set automatic channel selection.
 
-Channels for 2.4G: Use 1 or 6 or 11. Do not use automatic channel selection.
+Mode for 2.4G: Set N only if you no longer use B or G capable devices.
 
-Mode for 2.4G: Use G/N or B/G/N. Do not use N only.
+Network names: Do not set the 2.4G Network and the 5G Network to the same name. Note: Unfortunately many routers come with both networks set to the same name.
 
-Network names: Do not set the 2.4G Network and the 5G Network to the same name. Note: Many routers come with both networks set to the same name.
+Channels for 5G: Not all devices are capable of using DFS channels. It may be necessary to set channel 36 or 149 fixed depending on the congestion at your location.
 
-Power Saving: Set to off. This can help in some situations. If you try turning it off and you see no improvement then set it back to on so as to save electricity.
+Best location for the router: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location.
 
-After making these changes, reboot the router.
+Checking congestion: There are apps available for smart phones that allow you to check the congestion levels on wifi channels. The apps generally go by the name of WiFi Analyzer or something similar.
+
+After making and saving changes, reboot the router.
 
 
 ### Set regulatory domain to correct setting in OS

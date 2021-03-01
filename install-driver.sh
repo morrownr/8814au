@@ -33,6 +33,13 @@ RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
 	echo "An error occurred while running: dkms add : ${RESULT}"
+    echo "Removing ${OPTIONS_FILE} from: /etc/modprobe.d"
+	rm -f /etc/modprobe.d/${OPTIONS_FILE}
+    echo "Removing source files from: /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+    echo "Cleanup complete"
+    echo "dkms status:"
+    dkms status
 	exit $RESULT
 fi
 
@@ -41,6 +48,14 @@ RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
 	echo "An error occurred while running: dkms build : ${RESULT}"
+    dkms remove ${DRV_NAME}/${DRV_VERSION} --all
+    echo "Removing ${OPTIONS_FILE} from: /etc/modprobe.d"
+	rm -f /etc/modprobe.d/${OPTIONS_FILE}
+    echo "Removing source files from: /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+    echo "Cleanup complete"
+    echo "dkms status:"
+    dkms status
 	exit $RESULT
 fi
 
@@ -49,8 +64,17 @@ RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
 	echo "An error occurred while running: dkms install : ${RESULT}"
+    dkms remove ${DRV_NAME}/${DRV_VERSION} --all
+    echo "Removing ${OPTIONS_FILE} from: /etc/modprobe.d"
+	rm -f /etc/modprobe.d/${OPTIONS_FILE}
+    echo "Removing source files from: /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+    echo "Cleanup complete"
+    dkms status
 	exit $RESULT
 else
+    echo "dkms status:"
+    dkms status
 	echo "The driver was installed successfully."
 	exit 0
 fi
