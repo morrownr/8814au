@@ -1,80 +1,82 @@
 #!/bin/bash
 
+SCRIPT_NAME="install-driver.sh"
+SCRIPT_VERSION="20210325"
+
 DRV_NAME="rtl8814au"
 DRV_VERSION="5.8.5.1"
 OPTIONS_FILE="8814au.conf"
 
 DRV_DIR="$(pwd)"
 KRNL_VERSION="$(uname -r)"
-SCRIPT_NAME="install-driver.sh"
 
+clear
+echo "${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+
+# check to ensure sudo was used
 if [[ $EUID -ne 0 ]]; then
 	echo "You must run this script with superuser (root) privileges."
 	echo "Try: \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
 
-if [[ -d "/usr/lib/dkms" ]]; then
-	echo "Installing ${DRV_NAME}-${DRV_VERSION}"
-else
-	echo "dkms does not appear to be installed."
-	echo "Please install dkms and try again."
+# check for previous installation
+if [[ -d "/usr/src/${DRV_NAME}-${DRV_VERSION}" ]]; then
+	echo "It appears that this driver may already be installed."
+	echo "You will need to run the following before installing."
+	echo "$ sudo ./remove-driver.sh"
 	exit 1
 fi
 
+# the add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
 echo "Copying source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
-cp -r "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
-
+cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
 echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
-cp -r ${OPTIONS_FILE} /etc/modprobe.d
+cp -f ${OPTIONS_FILE} /etc/modprobe.d
+echo "All required files have been copied to the proper places."
 
-dkms add ${DRV_NAME}/${DRV_VERSION}
+dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
+# dkms add ${DRV_NAME}/${DRV_VERSION}
 RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
 	echo "An error occurred while running: dkms add : ${RESULT}"
-    echo "Removing ${OPTIONS_FILE} from: /etc/modprobe.d"
-	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-    echo "Removing source files from: /usr/src/${DRV_NAME}-${DRV_VERSION}"
-	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
-    echo "Cleanup complete"
-    echo "dkms status:"
-    dkms status
+	echo "Please report errors."
 	exit $RESULT
 fi
 
-dkms build ${DRV_NAME}/${DRV_VERSION}
+dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
 RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
 	echo "An error occurred while running: dkms build : ${RESULT}"
-    dkms remove ${DRV_NAME}/${DRV_VERSION} --all
-    echo "Removing ${OPTIONS_FILE} from: /etc/modprobe.d"
-	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-    echo "Removing source files from: /usr/src/${DRV_NAME}-${DRV_VERSION}"
-	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
-    echo "Cleanup complete"
-    echo "dkms status:"
-    dkms status
+	echo "Please report errors."
 	exit $RESULT
 fi
 
-dkms install ${DRV_NAME}/${DRV_VERSION}
+dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
 RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
 	echo "An error occurred while running: dkms install : ${RESULT}"
-    dkms remove ${DRV_NAME}/${DRV_VERSION} --all
-    echo "Removing ${OPTIONS_FILE} from: /etc/modprobe.d"
-	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-    echo "Removing source files from: /usr/src/${DRV_NAME}-${DRV_VERSION}"
-	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
-    echo "Cleanup complete"
-    dkms status
+	echo "Please report errors."
 	exit $RESULT
-else
-    echo "dkms status:"
-    dkms status
-	echo "The driver was installed successfully."
-	exit 0
 fi
+
+echo "The driver was installed successfully."
+
+read -p "Do you want edit the driver options file now? [y/n] " -n 1 -r
+echo    # move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    nano /etc/modprobe.d/${OPTIONS_FILE}
+fi
+
+read -p "Are you ready to reboot now? [y/n] " -n 1 -r
+echo    # move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    reboot
+fi
+
+exit 0

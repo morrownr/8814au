@@ -13,7 +13,7 @@ if [[ $EUID -ne 0 ]]; then
 	exit 1
 fi
 
-dkms remove ${DRV_NAME}/${DRV_VERSION} --all
+dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
 RESULT=$?
 
 if [[ "$RESULT" != "0" ]]; then
