@@ -38,15 +38,15 @@
 - VHT control (allows 80 MHz channel width in AP mode)
 
 Note: WPA3-AES does not work. If you need a comparable adapter that does support
-WPA3-AES, I will suggest an Alfa AWUS036ACM. You can get more information and
-links about this adapter at the following site:
+WPA3-AES, I suggest an Alfa AWUS036ACM (mt7612u chipset). You can get more
+information and links to this adapter at the following site:
 
 https://github.com/morrownr/USB-WiFi
 
 Note: Realtek out-of-kernel drivers, including this driver, do not support
 interface combinations. If you need support for interface combinations, I
 suggest adapters based on the Mediatek mt7612u and mt7610u chipsets. You can
-get more information and links to this adapter at the following site:
+get more information and links at the following site:
 
 https://github.com/morrownr/USB-WiFi
 
