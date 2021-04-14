@@ -55,9 +55,9 @@ some issues with master (AP) and monitor modes. What we need is a modernized
 update to the source and only Realtek can provide that. There is only so much
 that I and others can do to make this driver better. If you need an adapter that
 works very well in master and/or monitor modes, I suggest adapters based on the
-mt7612u/mt7610u or rtl8812au/rtl8811au chipsets with priority given the the
-Mediatek (mt) chipsets since the drivers for those chipsets are in the Linux
-kernel and are standards compliant and well maintained.
+mt7612u, mt7610u and rtl8812au chipsets with priority given the the Mediatek (mt)
+chipsets since the drivers for those chipsets are in the Linux kernel and are
+standards compliant and are well maintained.
 
 ### Compatible CPUs
 
