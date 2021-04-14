@@ -74,6 +74,8 @@ kernel and are standards compliant and well maintained.
 - Arch Linux (kernel 5.4)
 - Arch Linux (kernel 5.9)
 
+- Fedora (kernel 5.11)
+
 - Linux Mint 20.1 (Linux Mint based on Ubuntu) (kernel 5.4)
 - Linux Mint 20   (Linux Mint based on Ubuntu) (kernel 5.4)
 - Linux Mint 19.3 (Linux Mint based on Ubuntu) (kernel 5.4)
@@ -92,6 +94,7 @@ kernel and are standards compliant and well maintained.
 ### Download Locations for Tested Linux Distributions
 
 - [Arch Linux](https://www.archlinux.org)
+- [Fedora](https://getfedora.org)
 - [Linux Mint](https://www.linuxmint.com)
 - [Manjaro](https://manjaro.org)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
@@ -143,6 +146,11 @@ Step 2: Update the system (select the option for the OS you are using)
 
     $ sudo pacman -Syu
 ```
+```
+    Option for Fedora based distributions
+
+    # sudo dnf -y update
+```
 Step 3: Install the required packages (select the option for the OS you are using)
 ```
     Option for Raspberry Pi OS
@@ -163,6 +171,11 @@ Step 3: Install the required packages (select the option for the OS you are usin
     Option for Arch or Manjaro
 
     $ sudo pacman -S --noconfirm linux-headers dkms git
+```
+```
+    Option for Fedora
+
+    # sudo dnf -y install git dkms kernel-devel kernel-debug-devel
 ```
 Step 4: Create a directory to hold the downloaded driver
 
