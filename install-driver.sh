@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20210404"
+SCRIPT_VERSION="20210416"
 
 DRV_NAME="rtl8814au"
 DRV_VERSION="5.8.5.1"
@@ -30,22 +30,20 @@ then
 	exit 1
 fi
 
-echo "This is a process that can take a considerable amount of time."
+echo "Start installation."
 # the add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
 echo "Copying source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
 cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
 echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
-echo "All required files have been copied to the proper places."
 
 dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
-# dkms add ${DRV_NAME}/${DRV_VERSION}
 RESULT=$?
 
 if [[ "$RESULT" != "0" ]]
 then
-	echo "An error occurred while running: dkms add : ${RESULT}"
-	echo "Please report errors."
+	echo "An error occurred. dkms add error = ${RESULT}"
+	echo "Please report this error."
 	exit $RESULT
 fi
 
@@ -54,8 +52,8 @@ RESULT=$?
 
 if [[ "$RESULT" != "0" ]]
 then
-	echo "An error occurred while running: dkms build : ${RESULT}"
-	echo "Please report errors."
+	echo "An error occurred. dkms build error = ${RESULT}"
+	echo "Please report this error."
 	exit $RESULT
 fi
 
@@ -64,8 +62,8 @@ RESULT=$?
 
 if [[ "$RESULT" != "0" ]]
 then
-	echo "An error occurred while running: dkms install : ${RESULT}"
-	echo "Please report errors."
+	echo "An error occurred. dkms install error = ${RESULT}"
+	echo "Please report this error."
 	exit $RESULT
 fi
 
