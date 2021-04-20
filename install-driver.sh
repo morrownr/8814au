@@ -69,18 +69,20 @@ fi
 
 echo "The driver was installed successfully."
 
-read -p "Do you want edit the driver options file now? [y/n] " -n 1 -r
-echo    # move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    nano /etc/modprobe.d/${OPTIONS_FILE}
-fi
+if [ "$1" != "NoPrompt" ]; then
+        read -p "Do you want edit the driver options file now? [y/n] " -n 1 -r
+        echo    # move to a new line
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+                nano /etc/modprobe.d/${OPTIONS_FILE}
+        fi
 
-read -p "Are you ready to reboot now? [y/n] " -n 1 -r
-echo    # move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    reboot
+        read -p "Are you ready to reboot now? [y/n] " -n 1 -r
+        echo    # move to a new line
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+                reboot
+        fi
 fi
 
 exit 0
