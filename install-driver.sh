@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20210416"
+SCRIPT_VERSION="20210421"
 
 DRV_NAME="rtl8814au"
 DRV_VERSION="5.8.5.1"
@@ -10,8 +10,26 @@ OPTIONS_FILE="8814au.conf"
 DRV_DIR="$(pwd)"
 KRNL_VERSION="$(uname -r)"
 
+NO_PROMPT=0
+
 clear
-echo "${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+echo "Running: ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+
+# Get the options
+while [ $# -gt 0 ]
+do
+	case $1 in
+		NoPrompt)
+			NO_PROMPT=1 ;;
+		*h|*help|*)
+			echo "Syntax $0 <NoPrompt>"
+			echo "       NoPrompt - noninteractive mode"
+			echo "       -h|--help - Show help"
+			exit 1
+			;;
+	esac
+	shift
+done
 
 # check to ensure sudo was used
 if [[ $EUID -ne 0 ]]
@@ -69,20 +87,21 @@ fi
 
 echo "The driver was installed successfully."
 
-if [ "$1" != "NoPrompt" ]; then
-        read -p "Do you want edit the driver options file now? [y/n] " -n 1 -r
-        echo    # move to a new line
-        if [[ $REPLY =~ ^[Yy]$ ]]
-        then
-                nano /etc/modprobe.d/${OPTIONS_FILE}
-        fi
+if [ $NO_PROMPT -ne 1 ]
+then
+	read -p "Do you want to edit the driver options file now? [y/n] " -n 1 -r
+	echo    # move to a new line
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		nano /etc/modprobe.d/${OPTIONS_FILE}
+	fi
 
-        read -p "Are you ready to reboot now? [y/n] " -n 1 -r
-        echo    # move to a new line
-        if [[ $REPLY =~ ^[Yy]$ ]]
-        then
-                reboot
-        fi
+	read -p "Do you want to reboot now? [y/n] " -n 1 -r
+	echo    # move to a new line
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		reboot
+	fi
 fi
 
 exit 0

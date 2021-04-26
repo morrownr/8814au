@@ -37,9 +37,10 @@
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
 
-Note: WPA3-AES does not work. If you need a comparable adapter that does support
-WPA3-AES, I suggest an Alfa AWUS036ACM (mt7612u chipset). You can get more
-information and links to this adapter at the following site:
+Note: WPA3 does not work. If you need a comparable adapter that does support
+WPA3, I suggest an Alfa AWUS036ACM (mt7612u chipset) or a Alfa AWUS036ACHM
+(mt7610u chipset). You can get more information and links to these adapters at
+the following site:
 
 https://github.com/morrownr/USB-WiFi
 
@@ -108,14 +109,14 @@ standards compliant and are well maintained.
 
 ### Compatible Devices
 
-Warning: Beware of "multi-state" USB WiFi adapters. Some USB WiFi adapters have proprietary Windows drivers onboard. When plugged in, they act like a flash drive or CDROM and on Windows will attempt to start installing the Windows driver. That won't work on Linux or MAC or any other non-Windows OS so the adapter sits there in flash drive or CDROM mode. The problem is that the state of the adapter has to be changed for the adapter to show up as the device that you expect, in this case, a WiFi adapter. Most modern Linux distributions ship with a utility called "usb-modeswitch" that will handle this issue for you if it has the correct information for your adapter. It is a good utility but if you buy adapters that are "multi-state," that is one more potential headache you may have to deal with when something goes wrong. Often you can indentify adapters that are "multi-state" as they are advertised as "free driver" or "free installation driver." If you are looking to buy a USB WiFi adapter for use on Linux, MAC OS, *NIX or anything besides Windows, it is a good idea to seek out single-state adapters.
-
-Note: Some adapter makers change the chipsets in their products while keeping the same model number so please check to confirm that the product you plan to buy has the chipset you are expecting.
-
 * D-Link DWA-192 AC1900 Ultra Wi-Fi USB 3.0 Adapter
 * ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter
 * Edimax EW-7833 UAC AC1750 Dual-Band Wi-Fi USB 3.0 Adapter
 * Numerous products that are based on the supported chipset
+
+Warning: Beware of "multi-state" USB WiFi adapters. Some USB WiFi adapters have proprietary Windows drivers onboard. When plugged in, they act like a flash drive or CDROM and on Windows will attempt to start installing the Windows driver. That won't work on Linux or MAC or any other non-Windows OS so the adapter sits there in flash drive or CDROM mode. The problem is that the state of the adapter has to be changed for the adapter to show up as the device that you expect, in this case, a WiFi adapter. Most modern Linux distributions ship with a utility called "usb-modeswitch" that will handle this issue for you if it has the correct information for your adapter. It is a good utility but if you buy adapters that are "multi-state," that is one more potential headache you may have to deal with when something goes wrong. Often you can indentify adapters that are "multi-state" as they are advertised as "free driver" or "free installation driver." If you are looking to buy a USB WiFi adapter for use on Linux, MAC OS, *NIX or anything besides Windows, it is a good idea to seek out single-state adapters.
+
+Note: Some adapter makers change the chipsets in their products while keeping the same model number so please check to confirm that the product you plan to buy has the chipset you are expecting.
 
 ### Installation Information
 
@@ -130,6 +131,8 @@ You will need to use the terminal interface. The quick way to open a terminal: C
 DKMS is used for the installation. DKMS is a system utility which will automatically recompile and install this driver when a new kernel is installed. DKMS is provided by and maintained by Dell.
 
 It is recommended that you do not delete the driver directory after installation as the directory contains information and scripts that you may need in the future.
+
+Note: There is no need to disable Secure Mode to install this driver. If Secure Mode is properly setup on your system, this installation will support it.
 
 ### Installation Steps
 
@@ -207,9 +210,9 @@ Run a preparation script
 
     $ sudo ./raspi64.sh
 ```
-Step 9: Run the installation script
+Step 9: Run the installation script (For automated builds - for example an RPM package or an image - use _NoPrompt_ as an option)
 ```bash
-$ sudo ./install-driver.sh
+$ sudo ./install-driver.sh [NoPrompt]
 ```
 Step 10: Reboot
 ```bash
