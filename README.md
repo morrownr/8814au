@@ -13,24 +13,15 @@
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
-- WPS - PIN and PBC Methods
 - IEEE 802.11b/g/n/ac Client mode
   * Support wireless security for WEP, WPA TKIP and WPA2 AES PSK
   * Support site survey scan and manual connect
-  * Support WPA/WPA2 TLS client
   * Support power saving mode
-- Soft AP mode
-- WiFi-Direct
-- MU-MIMO
-- Mesh
-- Wake on WLAN
 - Supported interface modes:
   * IBSS
   * Managed (client)
   * AP (does not work well)
   * Monitor (does not work well)
-  * P2P-client
-  * P2P-GO
 - USB mode control
 - Log level control
 - LED control
