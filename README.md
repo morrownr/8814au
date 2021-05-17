@@ -30,12 +30,12 @@
 
 FAQ:
 
-Question: Does this driver support WPA3?
+Question: Does WPA3 work with this driver?
 
-Answer: No. Note: WPA3 does not work. If you need a comparable adapter that does
-support WPA3, I suggest an Alfa AWUS036ACM (mt7612u chipset) or a Alfa AWUS036ACHM
-(mt7610u chipset). You can get more information and links to these adapters at
-the following site:
+Answer: No, WPA3 does not work with this driver. If you need a comparable adapter
+that does support WPA3, I suggest an Alfa AWUS036ACM (mt7612u chipset) or a
+Alfa AWUS036ACHM (mt7610u chipset). You can get more information and links to
+these adapters at the following site:
 
 https://github.com/morrownr/USB-WiFi
 
@@ -58,8 +58,8 @@ issues with monitor mode. What we need is a modernized update to the source and
 only Realtek can provide that. There is only so much that I and others can do
 to make this driver better. If you need an adapter that works very well in
 monitor mode, I suggest adapters based on the mt7612u, mt7610u and rtl8812au
-chipsets with priority given the the Mediatek (mt) chipsets since the drivers
-for those chipsets are in the Linux kernel and are standards compliant and are
+chipsets with priority given to the the Mediatek (mt) chipsets since the drivers
+for those chipsets are in the Linux kernel, are standards compliant and are
 well maintained.
 
 ### Compatible CPUs
