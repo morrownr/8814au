@@ -19,8 +19,8 @@
   * Support power saving mode
 - Supported interface modes:
   * IBSS
-  * Managed (client)
-  * AP (does not work well)
+  * Managed
+  * AP
   * Monitor (does not work well)
 - USB mode control
 - Log level control
@@ -28,28 +28,39 @@
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
 
-Note: WPA3 does not work. If you need a comparable adapter that does support
-WPA3, I suggest an Alfa AWUS036ACM (mt7612u chipset) or a Alfa AWUS036ACHM
+FAQ:
+
+Question: Does this driver support WPA3?
+
+Answer: No. Note: WPA3 does not work. If you need a comparable adapter that does
+support WPA3, I suggest an Alfa AWUS036ACM (mt7612u chipset) or a Alfa AWUS036ACHM
 (mt7610u chipset). You can get more information and links to these adapters at
 the following site:
 
 https://github.com/morrownr/USB-WiFi
 
-Note: Realtek out-of-kernel drivers, including this driver, do not support
-interface combinations. If you need support for interface combinations, I
-suggest adapters based on the Mediatek mt7612u and mt7610u chipsets. You can
+Question: What interface combination does this driver support?
+
+Answer: None. Realtek out-of-kernel drivers, including this driver, do not
+support interface combinations. If you need support for interface combinations,
+I suggest adapters based on the Mediatek mt7612u and mt7610u chipsets. You can
 get more information and links at the following site:
 
 https://github.com/morrownr/USB-WiFi
 
-Overall thoughts: This driver works good in managed (client) mode but there are
-some issues with master (AP) and monitor modes. What we need is a modernized
-update to the source and only Realtek can provide that. There is only so much
-that I and others can do to make this driver better. If you need an adapter that
-works very well in master and/or monitor modes, I suggest adapters based on the
-mt7612u, mt7610u and rtl8812au chipsets with priority given the the Mediatek (mt)
-chipsets since the drivers for those chipsets are in the Linux kernel and are
-standards compliant and are well maintained.
+Question: What is wrong with monitor mode?
+
+Answer: I wish I could figure that out. If you would like work on it, please
+do so. Help is appreciated.
+
+Overall thoughts: This driver works good in managed mode but there are some
+issues with monitor mode. What we need is a modernized update to the source and
+only Realtek can provide that. There is only so much that I and others can do
+to make this driver better. If you need an adapter that works very well in
+monitor mode, I suggest adapters based on the mt7612u, mt7610u and rtl8812au
+chipsets with priority given the the Mediatek (mt) chipsets since the drivers
+for those chipsets are in the Linux kernel and are standards compliant and are
+well maintained.
 
 ### Compatible CPUs
 
