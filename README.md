@@ -335,7 +335,7 @@ Step 4: Reboot
 ```bash
 $ sudo reboot
 ```
-### Recommended Router Settings for WiFi
+### Recommended WiFi Router/ Access Point Settings
 
 Note: These are general recommendations, some of which may not apply to your specific situation.
 
@@ -345,13 +345,13 @@ Channel width for 2.4G: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 autom
 
 Channels for 2.4G: Set channel 1 or 6 or 11 depending on the congestion at your location. Do not set automatic channel selection.
 
-Mode for 2.4G: Set "N only" if you no longer use B or G capable devices.
+Mode for 2.4G: For best performance, set "N only" if you no longer use B or G capable devices.
 
 Network names: Do not set the 2.4G Network and the 5G Network to the same name. Note: Unfortunately many routers come with both networks set to the same name.
 
-Channels for 5G: Not all devices are capable of using DFS channels. It may be necessary to set channel 36 or 149 fixed depending on the congestion at your location.
+Channels for 5G: Not all devices are capable of using DFS channels. It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 161 in order for all of your devices to work on 5g. (for US, other countries may vary)
 
-Best location for the router: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location.
+Best location for the wifi router/ access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location.
 
 Check congestion: There are apps available for smart phones that allow you to check the congestion levels on wifi channels. The apps generally go by the name of WiFi Analyzer or something similar.
 
@@ -386,9 +386,13 @@ REGDOMAIN=US
 
 ### Recommendations regarding USB
 
+- Moving your USB WiFi adapter to a different USB port has been known to fix a variety of problems. Problems include WiFi going on and off as well as connections coming and going.
+
 - If connecting your USB WiFi adapter to a desktop computer, use the USB ports on the rear of the computer. Why? The ports on the rear are directly connected to the motherboard which will reduce problems with interference and disconnection that can happen with front ports that use cables.
 
 - If your USB WiFi adapter is USB 3 capable then plug it into a USB 3 port.
+
+- Avoid USB 3.1 Gen 2 ports if possible as almost all currently available adapters have been tested with USB 3.1 Gen 1 (aka USB 3) and not with USB 3.1 Gen 2.
 
 - If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable.
 
