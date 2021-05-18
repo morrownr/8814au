@@ -22,6 +22,7 @@
   * Managed
   * AP
   * Monitor (does not work well)
+- Supported extended features: None
 - USB mode control
 - Log level control
 - LED control
