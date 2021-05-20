@@ -90,7 +90,7 @@ static void rtw_dev_shutdown(struct device *dev)
 #define USB_DEVICE_ID_MATCH_INT_CLASS		0x0080
 #define USB_DEVICE_ID_MATCH_INT_SUBCLASS	0x0100
 #define USB_DEVICE_ID_MATCH_INT_PROTOCOL	0x0200
-#define USB_DEVICE_ID_MATCH_INT_NUMBER		0x0400
+#define USB_DEVICE_ID_MATCH_INT_NUMBER	0x0400
 
 #define USB_DEVICE_ID_MATCH_INT_INFO \
 	(USB_DEVICE_ID_MATCH_INT_CLASS | \
@@ -1646,7 +1646,7 @@ static void rtw_dev_remove(struct usb_interface *pusb_intf)
 
 	usb_dvobj_deinit(pusb_intf);
 
-	RTW_INFO("-r871xu_dev_remove, done\n");
+//	RTW_INFO("-r871xu_dev_remove, done\n");
 
 	return;
 

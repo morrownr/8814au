@@ -22,7 +22,6 @@
   * Managed
   * AP
   * Monitor (does not work well)
-- Supported extended features: None
 - USB mode control
 - Log level control
 - LED control
@@ -40,12 +39,19 @@ these adapters at the following site:
 
 https://github.com/morrownr/USB-WiFi
 
-Question: What interface combination does this driver support?
+Question: What interface combinations does this driver support?
 
 Answer: None. Realtek out-of-kernel drivers, including this driver, do not
 support interface combinations. If you need support for interface combinations,
 I suggest adapters based on the Mediatek mt7612u and mt7610u chipsets. You can
 get more information and links at the following site:
+
+https://github.com/morrownr/USB-WiFi
+
+Question: What extended features does this driver support?
+
+Answer: None. For extended features, you need an adapter that uses Mediatek
+drivers. You can get more information and links at the following site:
 
 https://github.com/morrownr/USB-WiFi
 
@@ -234,96 +240,8 @@ To edit the driver options file, run the `edit-options.sh` script.
 ```bash
 $ sudo ./edit-options.sh
 ```
-The driver options are as follows
+Documentation for Driver Options is included in the file `8814au.conf`.
 
- -----
-
- Log level options ( rtw_drv_log_level )
-```
- 0 = NONE (default)
- 1 = ALWAYS
- 2 = ERROR
- 3 = WARNING
- 4 = INFO
- 5 = DEBUG
- 6 = MAX
-```
- Note: You can save a log of RTW log entries by running the following in a terminal:
-
- $ sudo ./save-log.sh
-
- -----
-
- LED control options ( rtw_led_ctrl )
-```
- 0 = Always off
- 1 = Normal blink (default)
- 2 = Always on
-```
- -----
-
- VHT enable options ( rtw_vht_enable )
-```
-  0 = Disable
-  1 = Enable (default)
-  2 = Force auto enable (use caution)
-```
- Notes:
- - Unless you know what you are doing, don't change the default for rtw_vht_enable.
- - A non-default setting can degrade performance greatly in some operational modes.
- - For AP mode, such as when you are using Hostapd, setting this option to 2 will
-   allow 80 MHz channel width.
-
- -----
-
-  Power saving options ( rtw_power_mgnt )
-```
- 0 = Disable power saving
- 1 = Power saving on, minPS (default)
- 2 = Power saving on, maxPS
-```
- Note: Extensive testing has shown that the default setting works well.
-
- -----
-
- USB mode options ( rtw_switch_usb_mode )
-```
- 0 = No switch (default)
- 1 = Switch from usb 2.0 to usb 3.0
- 2 = Switch from usb 3.0 to usb 2.0
-```
- Note: When changing USB options, a cold boot is recommended.
-
- -----
-
-### Information about USB 3 support
-
-USB 3 support is off by default as there can be problems with older USB 3 ports, however, almost all USB 3 ports on modern systems work well so turning USB 3 support on should work fine for almost everyone and the difference in performance can be large.
-
-See what your USB mode is:
-
-```bash
-$ lsusb -t
-```
-```
-USB 2 =  480 Mb/s
-USB 3 = 5000 Mb/s
-```
-
-### iperf3 test results with USB 3 mode on
-```
-Bitrate
--------------
-590 Mbits/sec
-596 Mbits/sec
-599 Mbits/sec
-624 Mbits/sec
-629 Mbits/sec
-607 Mbits/sec
-607 Mbits/sec
-616 Mbits/sec
-611 Mbits/sec
-```
 ### Removal of the Driver
 
 Note: This script should be used in the following situations:
