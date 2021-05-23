@@ -212,12 +212,12 @@ Run a preparation script
 ```
     Option for 32 bit operating systems to be installed to Raspberry Pi hardware
 
-    $ sudo ./raspi32.sh
+    $ ./raspi32.sh
 ```
 ```
     Option for 64 bit operating systems to be installed to Raspberry Pi hardware
 
-    $ sudo ./raspi64.sh
+    $ ./raspi64.sh
 ```
 Step 9: Run the installation script (For automated builds - for example an RPM package or an image - use _NoPrompt_ as an option)
 ```bash
