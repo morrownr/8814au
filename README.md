@@ -181,9 +181,9 @@ Step 3: Install the required packages (select the option for the OS you are usin
 ```
 ```
     Option for Arch or Manjaro
-    (Note: if it asks you to choose a provider, make sure to choose the one that corresponds to your version of the linux kernel (for example, linux510-headers for version 5.10)
-    if you have the incorrect version installed, you'll have to uninstall it and reinstall the correct version)
-
+    
+    Note: if it asks you to choose a provider, make sure to choose the one that corresponds to your version of the linux kernel (for example, linux510-headers for version 5.10) if you have the incorrect version installed, you'll have to uninstall it and reinstall the correct version.
+    
     $ sudo pacman -S --noconfirm linux-headers dkms git
 ```
 ```
