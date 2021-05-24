@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20210421"
+SCRIPT_VERSION="20210524"
 
 DRV_NAME="rtl8814au"
 DRV_VERSION="5.8.5.1"
@@ -13,7 +13,7 @@ KRNL_VERSION="$(uname -r)"
 NO_PROMPT=0
 
 clear
-echo "Running: ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
 # Get the options
 while [ $# -gt 0 ]
@@ -48,7 +48,7 @@ then
 	exit 1
 fi
 
-echo "Start installation."
+echo "Starting installation."
 # the add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
 echo "Copying source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
 cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}

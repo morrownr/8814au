@@ -14,7 +14,8 @@ SCRIPT_NAME="edit-options.sh"
 #
 # $ sudo ./edit-options.sh
 #
-if [[ $EUID -ne 0 ]]; then
+if [[ $EUID -ne 0 ]]
+then
 	echo "You must run this script with superuser (root) privileges."
 	echo "Try: \"sudo ./${SCRIPT_NAME}\""
 	exit 1
