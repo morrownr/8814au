@@ -878,6 +878,9 @@ struct cfg80211_bss *rtw_cfg80211_inform_bss(_adapter *padapter, struct wlan_net
 		goto exit;
 	}
 
+#if defined(CONFIG_NET_NS)
+	wiphy->flags |= WIPHY_FLAG_NETNS_OK;
+#endif //CONFIG_NET_NS
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 38))
 #ifndef COMPAT_KERNEL_RELEASE
 	/* patch for cfg80211, update beacon ies to information_elements */

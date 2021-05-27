@@ -93,6 +93,7 @@ CONFIG_ICMP_VOQ = n
 CONFIG_IP_R_MONITOR = n #arp VOQ and high rate
 # user priority mapping rule : tos, dscp
 CONFIG_RTW_UP_MAPPING_RULE = tos
+CONFIG_NET_NS = y
 
 ########################## Debug ###########################
 CONFIG_RTW_DEBUG = y
