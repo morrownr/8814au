@@ -1911,9 +1911,10 @@ int rtw_os_ndev_register(_adapter *adapter, const char *name)
 
 	_rtw_memcpy(ndev->dev_addr, adapter_mac_addr(adapter), ETH_ALEN);
 
-#if defined(CONFIG_NET_NS)
-    dev_net_set(ndev, wiphy_net(adapter_to_wiphy(adapter)));
-#endif //defined(CONFIG_NET_NS)
+#ifdef CONFIG_NET_NS
+	dev_net_set(ndev, wiphy_net(adapter_to_wiphy(adapter)));
+#endif //CONFIG_NET_NS
+
 
 	/* Tell the network stack we exist */
 
