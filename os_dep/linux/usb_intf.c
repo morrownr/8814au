@@ -635,7 +635,7 @@ static struct dvobj_priv *usb_dvobj_init(struct usb_interface *usb_intf, const s
 		}
 	}
 
-	RTW_INFO("nr_endpoint=%d, in_num=%d, out_num=%d\n\n", pdvobjpriv->nr_endpoint, pdvobjpriv->RtNumInPipes, pdvobjpriv->RtNumOutPipes);
+	RTW_INFO("nr_endpoint=%d, in_num=%d, out_num=%d\n", pdvobjpriv->nr_endpoint, pdvobjpriv->RtNumInPipes, pdvobjpriv->RtNumOutPipes);
 
 	switch (pusbd->speed) {
 	case USB_SPEED_LOW:

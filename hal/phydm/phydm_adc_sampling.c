@@ -1223,9 +1223,9 @@ void phydm_la_set_buff_mode(void *dm_void, enum la_buff_mode mode)
 	buf->start_pos = end_pos_tmp - buf->buffer_size;
 	smp->smp_number_max = buf->buffer_size >> 3;
 
-	pr_debug("start_addr=(0x%x), end_addr=(0x%x), buffer_size=(0x%x), smp_number_max=(%d)\n",
-		 buf->start_pos, buf->end_pos, buf->buffer_size,
-		 smp->smp_number_max);
+//	pr_debug("start_addr=(0x%x), end_addr=(0x%x), buffer_size=(0x%x), smp_number_max=(%d)\n",
+//		 buf->start_pos, buf->end_pos, buf->buffer_size,
+//		 smp->smp_number_max);
 }
 
 void phydm_la_adc_smp_start(void *dm_void)
