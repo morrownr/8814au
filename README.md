@@ -170,7 +170,7 @@ Step 3: Install the required packages (select the option for the OS you are usin
 
     $ sudo pacman -S --noconfirm linux-headers dkms git
 ```
-Note: if it asks you to choose a provider, make sure to choose the one that corresponds to your version of the linux kernel (for example, linux510-headers for version 5.10) if you have the incorrect version installed, you'll have to uninstall it and reinstall the correct version.
+Note regarding Arch and Manjaro: if you are asked to choose a provider, make sure to choose the one that corresponds to your version of the linux kernel (for example, ```linux510-headers``` for Linux kernel version 5.10) if you install the incorrect version, you'll have to uninstall it and reinstall the correct version.
 
 ```
     Option for Fedora
