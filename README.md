@@ -21,7 +21,7 @@
   * IBSS
   * Managed
   * AP
-  * Monitor (does not work well)
+  * Monitor
 - USB mode control
 - Log level control
 - LED control
@@ -54,20 +54,6 @@ Answer: None. For extended features, you need an adapter that uses Mediatek
 drivers. You can get more information and links at the following site:
 
 https://github.com/morrownr/USB-WiFi
-
-Question: What is wrong with monitor mode?
-
-Answer: I wish I could figure that out. If you would like work on it, please
-do so. Help is appreciated.
-
-Overall thoughts: This driver works good in managed mode but there are some
-issues with monitor mode. What we need is a modernized update to the source and
-only Realtek can provide that. There is only so much that I and others can do
-to make this driver better. If you need an adapter that works very well in
-monitor mode, I suggest adapters based on the mt7612u, mt7610u and rtl8812au
-chipsets with priority given to the the Mediatek (mt) chipsets since the drivers
-for those chipsets are in the Linux kernel, are standards compliant and are
-well maintained.
 
 ### Compatible CPUs
 
