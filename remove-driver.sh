@@ -21,7 +21,7 @@ echo "Starting removal."
 dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
 RESULT=$?
 
-# result will be 3 if there are no instances of module to remove
+# RESULT will be 3 if there are no instances of module to remove
 # however we still need to remove the files or the install script
 # will complain.
 if [[ ("$RESULT" = "0")||("$RESULT" = "3") ]]
