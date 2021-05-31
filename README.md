@@ -104,6 +104,7 @@ https://github.com/morrownr/USB-WiFi
 
 ### Compatible Devices
 
+* ALFA AWUS1900
 * D-Link DWA-192 AC1900 Ultra Wi-Fi USB 3.0 Adapter
 * ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter
 * Edimax EW-7833 UAC AC1750 Dual-Band Wi-Fi USB 3.0 Adapter
