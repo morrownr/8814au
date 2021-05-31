@@ -16,7 +16,7 @@ then
 	exit 1
 fi
 
-echo "Start removal."
+echo "Starting removal."
 
 dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
 RESULT=$?
