@@ -176,7 +176,7 @@ Note regarding Arch and Manjaro: if you are asked to choose a provider, make sur
     2) using AUR helper like paru or yay
     $ paru -S rtl8814au-dkms-git
 ```
-Note: Make to uninstall any existing driver installs sourced from other install methods. If the install fails and its cause is related to AUR's BUILDPKG script, please address the issue first to the package maintainer over at https://aur.archlinux.org/packages/rtl8814au-dkms-git/.
+Note: Make sure to uninstall any existing driver installs run from other install methods. If the install fails and its cause is related to AUR's BUILDPKG script, please address the issue first to the package maintainer over at https://aur.archlinux.org/packages/rtl8814au-dkms-git/.
 
 ```
     Option for Fedora
