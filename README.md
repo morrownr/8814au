@@ -167,11 +167,16 @@ Step 3: Install the required packages (select the option for the OS you are usin
     $ sudo apt-get install -y dkms git
 ```
 ```
-    Option for Arch or Manjaro
-
+    Options for Arch or Manjaro
+    1) using pacman 
     $ sudo pacman -S --noconfirm linux-headers dkms git
 ```
 Note regarding Arch and Manjaro: if you are asked to choose a provider, make sure to choose the one that corresponds to your version of the linux kernel (for example, ```linux510-headers``` for Linux kernel version 5.10) if you install the incorrect version, you'll have to uninstall it and reinstall the correct version.
+```
+    2) using AUR helper like paru or yay
+    $ paru -S rtl8814au-dkms-git
+```
+Note: Make sure to uninstall any existing driver installs run from other install methods. If the install fails and its cause is related to AUR's BUILDPKG script, please address the issue first to the package maintainer over at https://aur.archlinux.org/packages/rtl8814au-dkms-git/.
 
 ```
     Option for Fedora
@@ -219,7 +224,7 @@ $ sudo reboot
 
 ### Driver Options
 
-A file called `8814au.conf` will be installed in `/etc/modeprob.d` by default.
+A file called `8814au.conf` will be installed in `/etc/modprobe.d` by default.
 
 `/etc/modprobe.d/8814au.conf`
 
