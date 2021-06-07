@@ -1,4 +1,4 @@
-2021-05-30 - Modifications and testing in progress.
+2021-06-04 - Modifications and testing in progress.
 
 ## Bridged Wireless Access Point
 
@@ -31,13 +31,13 @@ this setup guide.
 
 -----
 
-2021-05-31
+2021-06-04
 
 #### Tested Setup
 
 [Raspberry Pi 4B (4gb)](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/)
 
-[Raspberry Pi OS (2021-03-04) (32 bit) (kernel 5.10.17-v7l+)](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit)
+[Raspberry Pi OS (2021-05-07) (32 bit) (kernel 5.10.17-v7l+)](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit)
 
 Ethernet connection providing internet
 

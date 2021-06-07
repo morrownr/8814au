@@ -168,15 +168,18 @@ Step 3: Install the required packages (select the option for the OS you are usin
 ```
 ```
     Options for Arch or Manjaro
-    1) using pacman 
+
+    1) if using pacman
+
     $ sudo pacman -S --noconfirm linux-headers dkms git
 ```
-Note regarding Arch and Manjaro: if you are asked to choose a provider, make sure to choose the one that corresponds to your version of the linux kernel (for example, ```linux510-headers``` for Linux kernel version 5.10) if you install the incorrect version, you'll have to uninstall it and reinstall the correct version.
+Note: If you are asked to choose a provider, make sure to choose the one that corresponds to your version of the linux kernel (for example, ```linux510-headers``` for Linux kernel version 5.10) if you install the incorrect version, you'll have to uninstall it and reinstall the correct version.
 ```
-    2) using AUR helper like paru or yay
+    2) if using an AUR helper like paru or yay
+
     $ paru -S rtl8814au-dkms-git
 ```
-Note: Make sure to uninstall any existing driver installs run from other install methods. If the install fails and its cause is related to AUR's BUILDPKG script, please address the issue first to the package maintainer over at https://aur.archlinux.org/packages/rtl8814au-dkms-git/.
+Note: Make sure to uninstall any existing driver installations from other installation method. If the installation fails and its cause is related to AUR's BUILDPKG script, please address the issue first to the package maintainer at https://aur.archlinux.org/packages/rtl8814au-dkms-git/.
 
 ```
     Option for Fedora
