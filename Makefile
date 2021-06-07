@@ -1,6 +1,6 @@
 EXTRA_CFLAGS += $(USER_EXTRA_CFLAGS)
-EXTRA_CFLAGS += -O1
-#EXTRA_CFLAGS += -O3
+#EXTRA_CFLAGS += -O1
+EXTRA_CFLAGS += -O3
 #EXTRA_CFLAGS += -Wall
 #EXTRA_CFLAGS += -Wextra
 EXTRA_CFLAGS += -Wno-error
@@ -25,7 +25,7 @@ endif
 
 EXTRA_CFLAGS += -I$(src)/include
 
-EXTRA_LDFLAGS += --strip-debug
+EXTRA_LDFLAGS += --strip-all -O3
 
 CONFIG_AUTOCFG_CP = n
 
