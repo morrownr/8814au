@@ -224,7 +224,7 @@ $ sudo reboot
 
 ### Driver Options
 
-A file called `8814au.conf` will be installed in `/etc/modprob.d` by default.
+A file called `8814au.conf` will be installed in `/etc/modprobe.d` by default.
 
 `/etc/modprobe.d/8814au.conf`
 
