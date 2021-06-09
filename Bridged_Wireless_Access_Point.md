@@ -1,4 +1,4 @@
-2021-06-04 - Modifications and testing in progress.
+2021-06-07
 
 ## Bridged Wireless Access Point
 
@@ -30,8 +30,6 @@ to and follow the appropriate section now, if required, before continuing with
 this setup guide.
 
 -----
-
-2021-06-04
 
 #### Tested Setup
 
@@ -106,8 +104,6 @@ The follow site provides links to adapters that support WPA3-SAE: [USB-WIFI](htt
 -----
 
 Update system.
-
-Code:
 ```
 sudo apt update
 ```
@@ -115,8 +111,6 @@ sudo apt update
 -----
 
 Upgrade system.
-
-Code:
 ```
 sudo apt full-upgrade
 ```
@@ -130,8 +124,6 @@ Reduce overall power consumption and overclock the CPU a modest amount.
 Note: All items in this step are optional and some items are specific to
 the Raspberry Pi 4B. If installing to a Raspberry Pi 3b or 3b+ you will
 need to use the appropriate settings for that hardward.
-
-Code:
 ```
 sudo nano /boot/config.txt
 ```
@@ -178,8 +170,6 @@ Enable predictable network interface names
 Note: While this step is optional, problems can arise without it on dual band
 setups. Some operating systems have this capability enabled by default but not
 the Raspberry Pi OS.
-
-Code:
 ```
 sudo raspi-config
 ```
@@ -188,23 +178,17 @@ Select: Advanced options > A4 Network Interface Names > Yes
 -----
 
 Reboot system.
-
-Code:
 ```
 sudo reboot
 ```
 -----
 
 Determine name and state of the network interfaces.
-
-Code:
 ```
 ip a
 ```
 You may need to additionally run the following commands in order to
 determine which adapter, in a dual band setup, has which interface name.
-
-Code:
 ```
 iw list
 ```
@@ -218,8 +202,6 @@ then the interface names used in your system will have to replace
 -----
 
 Install needed package. Website - [hostapd](https://w1.fi/hostapd/)
-
-Code:
 ```
 sudo apt install hostapd
 ```
@@ -227,8 +209,6 @@ sudo apt install hostapd
 
 Enable the wireless access point service and set it to start when your
 Raspberry Pi boots.
-
-Code:
 ```
 sudo systemctl unmask hostapd
 ```
@@ -241,8 +221,6 @@ Note: The below steps include creating two hostapd configurations files but
 only one is needed if using a single band setup.
 
 Create hostapd configuration file for 5 GHz band.
-
-Code:
 ```
 sudo nano /etc/hostapd/hostapd-5g.conf
 ```
@@ -395,8 +373,6 @@ vht_oper_centr_freq_seg0_idx=42
 -----
 
 Create the 2g hostapd configuration file.
-
-Code:
 ```
 sudo nano /etc/hostapd/hostapd-2g.conf
 ```
@@ -522,8 +498,6 @@ ht_capab=[HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935]
 Establish hostapd conf file and log file locations.
 
 Note: Make sure to change <your_home> to your home directory.
-
-Code:
 ```
 sudo nano /etc/default/hostapd
 ```
@@ -576,8 +550,6 @@ ExecStart=/usr/sbin/hostapd -B -P /run/hostapd.pid -B $DAEMON_OPTS $DAEMON_CONF
 
 Block the eth0, wlan0 qnd wlan1 interfaces from being processed, and let dhcpcd
 configure only br0 via DHCP.
-
-Code:
 ```
 sudo nano /etc/dhcpcd.conf
 ```
@@ -596,16 +568,12 @@ interface br0
 -----
 
 Enable systemd-networkd service. Website - [systemd-network](https://www.freedesktop.org/software/systemd/man/systemd.network.html)
-
-Code:
 ```
 sudo systemctl enable systemd-networkd
 ```
 -----
 
 Create bridge interface br0.
-
-Code:
 ```
 sudo nano /etc/systemd/network/10-bridge-br0-create.netdev
 ```
@@ -618,8 +586,6 @@ Kind=bridge
 -----
 
 Bind ethernet interface.
-
-Code:
 ```
 sudo nano /etc/systemd/network/20-bridge-br0-bind-ethernet.network
 ```
@@ -634,8 +600,6 @@ Bridge=br0
 -----
 
 Configure bridge interface.
-
-Code:
 ```
 sudo nano /etc/systemd/network/21-bridge-br0-config.network
 ```
@@ -654,16 +618,12 @@ DNS=8.8.8.8
 -----
 
 Ensure WiFi radio not blocked.
-
-Code:
 ```
 sudo rfkill unblock wlan
 ```
 -----
 
 Reboot system.
-
-Code:
 ```
 sudo reboot
 ```
@@ -680,16 +640,12 @@ Notes:
 -----
 
 Restart systemd-networkd service.
-
-Code:
 ```
 sudo systemctl restart systemd-networkd
 ```
 -----
 
 Check status of the services.
-
-Code:
 ```
 systemctl status hostapd
 ```
@@ -699,12 +655,9 @@ systemctl status systemd-networkd
 -----
 
 Autostarting iperf3
-
-Code:
 ```
 sudo apt install iperf3
 ```
-Code:
 ```
 sudo nano /etc/systemd/system/iperf3.service
 ```
@@ -721,13 +674,10 @@ ExecStart=/usr/bin/iperf3 -s
 [Install]
 WantedBy=multi-user.target
 ```
-Code:
 ```
 sudo systemctl enable iperf3
 ```
 Check iperf3 status
-
-Code:
 ```
 sudo systemctl status iperf3
 ```
@@ -738,14 +688,10 @@ Disable NetworkManager
 
 Note: For systems not running the Gnome desktop, purging Network Manager
 is the easiest solution.
-
-Code:
 ```
 sudo apt purge network-manager
 ```
 Note: For systems running the Gnome desktop, use the following.
-
-Code:
 ```
 sudo systemctl stop NetworkManager.service
 ```
@@ -783,8 +729,6 @@ Note: Netplan is the default network manager on Ubuntu server.
 Disable and mask networkd-dispatcher.
 
 Note: we are activating /etc/network/interfaces
-
-Code:
 ```
 sudo apt-get install ifupdown
 ```
@@ -798,8 +742,6 @@ sudo systemctl disable networkd-dispatcher
 sudo systemctl mask networkd-dispatcher
 ```
 Purge netplan.
-
-Code:
 ```
 sudo apt-get purge nplan netplan.io
 ```
