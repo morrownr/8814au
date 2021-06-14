@@ -27,9 +27,10 @@
 - LED control
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
-- SU Beamformee and SU Beamformer
+- SU Beamformee control
+- SU Beamformer control
 
-A FAQ is available near the end of this document.
+A FAQ is available at the end of this document.
 
 ### Compatible CPUs
 
@@ -225,7 +226,9 @@ Note: This script should be used in the following situations:
 - a new version of the driver needs to be installed
 - a major operating system upgrade is going to be applied
 
-Note: This script removes everything that has been installed, included the directory that contains the downloaded source.
+Note: This script removes everything that has been installed, with the exception
+of the packages installed in Step 3, included the directory that contains the
+downloaded source.
 
 Step 1: Open a terminal (Ctrl+Alt+T)
 
