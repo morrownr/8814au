@@ -227,7 +227,7 @@ Note: This script should be used in the following situations:
 - a major operating system upgrade is going to be applied
 
 Note: This script removes everything that has been installed, with the exception
-of the packages installed in Step 3, included the directory that contains the
+of the packages installed in Step 3, including the directory that contains the
 downloaded source.
 
 Step 1: Open a terminal (Ctrl+Alt+T)
