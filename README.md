@@ -333,26 +333,43 @@ $ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
 Question: Does WPA3 work with this driver?
 
-Answer: No, WPA3 does not work with this driver. If you need a AC class adapter
-that does support WPA3, I suggest an Alfa AWUS036ACM (mt7612u chipset) or a
-Alfa AWUS036ACHM (mt7610u chipset). You can get more information and links to
-these adapters at the following site:
+Answer: No, WPA3 does not work with this driver. If you need an AC class adapter
+that does support WPA3, I suggest an Alfa AWUS036ACM (mt7612u chipset) but there
+are other adapters based on the mt7612u chipset available at various price points.
+Be aware that WPA3 support is not fully in place in all Linux distros currently.
+More than driver support is required for WPA3 support. You can get more information
+and links at the following site:
 
 https://github.com/morrownr/USB-WiFi
+
 
 Question: What interface combinations does this driver support?
 
 Answer: None. Realtek out-of-kernel drivers, including this driver, do not
 support interface combinations. If you need support for interface combinations,
-I suggest adapters based on the Mediatek mt7612u and mt7610u chipsets. You can
-get more information and links at the following site:
+I suggest adapters based on the Mediatek chipsets. You can get more information
+and links at the following site:
 
 https://github.com/morrownr/USB-WiFi
 
+
 Question: What extended features does this driver support?
 
-Answer: None. For extended features, you need an adapter that uses Mediatek
-drivers. You can get more information and links at the following site:
+Answer: None. For extended features, you need an adapter that uses Mediatek or
+Atheros drivers. You can get more information and links at the following site:
+
+https://github.com/morrownr/USB-WiFi
+
+
+Question: I bought two rtl88x2bu adapters and am planning to run one of them as an AP and another as a WiFi client. How do I set that up?
+
+Answer: You can't. Realtek drivers do not support more than one adapter with the same chipset in the same computer. However, testing has shown that the Mediatek drivers do support more than one adapter with the same chipset in the same computer. I recommend adapters with the mt7612u chipset if you are looking for AC 1200+ adapters. You can get more information and links at the following site:
+
+https://github.com/morrownr/USB-WiFi
+
+Question: Why do you recommend Mediatek based adapters when you maintain this repo for a Realtek driver?
+
+Answer: Many Linux users already have adapters based on Realtek chipsets. This repo is for Linux users to support their existing adapters but my STRONG recommendation is for Linux users to seek out solutions based on Mediatek, Intel or Atheros chipsets and drivers. If users are looking at a USB solution, Mediatek and Atheros based adapters are the best solution. If users want a PCIe, mPCIe, SDIO or other implementation then Intel, Mediatek or Atheros are good solutions. Realtek based USB adapters are not a good solution because Realtek does not follow Linux Wireless standards for USB WiFi adapters. Realtek drivers are problematic in many ways. You have been WARNED. For information about usb wifi adapters:
 
 https://github.com/morrownr/USB-WiFi
 
