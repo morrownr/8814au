@@ -7,8 +7,6 @@ DRV_NAME="rtl8814au"
 DRV_VERSION="5.8.5.1"
 OPTIONS_FILE="8814au.conf"
 
-DRV_DIR="~/src/8814au"
-
 if [[ $EUID -ne 0 ]]
 then
 	echo "You must run this script with superuser (root) privileges."
@@ -30,9 +28,8 @@ then
 	rm -f /etc/modprobe.d/${OPTIONS_FILE}
 	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
-	echo "Deleting ${DRV_DIR}"
-	rm -rf ${DRV_DIR}
 	echo "The driver was removed successfully."
+	echo "You may now delete the driver directory if desired."
 else
 	echo "An error occurred. dkms remove error = ${RESULT}"
 	echo "Please report this error."
