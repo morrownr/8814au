@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20210531"
+SCRIPT_VERSION="20210626"
 
 DRV_NAME="rtl8814au"
 DRV_VERSION="5.8.5.1"
