@@ -40,7 +40,7 @@ A FAQ is available at the end of this document.
 ### Compatible Kernels
 
 - Kernels: 2.6.24 - 5.2 (Realtek)
-- Kernels: 5.3 - 5.12 (community support)
+- Kernels: 5.3 - 5.13 (community support)
 
 ### Tested Linux Distributions
 
@@ -51,9 +51,8 @@ A FAQ is available at the end of this document.
 
 - Kali Linux (kernel 5.10)
 
-- Linux Mint 20.1 (Linux Mint based on Ubuntu) (kernel 5.4)
+- Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernel 5.4)
 - Linux Mint 20   (Linux Mint based on Ubuntu) (kernel 5.4)
-- Linux Mint 19.3 (Linux Mint based on Ubuntu) (kernel 5.4)
 
 - LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
 
@@ -62,6 +61,7 @@ A FAQ is available at the end of this document.
 - Raspberry Pi OS (2021-01-11) (ARM 32 bit) (kernel 5.10)
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.9)
 
+- Ubuntu 21.04 (kernel 5.11)
 - Ubuntu 20.10 (kernel 5.8)
 - Ubuntu 20.04 (kernel 5.4)
 - Ubuntu 18.04 (kernel 5.4)
@@ -116,7 +116,7 @@ Step 2: Update the system (select the option for the OS you are using)
 ```
     Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and the Raspberry Pi OS
 
-    $ sudo apt-get update
+    $ sudo apt update
 ```
 ```
     Option for Arch based distributions such as Manjaro
@@ -132,32 +132,33 @@ Step 3: Install the required packages (select the option for the OS you are usin
 ```
     Option for Raspberry Pi OS
 
-    $ sudo apt-get install -y raspberrypi-kernel-headers bc build-essential dkms git
+    $ sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
 ```
 ```
     Option for Debian, Kali or Linux Mint Debian Edition (LMDE)
 
-    $ sudo apt-get install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
+    $ sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
 ```
 ```
     Option for Ubuntu (all flavors) or Linux Mint
 
-    $ sudo apt-get install -y dkms git
+    $ sudo apt install -y dkms git build-essential
 ```
 ```
     Options for Arch or Manjaro
 
-    1) if using pacman
+    if using pacman
 
     $ sudo pacman -S --noconfirm linux-headers dkms git
-```
-Note: If you are asked to choose a provider, make sure to choose the one that corresponds to your version of the linux kernel (for example, ```linux510-headers``` for Linux kernel version 5.10) if you install the incorrect version, you'll have to uninstall it and reinstall the correct version.
-```
-    2) if using an AUR helper like paru or yay
 
-    $ paru -S rtl8814au-dkms-git
+    Note: If you are asked to choose a provider, make sure to choose the one that
+    corresponds to your version of the linux kernel (for example, "linux510-headers"
+    for Linux kernel version 5.10) if you install the incorrect version, you'll have
+    to uninstall it and reinstall the correct version.
+
+    if using other methods, please follow the instructions provided by those methods
+
 ```
-Note: Make sure to uninstall any existing driver installations from other installation method. If the installation fails and its cause is related to AUR's BUILDPKG script, please address the issue first to the package maintainer at https://aur.archlinux.org/packages/rtl8814au-dkms-git/.
 
 ```
     Option for Fedora
@@ -193,6 +194,9 @@ Run a preparation script
     Option for 64 bit operating systems to be installed to Raspberry Pi hardware
 
     $ ./raspi64.sh
+
+    Note: I will only address issues having to do with the 64 bit version of the
+    Raspberry Pi OS once it is out of beta and is released as generally available.
 ```
 Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
 ```bash
@@ -227,8 +231,8 @@ Note: This script should be used in the following situations:
 - a major operating system upgrade is going to be applied
 
 Note: This script removes everything that has been installed, with the exception
-of the packages installed in Step 3, including the directory that contains the
-downloaded source.
+of the packages installed in Step 3 and the driver directory. The driver directory
+can and probably should be deleted in most cases after running the script.
 
 Step 1: Open a terminal (Ctrl+Alt+T)
 
@@ -367,9 +371,10 @@ Answer: You can't. Realtek drivers do not support more than one adapter with the
 
 https://github.com/morrownr/USB-WiFi
 
+
 Question: Why do you recommend Mediatek based adapters when you maintain this repo for a Realtek driver?
 
-Answer: Many Linux users already have adapters based on Realtek chipsets. This repo is for Linux users to support their existing adapters but my STRONG recommendation is for Linux users to seek out solutions based on Mediatek, Intel or Atheros chipsets and drivers. If users are looking at a USB solution, Mediatek and Atheros based adapters are the best solution. If users want a PCIe, mPCIe, SDIO or other implementation then Intel, Mediatek or Atheros are good solutions. Realtek based USB adapters are not a good solution because Realtek does not follow Linux Wireless standards for USB WiFi adapters. Realtek drivers are problematic in many ways. You have been WARNED. For information about usb wifi adapters:
+Answer: Many Linux users already have adapters based on Realtek chipsets. This repo is for Linux users to support their existing adapters but my STRONG recommendation is for Linux users to seek out WiFi solutions based on Mediatek, Intel or Atheros chipsets and drivers. If users are looking at a USB solution, Mediatek and Atheros based adapters are the best solution. If users want a PCIe, mPCIe, SDIO or other implementation then Intel, Mediatek or Atheros are good solutions. Realtek based USB adapters are not a good solution because Realtek does not follow Linux Wireless standards for USB WiFi adapters. Realtek drivers are problematic in many ways. You have been WARNED. For information about usb wifi adapters:
 
 https://github.com/morrownr/USB-WiFi
 

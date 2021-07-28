@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20210524"
+SCRIPT_VERSION="20210725"
 
 DRV_NAME="rtl8814au"
 DRV_VERSION="5.8.5.1"
@@ -89,14 +89,14 @@ echo "The driver was installed successfully."
 
 if [ $NO_PROMPT -ne 1 ]
 then
-	read -p "Do you want to edit the driver options file now? [y/n] " -n 1 -r
+	read -p "Do you want to edit the driver options file now? [y/N] " -n 1 -r
 	echo    # move to a new line
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		nano /etc/modprobe.d/${OPTIONS_FILE}
 	fi
 
-	read -p "Do you want to reboot now? [y/n] " -n 1 -r
+	read -p "Do you want to reboot now? [y/N] " -n 1 -r
 	echo    # move to a new line
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
