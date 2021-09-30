@@ -6,7 +6,7 @@
 
 ### Linux Driver for USB WiFi Adapters that are based on the RTL8814AU Chipset
 
-- v5.8.5.1 (Realtek) (2019-10-29)
+- v5.8.5.1 (Realtek) (20191029)
 - Plus updates from the Linux community
 
 ### Features
@@ -14,10 +14,10 @@
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
 - IEEE 802.11b/g/n/ac Client mode
-  * Support wireless security for WEP, WPA TKIP and WPA2 AES PSK
-  * Support site survey scan and manual connect
-  * Support power saving mode
-- Supported interface modes:
+  * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
+  * Supports site survey scan and manual connect
+  * Supports power saving mode
+- Supported interface modes
   * IBSS
   * Managed
   * AP (see *Bridged Wireless Access Point* located in the main directory of this repo)
@@ -40,31 +40,29 @@ A FAQ is available at the end of this document.
 ### Compatible Kernels
 
 - Kernels: 2.6.24 - 5.2 (Realtek)
-- Kernels: 5.3 - 5.13 (community support)
+- Kernels: 5.3 - 5.14 (community support)
 
 ### Tested Linux Distributions
 
 - Arch Linux (kernel 5.4)
-- Arch Linux (kernel 5.9)
+- Arch Linux (kernel 5.11)
 
 - Fedora (kernel 5.11)
 
 - Kali Linux (kernel 5.10)
 
-- Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernel 5.4)
-- Linux Mint 20   (Linux Mint based on Ubuntu) (kernel 5.4)
+- Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernels 5.4 and 5.11)
 
 - LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
 
 - Manjaro 20.1 (kernel 5.9)
 
-- Raspberry Pi OS (2021-01-11) (ARM 32 bit) (kernel 5.10)
-- Raspberry Pi Desktop (x86 32 bit) (kernel 4.9)
+- Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
+- Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
 - Ubuntu 21.04 (kernel 5.11)
 - Ubuntu 20.10 (kernel 5.8)
 - Ubuntu 20.04 (kernel 5.4)
-- Ubuntu 18.04 (kernel 5.4)
 
 ### Download Locations for Tested Linux Distributions
 
@@ -79,26 +77,22 @@ A FAQ is available at the end of this document.
 ### Tested Hardware
 
 - [Wireless USB WiFi Adapter, 1900Mbps Dual Band 2.4GHz/600Mbps 5.8GHz/1300Mbps High Gain 5dBi Antennas USB 3.0]( https://www.amazon.com/gp/product/B07VCKN83P )
-
 - [ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter](https://www.amazon.com/dp/B01I7QFR10)
 
 ### Compatible Devices
 
 * ALFA AWUS1900
-* D-Link DWA-192 AC1900 Ultra Wi-Fi USB 3.0 Adapter
 * ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter
 * Edimax EW-7833 UAC AC1750 Dual-Band Wi-Fi USB 3.0 Adapter
 * Numerous products that are based on the supported chipset
 
-Warning: Beware of "multi-state" USB WiFi adapters. Some USB WiFi adapters have proprietary Windows drivers onboard. When plugged in, they act like a flash drive or CDROM and on Windows will attempt to start installing the Windows driver. That won't work on Linux or MAC or any other non-Windows OS so the adapter sits there in flash drive or CDROM mode. The problem is that the state of the adapter has to be changed for the adapter to show up as the device that you expect, in this case, a WiFi adapter. Most modern Linux distributions ship with a utility called "usb-modeswitch" that will handle this issue for you if it has the correct information for your adapter. It is a good utility but if you buy adapters that are "multi-state," that is one more potential headache you may have to deal with when something goes wrong. Often you can indentify adapters that are "multi-state" as they are advertised as "free driver" or "free installation driver." If you are looking to buy a USB WiFi adapter for use on Linux, MAC OS, *NIX or anything besides Windows, it is a good idea to seek out single-state adapters.
-
-Note: Some adapter makers change the chipsets in their products while keeping the same model number so please check to confirm that the product you plan to buy has the chipset you are expecting.
+Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
 ### Installation Information
 
 The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
 
-Temporary internet access is required for installation. There are numerous ways to enable temporary internet access depending on your hardware and situation. [One method is to use tethering from a phone.](https://www.makeuseof.com/tag/how-to-tether-your-smartphone-in-linux). Another method to enable temporary internet access is to keep a [wifi adapter that uses an in-kernel driver](https://github.com/morrownr/USB-WiFi) in your toolkit.
+Temporary internet access is required for installation. There are numerous ways to enable temporary internet access depending on your hardware and situation. [One method is to use tethering from a phone.](https://www.makeuseof.com/tag/how-to-tether-your-smartphone-in-linux) Another method to enable temporary internet access is to keep a [wifi adapter that uses an in-kernel driver](https://github.com/morrownr/USB-WiFi) in your toolkit.
 
 You will need to use the terminal interface. The quick way to open a terminal: Ctrl+Alt+T (hold down on the Ctrl and Alt keys then press the T key)
 
@@ -112,9 +106,11 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 Step 1: Open a terminal (Ctrl+Alt+T)
 
-Step 2: Update the system (select the option for the OS you are using)
+Step 2: Update system package information (select the option for the OS you are using)
+
+Note: If you do not regularly maintain your system by installing updated packages, it is a good idea to not only update system package information but also to install the updated packages followed by a system reboot. The installation can then be continued with step 3.
 ```
-    Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and the Raspberry Pi OS
+    Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
 
     $ sudo apt update
 ```
@@ -153,10 +149,10 @@ Step 3: Install the required packages (select the option for the OS you are usin
 
     Note: If you are asked to choose a provider, make sure to choose the one that
     corresponds to your version of the linux kernel (for example, "linux510-headers"
-    for Linux kernel version 5.10) if you install the incorrect version, you'll have
+    for Linux kernel version 5.10). If you install the incorrect version, you'll have
     to uninstall it and reinstall the correct version.
 
-    if using other methods, please follow the instructions provided by those methods
+    If using other methods, please follow the instructions provided by those methods.
 
 ```
 
@@ -182,7 +178,7 @@ Step 7: Move to the newly created driver directory
 ```bash
 $ cd ~/src/8814au
 ```
-Step 8: Warning: this step only applies if you are installing to Raspberry Pi *hardware*.
+Step 8: Warning: this step only applies if you are installing to Raspberry Pi *hardware*. You can skip this step if installing to x86 or amd64 based systems.
 
 Run a preparation script
 ```
@@ -200,7 +196,7 @@ Run a preparation script
 ```
 Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
 ```bash
-$ sudo ./install-driver.sh [NoPrompt]
+$ sudo ./install-driver.sh
 ```
 Step 10: Reboot
 ```bash
@@ -254,19 +250,19 @@ Note: These are general recommendations, some of which may not apply to your spe
 
 Security: Set WPA2-AES. Do not set WPA2 mixed mode or WPA or TKIP.
 
-Channel width for 2.4G: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
+Channel width for 2.4 GHz: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
 
-Channels for 2.4G: Set channel 1 or 6 or 11 depending on the congestion at your location. Do not set automatic channel selection.
+Channels for 2.4 GHz: Set channel 1 or 6 or 11 depending on the congestion at your location. Do not set automatic channel selection. As time passes, if you notice poor performance, recheck congestion and set channel appropriately. The environment around you can and does change over time.
 
-Mode for 2.4G: For best performance, set "N only" if you no longer use B or G capable devices.
+Mode for 2.4 GHz: For best performance, set "N only" if you no longer use B or G capable devices.
 
-Network names: Do not set the 2.4G Network and the 5G Network to the same name. Note: Unfortunately many routers come with both networks set to the same name.
+Network names: Do not set the 2.4 GHz Network and the 5 GHz Network to the same name. Note: Unfortunately many routers come with both networks set to the same name. You need to be able to control which network that is in use.
 
-Channels for 5G: Not all devices are capable of using DFS channels. It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 161 in order for all of your devices to work on 5g. (for US, other countries may vary)
+Channels for 5 GHz: Not all devices are capable of using DFS channels. It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 161 in order for all of your devices to work on 5 GHzg. (for US, other countries may vary)
 
-Best location for the wifi router/ access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location.
+Best location for the wifi router/ access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location. You may have to test to see what the best location is in your environment.
 
-Check congestion: There are apps available for smart phones that allow you to check the congestion levels on wifi channels. The apps generally go by the name of WiFi Analyzer or something similar.
+Check congestion: There are apps available for smart phones that allow you to check the congestion levels on wifi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
 
 After making and saving changes, reboot the router.
 
@@ -335,46 +331,27 @@ $ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
 ### FAQ:
 
-Question: Does WPA3 work with this driver?
-
-Answer: No, WPA3 does not work with this driver. If you need an AC class adapter
-that does support WPA3, I suggest an Alfa AWUS036ACM (mt7612u chipset) but there
-are other adapters based on the mt7612u chipset available at various price points.
-Be aware that WPA3 support is not fully in place in all Linux distros currently.
-More than driver support is required for WPA3 support. You can get more information
-and links at the following site:
-
-https://github.com/morrownr/USB-WiFi
-
-
 Question: What interface combinations does this driver support?
 
 Answer: None. Realtek out-of-kernel drivers, including this driver, do not
 support interface combinations. If you need support for interface combinations,
-I suggest adapters based on the Mediatek chipsets. You can get more information
-and links at the following site:
-
-https://github.com/morrownr/USB-WiFi
+I suggest adapters based on the Mediatek chipsets.
 
 
 Question: What extended features does this driver support?
 
 Answer: None. For extended features, you need an adapter that uses Mediatek or
-Atheros drivers. You can get more information and links at the following site:
-
-https://github.com/morrownr/USB-WiFi
+Atheros drivers.
 
 
-Question: I bought two rtl88x2bu adapters and am planning to run one of them as an AP and another as a WiFi client. How do I set that up?
+Question: I bought two rtl8812au based adapters and am planning to run one of them as an AP and another as a WiFi client. How do I set that up?
 
-Answer: You can't. Realtek drivers do not support more than one adapter with the same chipset in the same computer. However, testing has shown that the Mediatek drivers do support more than one adapter with the same chipset in the same computer. I recommend adapters with the mt7612u chipset if you are looking for AC 1200+ adapters. You can get more information and links at the following site:
-
-https://github.com/morrownr/USB-WiFi
+Answer: You can't. Realtek drivers do not support more than one adapter with the same chipset in the same computer. However, testing has shown that the Mediatek drivers do support more than one adapter with the same chipset in the same computer.
 
 
 Question: Why do you recommend Mediatek based adapters when you maintain this repo for a Realtek driver?
 
-Answer: Many Linux users already have adapters based on Realtek chipsets. This repo is for Linux users to support their existing adapters but my STRONG recommendation is for Linux users to seek out WiFi solutions based on Mediatek, Intel or Atheros chipsets and drivers. If users are looking at a USB solution, Mediatek and Atheros based adapters are the best solution. If users want a PCIe, mPCIe, SDIO or other implementation then Intel, Mediatek or Atheros are good solutions. Realtek based USB adapters are not a good solution because Realtek does not follow Linux Wireless standards for USB WiFi adapters. Realtek drivers are problematic in many ways. You have been WARNED. For information about usb wifi adapters:
+Answer: Many new Linux users already have adapters based on Realtek chipsets. This repo is for Linux users to support their existing adapters but my STRONG recommendation is for Linux users to seek out WiFi solutions based on Mediatek, Intel or Atheros chipsets and drivers. If users are looking at a USB solution, Mediatek and Atheros based adapters are the best solution. Realtek based USB adapters are not a good solution because Realtek does not follow Linux Wireless standards for USB WiFi adapters. Realtek drivers are problematic in many ways. You have been WARNED. For information about usb wifi adapters:
 
 https://github.com/morrownr/USB-WiFi
 
