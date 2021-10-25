@@ -1,4 +1,4 @@
-2021-06-07
+2021-10-24
 
 ## Bridged Wireless Access Point
 
@@ -27,7 +27,9 @@ Note: This guide uses systemd-networkd for network management. If your Linux
 distro uses Network Manager or Netplan, they must be disabled. Sections that
 explain how to do this are located near the end of this document. Please go
 to and follow the appropriate section now, if required, before continuing with
-this setup guide.
+this setup guide. If you are using the Raspberry Pi OS, you may continue with
+this setup guide now as the Raspberry Pi OS does not use Network Manager or
+Netplan.
 
 -----
 
@@ -69,10 +71,9 @@ shows actual usage of 360 mA during heavy load and usage of 180 mA during
 light loads. This is much lower power usage than most AC1200 class adapters
 which makes this adapter a good choice for a Raspberry Pi based access point.
 
+-----
 
 #### Setup Steps
-
------
 
 USB WiFi adapter driver installation, if required, should be performed and tested
 prior to continuing.
@@ -81,13 +82,13 @@ Note: For USB3 adapters based on the Realtek rtl8812au, rtl8814au, and rtl8812bu
 chipsets, the following module parameters may be needed for best performance
 when the adapter is set to support 5 GHz band:
 ```
-rtw_vht_enable=2 rtw_switch_usb_mode=1
+rtw_vht_enable=2 rtw_switch_usb_mode=1 rtw_beamform_cap=1
 ```
 Note: For USB3 adapters based on the Realtek rtl8812au, rtl8814au, and rtl8812bu
 chipsets, the following module parameters may be needed for best performance
 when the adapter is set to support 2.4 GHz band:
 ```
-rtw_vht_enable=1 rtw_switch_usb_mode=2
+rtw_vht_enable=1 rtw_switch_usb_mode=2 rtw_beamform_cap=0
 ```
 Note: For USB3 adapters based on Mediatek mt7612u or my7612un chipsets, the
 following module parameter may be needed for best performance:
@@ -228,7 +229,7 @@ File contents
 ```
 # /etc/hostapd/hostapd-5g.conf
 # Documentation: https://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf
-# 2021-05-30
+# 2021-10-24
 
 # SSID
 ssid=myPI-5g
@@ -250,7 +251,8 @@ ctrl_interface=/var/run/hostapd
 ctrl_interface_group=0
 
 ieee80211d=1
-ieee80211h=1
+# The below line is not needed as USB WiFi adapters do not support DFS channels
+#ieee80211h=1
 
 beacon_int=100
 dtim_period=2
@@ -261,6 +263,7 @@ fragm_threshold=2346
 #send_probe_response=1
 
 # security
+# auth_algs=3 is required for WPA-3 SAE and WPA-3 SAE Transitional
 auth_algs=1
 ignore_broadcast_ssid=0
 # wpa=2 is required for WPA2 and WPA3 (read the docs)
@@ -309,7 +312,7 @@ ieee80211ac=1
 #vht_capab=[RXLDPC][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][MAX-A-MPDU-LEN-EXP3][RX-ANTENNA-PATTERN][TX-ANTENNA-PATTERN]
 #
 # rtl8812au - rtl8811au -  rtl8812bu - rtl8811cu - rtl8814au
-vht_capab=[MAX-MPDU-11454][SHORT-GI-80][HTC-VHT]
+vht_capab=[MAX-MPDU-11454][SHORT-GI-80][SU-BEAMFORMER][HTC-VHT]
 # Note: [TX-STBC-2BY1] causes problems
 #
 # Required for 80 MHz width channel operation
@@ -380,7 +383,7 @@ File contents
 ```
 # /etc/hostapd/hostapd-2g.conf
 # Documentation: https://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf
-# 2021-05-30
+# 2021-10-24
 
 # SSID
 ssid=myPI-2g
@@ -409,6 +412,7 @@ fragm_threshold=2346
 #send_probe_response=1
 
 # security
+# auth_algs=3 is required for WPA-3 SAE and WPA-3 SAE Transitional
 auth_algs=1
 macaddr_acl=0
 ignore_broadcast_ssid=0
@@ -548,7 +552,7 @@ ExecStart=/usr/sbin/hostapd -B -P /run/hostapd.pid -B $DAEMON_OPTS $DAEMON_CONF
 ```
 -----
 
-Block the eth0, wlan0 qnd wlan1 interfaces from being processed, and let dhcpcd
+Block the eth0, wlan0 and wlan1 interfaces from being processed, and let dhcpcd
 configure only br0 via DHCP.
 ```
 sudo nano /etc/dhcpcd.conf
