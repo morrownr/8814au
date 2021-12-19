@@ -1,4 +1,24 @@
+-----
+
 ##### [Click for USB WiFi Adapter Information for Linux](https://github.com/morrownr/USB-WiFi)
+
+-----
+
+### All-Points Bulletin
+
+I need your help. We need to find a newer version of the source code for
+this driver. While working on source code for other recently available
+drivers I have noticed indications that Realtek is still working on this
+8814au driver. I have not been able to locate a newer version that is
+available. This driver is v5.8.5.1 dated 20191029. It is getting hard to
+maintain and has many problems. The newer drivers that I have been able
+to bring online are for the 8812au, 8811au and 8812bu chipsets and they
+are the best Realtek drivers I have seen, even if they are out-of-kernel
+and based on the wrong technology. If we can find a driver for the
+8814au that is up to date then we can make better use of our 8814au 
+adapters. The newer drivers have version numbers of 5.12.x and 5.13.x
+so please search all locations that might have a new version available.
+Ask retailers. Please help.
 
 -----
 
