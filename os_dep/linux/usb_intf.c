@@ -237,7 +237,7 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 #ifdef CONFIG_RTL8814A
 	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0x8813), .driver_info = RTL8814A},
 	/*=== Customer ID ===*/
-	{USB_DEVICE(0x2001, 0x3314), .driver_info = RTL8814A}, /* D-Link - D-Link */
+	{USB_DEVICE(0x2001, 0x331A), .driver_info = RTL8814A}, /* D-Link - D-Link */
 	{USB_DEVICE(0x0B05, 0x1817), .driver_info = RTL8814A}, /* ASUS - ASUSTeK */
 	{USB_DEVICE(0x0B05, 0x1852), .driver_info = RTL8814A}, /* ASUS - ASUSTeK */
 	{USB_DEVICE(0x0B05, 0x1853), .driver_info = RTL8814A}, /* ASUS - ASUSTeK */
