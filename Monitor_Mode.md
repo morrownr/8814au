@@ -1,18 +1,40 @@
+-----
+
+2022-01-25
+
 ## Monitor Mode
 
-Purpose: Provide information and tools for testing and using monitor mode.
+Purpose: Provide information and tools for testing and using monitor
+mode with the following Realtek drivers:
 
-Monitor mode, or RFMON (Radio Frequency MONitor) mode, allows a computer with a
-wireless network interface controller (WNIC) to monitor all traffic received on
-a wireless channel. Monitor mode allows packets to be captured without having to
-associate with an access point or ad hoc network first. Monitor mode only
-applies to wireless networks, while promiscuous mode can be used on both wired
-and wireless networks. Monitor mode is one of the eight modes that 802.11
-wireless cards and adapters can operate in: Master (acting as an access point),
-Managed (client, also known as station), Ad hoc, Repeater, Mesh, Wi-Fi Direct,
+```
+https://github.com/morrownr/8812au-20210629
+https://github.com/morrownr/8821au-20210708
+https://github.com/morrownr/8821cu-20210118
+https://github.com/morrownr/88x2bu-20210702
+https://github.com/morrownr/8814au
+```
+Note: This document and the `start-mon.sh` script will work with
+adapters that use in-kernel drivers but it is not necessary as the use
+of any of the many guides that are available should work fine as the
+in-kernel drivers work in the textbook, standards compliant manner.
+
+Please submit corrections or additions via Issues.
+
+Monitor mode, or RFMON (Radio Frequency MONitor) mode, allows a computer
+with a wireless network interface controller (WNIC) to monitor all
+traffic received on a wireless channel. Monitor mode allows packets to
+be captured without having to associate with an access point or ad hoc
+network first. Monitor mode only applies to wireless networks, while
+promiscuous mode can be used on both wired and wireless networks.
+Monitor mode is one of the eight modes that 802.11 wireless cards and
+adapters can operate in: Master (acting as an access point), Managed
+(client, also known as station), Ad hoc, Repeater, Mesh, Wi-Fi Direct,
 TDLS and Monitor mode.
 
-Note: This document and the start-mon.sh script have been tested on the following:
+Note: This document and the `start-mon.sh` script have been tested on the
+following:
+
 ```
 Kali Linux
 Raspberry Pi OS
@@ -21,7 +43,9 @@ Ubuntu
 ```
 -----
 
-## Steps to test monitor mode
+## Steps to start/test monitor mode
+
+#### Install USB WiFi adapter and driver per instructions.
 
 
 #### Update system
@@ -41,12 +65,13 @@ sudo rfkill unblock wlan
 
 -----
 
-#### Install the aircrack-ng and wireshark packages
+#### Install aircrack-ng (optional)
 ```
-sudo apt install aircrack-ng wireshark
+sudo apt install -y aircrack-ng
 ```
 
 -----
+
 #### Check wifi interface information
 ```
 iw dev
@@ -56,62 +81,69 @@ iw dev
 
 #### Information
 
-The wifi interface name ```wlan0``` is used in this document but you will need
-to substitute the name of your wifi interface while using this document.
+The wifi interface name `wlan0` is used in this document but you will
+need to substitute the name of your wifi interface while using this
+document.
 
 -----
 
-#### Disable interfering processes
+#### Enter and check monitor mode
 
-Option 1
+A script called `start-mon.sh` is available in the driver directory.
+It will automate much of the following.
+
+Usage:
+
+```
+sudo ./start-mon.sh [interface:wlan0]
+```
+
+Note: If you want to do things manually, continue below.
+
+-----
+
+#### Disable interfering processes (see note about `start-mon.sh` below)
+
 ```
 sudo airmon-ng check kill
 ```
 
-Option 2, another way that works for me on Linux Mint:
+Note: `start-mon.sh` is capable of disabling interfering processes. It
+uses a different method than airmon-ng. Airmon-ng kills the processes
+whereas `start-mon.sh` simply stops the processes and restarts them
+when the script terminates. Stopping the processes seems to have some
+advantages over killing them.
 
-Note: I use multiple wifi adapters in my systems and I need to stay connected
-to the internet while testing. This option works well for me and allows
-me to stay connected by allowing Network Manager to continue managing interfaces
-that are not marked as unmanaged.
+Advantage 1: When killing the very clever interfering processes, you may
+find that interfering processes are able to spawn new processes that will
+continue to interfer. Stopping the interfering processes does not seem to
+trigger the spawning of new processes.
 
-Ensure Network Manager doesn't cause problems
-```
-sudo nano /etc/NetworkManager/NetworkManager.conf
-```
-add
-```
-[keyfile]
-unmanaged-devices=interface-name:<wlan0>;interface-name:wlan0mon
-```
+Advantage 2: If you use more than one wifi adapter/card in the system,
+and if you need one of the adapter/cards to stay connected to the
+internet, killing the processes may cause your internet connection to
+drop. Stopping the processes does not cause your internet connection to
+drop.
 
-Note: The above tells Network Manager to leave the specified interfaces alone.
-Remember to replace ```<wlan0>``` with the name of the wifi interface that you
-intend to use in monitor mode.
+Advantage 3: Stopping the processes allows the processes to be restarted.
+The `start-mon.sh` script can put your interface in monitor mode,
+properly configured, and then return your system, including stopped
+processes and interface to original settings. This can reduce reboots
+that sometimes might have been needed to reset things to normal operation.
 
-```
-sudo reboot
-```
 
------
+#### Change to monitor mode 
 
-#### Change to monitor mode
+Option 1 (the airmon-ng way)
 
-Option 1
-
-Note: This option may not work with some driver/adapter combinations. If not,
-press on with ```start-mon.sh``` or option 2.
+Note: This option may not work with some driver/adapter combinations
+(I'm looking at you Realtek). If this option does not work, you can
+use Option 2 or the `start-mon.sh` script that was previously mentioned.
 ```
 sudo airmon-ng start <wlan0>
 ```
 
-Note: I have provided a script called ```start-mon.sh``` to automate most
-of the following option. Please give it a try and make suggestions to improve it.
-```
-Usage: $ sudo ./start-mon.sh <wlan0>
-```
-
-Option 2
+Option 2 (the manual way)
 
 Check the wifi interface name and mode
 ```
@@ -264,10 +296,14 @@ Note:  1600 = 16 dBm
 
 -----
 
-### airodump-ng can receive and interpret key strokes while running.
+### Information
+
+airodump-ng can receive and interpret key strokes while running.
+
 ```
 
-The following list describes the currently assigned keys and supported actions:
+The following list describes the currently assigned keys and supported
+actions:
 
 
 a
