@@ -60,7 +60,7 @@ A FAQ is available at the end of this document.
 ### Compatible Kernels
 
 - Kernels: 2.6.24 - 5.2 (Realtek)
-- Kernels: 5.3 - 5.17 (community support)
+- Kernels: 5.3 - 5.18 (community support)
 
 ### Tested Linux Distributions
 
