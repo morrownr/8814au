@@ -87,14 +87,15 @@ A FAQ is available at the end of this document.
 
 ### Tested Hardware
 
-- [Wireless USB WiFi Adapter, 1900Mbps Dual Band 2.4GHz/600Mbps 5.8GHz/1300Mbps High Gain 5dBi Antennas USB 3.0]( https://www.amazon.com/gp/product/B07VCKN83P )
-- [ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter](https://www.amazon.com/dp/B01I7QFR10)
+- ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter
+- COMFAST CF-958AC
 
 ### Compatible Devices
 
 * ALFA AWUS1900
 * ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter
 * Edimax EW-7833 UAC AC1750 Dual-Band Wi-Fi USB 3.0 Adapter
+* COMFAST CF-958AC
 * Numerous products that are based on the supported chipset
 
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
