@@ -4,6 +4,10 @@
 
 -----
 
+#### A FAQ is available at the end of this document.
+
+-----
+
 ### All-Points Bulletin
 
 I need your help. We need to find a newer version of the source code for
@@ -202,25 +206,25 @@ sudo reboot
 - Option for Raspberry Pi OS (ARM/ARM64)
 
 ```
-sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
+sudo apt install -y raspberrypi-kernel-headers build-essential bc dkms git
 ```
 
 - Option for Debian, Kali, and Raspberry Pi Desktop (x86)
 
 ```
-sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
+sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf-dev
 ```
 
 - Option for Ubuntu (all flavors)
 
 ```
-sudo apt install -y dkms git build-essential
+sudo apt install -y build-essential dkms git 
 ```
 
 - Option for Fedora
 
 ```
-sudo dnf -y install git dkms kernel-devel kernel-debug-devel
+sudo dnf -y install kernel-devel kernel-debug-devel dkms git 
 ```
 
 - Option for openSUSE
