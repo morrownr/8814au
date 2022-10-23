@@ -1,13 +1,3 @@
------
-
-#### Click [here](https://github.com/morrownr/USB-WiFi) for USB WiFi Adapter Information for Linux
-
------
-
-#### A FAQ is available at the end of this document.
-
------
-
 ### All-Points Bulletin
 
 I need your help. We need to find a newer version of the source code for
@@ -41,15 +31,15 @@ available. Ask retailers. Please help.
 - Supported interface modes
   * IBSS
   * Managed
-  * AP
-  * Monitor
+  * Monitor (see FAQ)
+  * AP (see FAQ)
 - USB mode control
 - Log level control
 - LED control
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
 
-A FAQ is available at the end of this document.
+### A FAQ is available at the end of this document
 
 ### Compatible CPUs
 
@@ -58,26 +48,39 @@ A FAQ is available at the end of this document.
 
 ### Compatible Kernels
 
-- Kernels: 2.6.24 - 5.2 (Realtek)
-- Kernels: 5.3 - 6.1    (community support)
+- Kernels: 4.19 - 5.2 (Realtek)
+- Kernels: 5.3  - 6.1 (community support)
 
 ### Tested Linux Distributions
 
-- Arch Linux (kernel 5.11)
+Note: One of the goals of this project is to provide driver support that
+is easy to install and works reliably on many distros. Meeting this goal
+depends on you to report your recommendations and updated information. 
+If you see information that needs to be updated, please report the
+updated information and if you do not see adequate support for
+items such as Installation Steps 2, 3 and 9, and you know what updates 
+need to added or you can get that information, please provide it so that
+the Installation Steps can be improved.
 
-- Fedora (kernel 5.11)
+- Arch Linux (kernels 5.4 and 5.11)
 
 - Debian 11 (kernels 5.10 and 5.15)
 
+- Fedora (kernel 5.11)
+
 - Kali Linux (kernel 5.10)
 
-- Manjaro 20.1 (kernel 5.9)
+- Manjaro 21.1 (kernel 5.13)
 
-- Raspberry Pi OS (2022-04-04) (ARM 64 bit) (kernel 5.10)
+- openSUSE Tumbleweed (rolling) (kernel 5.15)
 
-- Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
+- Raspberry Pi OS (2022-09-22) (ARM 32 bit and 64 bit) (kernel 5.15)
+
+- Raspberry Pi Desktop (2022-07-01) (x86 32 bit) (kernel 5.10)
 
 - Ubuntu 22.04 (kernel 5.15)
+
+- Void Linux (kernel 5.18)
 
 ### Download Locations for Tested Linux Distributions
 
@@ -86,8 +89,10 @@ A FAQ is available at the end of this document.
 - [Fedora](https://getfedora.org)
 - [Kali Linux](https://www.kali.org/)
 - [Manjaro](https://manjaro.org)
+- [openSUSE](https://www.opensuse.org/)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
 - [Ubuntu](https://www.ubuntu.com)
+- [Void Linux](https://voidlinux.org/)
 
 ### Tested Hardware
 
@@ -96,11 +101,20 @@ A FAQ is available at the end of this document.
 
 ### Compatible Devices
 
+Warning: Adapters listed here are not recommended for purchase as I do
+not recommend Linux users buy Realtek based USB WiFi adapters due to the
+lack of mac80211 technology drivers that are supported in-kernel as
+called for by Linux Wireless Standards. This repo is supported for the
+benefit of Linux users who already have adapters based on the supported
+chipsets. If you are looking for information about what adapter to buy,
+click [here](https://github.com/morrownr/USB-WiFi) for information about
+and links to recommended adapters.
+
 * ALFA AWUS1900
 * ASUS USB-AC68 AC1900 Dual-Band USB 3.0 WiFi Adapter
 * Edimax EW-7833 UAC AC1750 Dual-Band Wi-Fi USB 3.0 Adapter
 * COMFAST CF-958AC
-* Numerous products that are based on the supported chipset
+* Numerous adapters that are based on the supported chipset.
 
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
@@ -120,13 +134,14 @@ driver by running the following command:
 sudo dkms status
 ```
 
-Warning: If you decide to upgrade to a new version of kernel such as 5.18 to 5.19, you
-need to remove the driver you have installed and install the newest available before
-installing the new kernel. Use the following commands in the driver directory:
+Warning: If you decide to upgrade to a new version of kernel such as
+5.18 to 5.19, you need to remove the driver you have installed and
+install the newest available before installing the new kernel. Use the
+following commands in the driver directory:
 
 ```
-$ sudo ./remove-driver.sh
 $ git pull
+$ sudo ./remove-driver.sh
 $ sudo ./install-driver.sh
 ```
 
@@ -178,7 +193,7 @@ Note: If your Linux distro does not fall into one of options listed
 below, you will need to research how to update and upgrade your system
 packages.
 
-- Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
+- Option for Debian based distributions such as Ubuntu, Kali and Raspberry Pi OS
 
 ```
 sudo apt update && sudo apt upgrade
@@ -200,6 +215,12 @@ sudo dnf upgrade
 
 ```
 sudo zypper update
+```
+
+- Option for Void Linux
+
+```
+sudo xbps-install -Syu
 ```
 
 Note: It is recommended that you reboot your system at this point. The
@@ -224,7 +245,7 @@ sudo apt install -y raspberrypi-kernel-headers build-essential bc dkms git
 sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf-dev
 ```
 
-- Option for Ubuntu (all flavors)
+- Option for Ubuntu (all official flavors) and the numerous Ubuntu based distros
 
 ```
 sudo apt install -y build-essential dkms git 
@@ -233,7 +254,7 @@ sudo apt install -y build-essential dkms git
 - Option for Fedora
 
 ```
-sudo dnf -y install kernel-devel kernel-debug-devel dkms git 
+sudo dnf -y install git dkms kernel-devel kernel-debug-devel
 ```
 
 - Option for openSUSE
@@ -242,10 +263,10 @@ sudo dnf -y install kernel-devel kernel-debug-devel dkms git
 sudo zypper install -t pattern devel_kernel dkms
 ```
 
-- Option for Solus
+- Option for Void Linux
 
 ```
-sudo eopkg install gcc linux-current-headers make git binutils
+sudo xbps-install linux-headers dkms git make
 ```
 
 - Options for Arch and Manjaro
@@ -333,10 +354,7 @@ to be included here.
 
 #### Step 10: Run the installation script ( install-driver.sh )
 
-Note: Solus Linux does not support dkms and will require a manual build.
-See `Manual build instructions` below.
-
-Note: For automated builds, use _NoPrompt_ as an option.
+Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
 
 ```
 sudo ./install-driver.sh
@@ -346,9 +364,9 @@ Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-Manual build instructions: The script `install-driver.sh` automates the
-installation process, however, it may be necessary to build and install
-the driver manually with some Linux distros:
+Manual build instructions: The above script automates the installation
+process, however, if you want to or need to do a command line
+installation, use the following:
 
 ```
 make clean
@@ -365,7 +383,7 @@ the process each time a new kernel is installed in your distro.
 ### Driver Options ( edit-options.sh )
 
 A file called `8814au.conf` will be installed in `/etc/modprobe.d` by
-default.
+default if you use the `./install-driver.sh` script.
 
 Note: The installation script will prompt you to edit the options.
 
@@ -385,14 +403,14 @@ Note: Documentation for Driver Options is included in the file `8814au.conf`.
 
 ### Removal of the Driver ( remove-driver.sh )
 
-Note: This script should be used in the following situations:
+Note: Removing the driver is advised in the following situations:
 
 - if driver installation fails
 - if the driver is no longer needed
 - if a new or updated version of the driver needs to be installed
-- if a distro version upgrade is going to be installed
+- if a distro version upgrade is going to be installed (i.e. going from kernel 5.10 to kernel 5.15)
 
-Note: This script removes everything that has been installed, with the
+Note: The following removes everything that has been installed, with the
 exception of the packages installed in Step 3 and the driver directory.
 The driver directory can be deleted after running this script.
 
@@ -406,6 +424,8 @@ cd ~/src/8814au
 
 #### Step 3: Run the removal script
 
+Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
+
 ```
 sudo ./remove-driver.sh
 ```
@@ -416,7 +436,7 @@ sudo ./remove-driver.sh
 
 Note: These are general recommendations, some of which may not apply to your specific situation.
 
-- Security: Set WPA2-AES. Do not set WPA2 mixed mode or WPA or TKIP.
+- Security: Set WPA2-AES or WPA2/WPA3 mixed or WPA3. Do not set WPA2 mixed mode or WPA or TKIP.
 
 - Channel width for 2.4 GHz: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
 
@@ -436,40 +456,6 @@ After making and saving changes, reboot the router.
 
 -----
 
-### Check and set regulatory domain
-
-Check the current setting
-
-```
-sudo iw reg get
-```
-
-If you get 00, that is the default and may not provide optimal performance.
-
-Find the correct setting here: http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-
-Set it temporarily
-
-```
-sudo iw reg set US
-```
-
-Note: Substitute your country code if you are not in the United States.
-
-Set it permanently
-
-```
-sudo nano /etc/default/crda
-```
-
-Change the last line to read:
-
-```
-REGDOMAIN=US
-```
-
------
-
 ### Recommendations regarding USB
 
 - Moving your USB WiFi adapter to a different USB port has been known to fix a variety of problems.
@@ -480,7 +466,7 @@ REGDOMAIN=US
 
 - Avoid USB 3.1 Gen 2 ports if possible as almost all currently available adapters have been tested with USB 3.1 Gen 1 (aka USB 3) and not with USB 3.1 Gen 2.
 
-- If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will at best be limited to USB 2 speeds).
+- If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will be limited to USB 2 speeds).
 
 - Extention cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
 
@@ -526,20 +512,20 @@ Atheros drivers.
 Question: I bought two rtl8814au based adapters and am planning to use both in
 the same computer. How do I set that up?
 
-Answer: You can't without considerable technical skills.  Realtek drivers do not
-support more than one adapter with the same chipset in the same computer. You
-can have multiple Realtek based adapters in the same computer as long as the
-adapters are based on different chipsets.
+Answer: Realtek drivers do not support more than one adapter with the
+same chipset in the same computer. You can have multiple Realtek based
+adapters in the same computer as long as the adapters are based on
+different chipsets.
 
 -----
 
-Question: Why do you recommend Mediatek based adapters when you maintain this
-repo for a Realtek driver?
+Question: Why do you recommend Mediatek based adapters when you maintain
+this repo for a Realtek driver?
 
-Answer: Many new and existing Linux users already have adapters based on Realtek
-chipsets. This repo is for Linux users to support their existing adapters but my
-STRONG recommendation is for Linux users to seek out USB WiFi solutions based on
-Mediatek,
+Answer: Many new and existing Linux users already have adapters based on
+Realtek chipsets. This repo is for Linux users to support their existing
+adapters but my STRONG recommendation is for Linux users to seek out USB
+WiFi solutions based on Mediatek chipsets:
 
 https://github.com/morrownr/USB-WiFi
 
@@ -566,8 +552,9 @@ Raspberry Pi OS and Kali. In an attempt to make this driver work well on
 many Linux distros, other distros, including the Arch based Manjaro is
 used for testing. Currently I do not have installations of Fedora or
 OpenSUSE available for testing and reply on user reports of success or
-failure. I have two test systems with secure boot on so as to  test secure
-boot. I have not seen any secure boot problems with Ubuntu based systems.
+failure. I have two test systems with secure boot on so as to test secure
+boot. I have not seen any secure boot problems with Debian based systems
+and I don't remember problems with Manjaro.
 
 dkms is used in the installation script. It helps with a lot of issues that
 will come up if a simple manual installation is used. dkms has the
@@ -594,6 +581,9 @@ present what you know to the devs of your distro via their problem
 reporting system. Turning off secure boot is NOT a fix. A real fix needs
 to happen.
 
+-----
+
+#### [Go to Main Menu](https://github.com/morrownr/USB-WiFi)
 
 -----
 
