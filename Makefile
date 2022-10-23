@@ -18,6 +18,7 @@ EXTRA_CFLAGS += -Wno-vla
 EXTRA_CFLAGS += -Wno-misleading-indentation
 EXTRA_CFLAGS += -Wno-implicit-fallthrough
 EXTRA_CFLAGS += -Wno-return-type
+EXTRA_CFLAGS += -Wno-discarded-qualifiers
 
 # gcc-12
 EXTRA_CFLAGS += -Wno-address
