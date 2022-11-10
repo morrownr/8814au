@@ -214,7 +214,7 @@ sudo dnf upgrade
 - Option for openSUSE based distributions
 
 ```
-sudo zypper update
+sudo zypper up
 ```
 
 - Option for Void Linux
@@ -260,7 +260,8 @@ sudo dnf -y install git dkms kernel-devel kernel-debug-devel
 - Option for openSUSE
 
 ```
-sudo zypper install -t pattern devel_kernel dkms
+sudo zypper in -t pattern devel_kernel
+sudo zypper in dkms git
 ```
 
 - Option for Void Linux
