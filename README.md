@@ -49,16 +49,16 @@ available. Ask retailers. Please help.
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.2 (Realtek)
-- Kernels: 5.3  - 6.1 (community support)
+- Kernels: 5.3  - 6.3 (community support)
 
 ### Tested Linux Distributions
 
 Note: One of the goals of this project is to provide driver support that
 is easy to install and works reliably on many distros. Meeting this goal
-depends on you to report your recommendations and updated information. 
+depends on you to report your recommendations and updated information.
 If you see information that needs to be updated, please report the
 updated information and if you do not see adequate support for
-items such as Installation Steps 2, 3 and 9, and you know what updates 
+items such as Installation Steps 2, 3 and 9, and you know what updates
 need to added or you can get that information, please provide it so that
 the Installation Steps can be improved.
 
@@ -248,7 +248,7 @@ sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf
 - Option for Ubuntu (all official flavors) and the numerous Ubuntu based distros
 
 ```
-sudo apt install -y build-essential dkms git 
+sudo apt install -y build-essential dkms git
 ```
 
 - Option for Fedora
@@ -314,7 +314,7 @@ cd ~/src/8814au
 #### Step 8: Run a script to reconfigure for ARM or ARM64 based systems
 
 Warning: This driver defaults to supporting x86 and amd64 based systems
-and this step should be `skipped` if your system is powered by an x86, 
+and this step should be `skipped` if your system is powered by an x86,
 amd64 or compatible CPU.
 
 Note: If your system is powered by an ARM or ARM64 based Raspberry Pi,
