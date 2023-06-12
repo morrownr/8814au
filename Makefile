@@ -1348,6 +1348,11 @@ KVER ?= $(shell uname -r)
 KSRC := /lib/modules/$(KVER)/build
 MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
 INSTALL_PREFIX :=
+STAGINGMODDIR := /lib/modules/$(KVER)/kernel/drivers/staging
+
+# Platform Specific Flags may be Needed in some Situations
+#EXTRA_CFLAGS += -DCONFIG_PLATFORM_ANDROID
+# End of Platform Specific Flags
 endif
 # *** End AUTODETECT ***
 
@@ -1358,7 +1363,7 @@ EXTRA_CFLAGS += -DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT
 SUBARCH := $(shell uname -m | sed -e s/i.86/i386/)
 ARCH ?= $(SUBARCH)
 CROSS_COMPILE ?=
-KVER ?= $(shell uname -r)
+KVER := $(shell uname -r)
 KSRC := /lib/modules/$(KVER)/build
 MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
 INSTALL_PREFIX :=
