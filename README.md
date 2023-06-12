@@ -362,9 +362,11 @@ enroll the key:
 sudo mokutil --import /var/lib/dkms/mok.pub
 ```
 
-Manual build and installation instructions: The above installation steps
-automate the installation process, however, if you want to or need to do a
-command line installation, use the following:
+### Manual build and installation instructions
+
+Note: The above installation steps automate the installation process,
+however, if you want to or need to do a basic command line installation,
+use the following:
 
 ```
 make clean
@@ -374,6 +376,8 @@ make clean
 make
 ```
 
+If secure boot is turned off:
+
 ```
 sudo make install
 ```
@@ -381,6 +385,38 @@ sudo make install
 ```
 sudo reboot
 ```
+
+or
+
+If secure boot is on:
+
+```
+sudo make sign-install
+```
+
+You will be promted for a password, please remember the password as it
+will be used in some of the following steps.
+
+```
+sudo reboot
+```
+
+The MOK managerment screen will appear during boot:
+
+Select "Enroll key".
+
+When promted, enter the password you entered earlier.
+
+If you enter wrong password, your computer will not be bootable. In this
+case, use the BOOT menu from your BIOS, to boot then do below steps:
+
+```
+sudo mokutil --reset
+```
+
+Restart your computer and use the BOOT menu from BIOS to boot. In the MOK
+managerment screen, select reset MOK list. Then Reboot and retry from the
+step `make sign-install`.
 
 To remove the driver if installed by the manual installation instructions:
 
