@@ -386,12 +386,10 @@ sudo make install
 sudo reboot
 ```
 
-or
+If secure boot is on:
 
 Note: Please read to the end of this section before coming back here to
 enter commands.
-
-If secure boot is on:
 
 ```
 sudo make sign-install
@@ -406,7 +404,15 @@ sudo reboot
 
 The MOK managerment screen will appear during boot:
 
-Select "Enroll key".
+`Shim UEFI Key Management"
+
+`Press any key...`
+
+Select "Enroll key"
+
+Select "Continue"
+
+Select "Yes"
 
 When promted, enter the password you entered earlier.
 
@@ -419,7 +425,7 @@ sudo mokutil --reset
 
 Restart your computer and use the BOOT menu from BIOS to boot. In the MOK
 managerment screen, select `reset MOK list`. Then Reboot and retry from
-the step `make sign-install`.
+the step `sudo make sign-install`.
 
 To remove the driver if installed by the manual installation instructions:
 
