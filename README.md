@@ -355,8 +355,8 @@ Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-Note: Fedora users that have secure boot turned on should run the following to
-enroll the key:
+Note: Fedora users that have secure boot turned on may need to run the
+following to enroll the key:
 
 ```
 sudo mokutil --import /var/lib/dkms/mok.pub
@@ -376,7 +376,7 @@ make clean
 make
 ```
 
-If secure boot is turned off:
+If secure boot is off:
 
 ```
 sudo make install
@@ -387,6 +387,9 @@ sudo reboot
 ```
 
 or
+
+Note: Please read to the end of this section before coming back here to
+enter commands.
 
 If secure boot is on:
 
@@ -407,16 +410,16 @@ Select "Enroll key".
 
 When promted, enter the password you entered earlier.
 
-If you enter wrong password, your computer will not be bootable. In this
-case, use the BOOT menu from your BIOS, to boot then do below steps:
+If you enter the wrong password, your computer will not be bootable. In
+this case, use the BOOT menu from your BIOS to boot then as follows:
 
 ```
 sudo mokutil --reset
 ```
 
 Restart your computer and use the BOOT menu from BIOS to boot. In the MOK
-managerment screen, select reset MOK list. Then Reboot and retry from the
-step `make sign-install`.
+managerment screen, select `reset MOK list`. Then Reboot and retry from
+the step `make sign-install`.
 
 To remove the driver if installed by the manual installation instructions:
 
@@ -428,8 +431,8 @@ sudo make uninstall
 sudo reboot
 ```
 
-Note: If you use the manual installation instructions, you will need to repeat
-the process each time a new kernel is installed in your distro.
+Note: If you use the manual installation instructions, you will need to
+repeat the process each time a new kernel is installed in your distro.
 
 -----
 
