@@ -1,15 +1,21 @@
 ### All-Points Bulletin
 
 I need your help. We need to find a newer version of the source code for
-this driver. While working on source code for other more recent drivers I
-have noticed indications that Realtek may still working on this 8814au
-driver. I have not been able to locate a newer version. This driver is
-v5.8.5.1 dated 20191029. It is getting hard to maintain and does not have
-many of the features that other, more modern drivers do. If we can find a
-driver for the 8814au that is up to date, we can make better use of our
-8814au adapters. A newer driver should have version numbers of 5.12.x,
-5.13.x or higher. Please search all locations that might have a new version
-available. Ask retailers. Please help.
+this driver, if Realtek still supports Linux on this chipset. It is
+unfortunate that Realtek does such a poor job of making the source code
+for their drivers available but that is the way it is. I recommend
+Mediatek based USB WiFi adapters because Mediatek does a MUCH better job
+of supporting Linux users. However, there are still many of us that have
+and use adapters based on the rtl8814au chipset so I will try to
+maintain this driver as long as it is practical to do so. What we really
+need is a new modernized version of this driver as it has become hard to
+maintain and it is missing many modern features. As much as I have
+searched, I have not been able to locate a newer version. This driver is
+v5.8.5.1 dated 20191029. If we can find a new driver for the 8814au that
+is up to date, we can make better use of our 8814au adapters. A newer
+driver should have version numbers of 5.12.x, 5.13.x or higher. Please
+search all locations that might have a new version available. Ask 
+retailers. Please help.
 
 -----
 
