@@ -44,10 +44,41 @@ https://wiki.debian.org/SecureBoot
 There is work underway to add Secure Boot support for systems that do not
 have `dkms` available or if a manual installation is desired.
 
-If you are using a basic command line installation, see the following
-section in the Installation Steps part of the README:
+If you are using a basic command line (non-dkms) installation, see the
+following section in the Installation Steps part of the README:
 
-Manual build and installation instructions
+If you use the `install-driver.sh` script and see the following message
+
+`SecureBoot enabled - read FAQ about SecureBoot`
+
+You need to read the following:
+
+The MOK managerment screen will appear during boot:
+
+`Shim UEFI Key Management"
+
+`Press any key...`
+
+Select "Enroll key"
+
+Select "Continue"
+
+Select "Yes"
+
+When promted, enter the password you entered earlier.
+
+If you enter the wrong password, your computer will not be bootable. In
+this case, use the BOOT menu from your BIOS to boot then as follows:
+
+```
+sudo mokutil --reset
+```
+
+Restart your computer and use the BOOT menu from BIOS to boot. In the MOK
+managerment screen, select `reset MOK list`. Then Reboot and retry the
+driver installation.
+
+Manual Installation Instructions
 
 It provides secure boot instructions.
 

@@ -368,7 +368,7 @@ following to enroll the key:
 sudo mokutil --import /var/lib/dkms/mok.pub
 ```
 
-### Manual build and installation instructions
+### Manual Installation Instructions
 
 Note: The above installation steps automate the installation process,
 however, if you want to or need to do a basic command line installation,
