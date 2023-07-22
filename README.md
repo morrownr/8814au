@@ -79,9 +79,9 @@ be provided via PR or message in Issues.
 
 - [Armbian](https://www.armbian.com/) (kernel 5.15) (Rock 4 SE (Rock 4b image with xfce))
 
-- [Debian](https://www.debian.org/) (kernels 5.10 and 5.15)
+- [Debian](https://www.debian.org/) (kernels 5.10, 5.15 and 6.1)
 
-- [Fedora](https://getfedora.org) (kernel 6.0)
+- [Fedora](https://getfedora.org) Fedora 38 (6.2.13-300)
 
 - [Kali Linux](https://www.kali.org/) (kernel 5.10)
 
@@ -105,10 +105,10 @@ knowledgable RHEL developers if they want to merge the required
 support and keep it current. I reserve the right to delete this support
 if it causes any problems.
 
-Note: Android is supported in the driver according to Realtek. I will support
-knowledgable Android developers if they want to merge and keep current the
-required support (most likely just instructions about how to compile and make
-a modification or two to the Makefile).
+Note: Android is supported in the driver according to Realtek. I will
+support knowledgable Android developers if they want to merge and keep
+current the required support (most likely just instructions about how to
+compile and maybe a modification or two to the Makefile).
 
 ### Compatible Devices
 
@@ -128,7 +128,7 @@ Warning: Installing multiple out-of-kernel drivers for the same hardware
 usually does not end well. The install-driver.sh script has the capability
 to detect and remove many conflicting drivers but not all. If this driver
 does not work well after installation and you have previously installed a
-driver that you did not remove, it suggested that you run the following
+driver that you did not remove, it is suggested that you run the following
 command in an effort to determine if you need to take action to manually
 remove conflicting drivers:
 
@@ -138,8 +138,8 @@ sudo dkms status
 
 Warning: If you decide to do a distro upgrade, which will likely install a
 new version of kernel such as 5.15 to 6.1, you need to upgrade this driver
-with the newest available before performing the disto upgrade. Use the
-following commands in the driver directory:
+with the newest available code before performing the disto upgrade. Use
+the following commands in the driver directory:
 
 ```
 git pull
@@ -237,13 +237,13 @@ environment for your system. General guidance follows.
 
 Development Environment Requirements: (package names may vary by distro)
 
-- Mandatory: `gcc` `make` `bc` `kernel-headers` `build-essential` `git`
-- Highly recommended: `dkms` `rfkill` `iw` `ip`
-- Mandatory if Secure Boot is active: `openssl` `mokutil`
+- Mandatory packages: `gcc` `make` `bc` `kernel-headers` `build-essential` `git`
+- Highly recommended packages: `dkms` `rfkill` `iw` `ip`
+- Mandatory packages if Secure Boot is active: `openssl` `sign-file` `mokutil`
 
 Note: The below options should take care of the mandatory and highly recommended
-requirements but only you know if Secure Boot is active. If Secure Boot is
-active on your system, please also install the mandatory packages for Secure Boot.
+requirements. If Secure Boot is active on your system, please also install the
+mandatory packages for Secure Boot as shown above.
 
 - Option for Armbian (arm64)
 
@@ -571,5 +571,18 @@ After making and saving changes, reboot the router.
 - Extention cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
 
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
+
+-----
+
+To-Do:
+
+- Detect and alert users when Airplane Mode is on.
+- Test for installation in VM's.
+- Reduce the size of the README while keeping the needed information.
+- Optimize scripts.
+
+-----
+
+#### [Go to Main Menu](https://github.com/morrownr/USB-WiFi)
 
 -----
