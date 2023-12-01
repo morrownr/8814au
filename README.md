@@ -108,7 +108,7 @@ if it causes any problems.
 Note: Android is supported in the driver according to Realtek. I will
 support knowledgable Android developers if they want to merge and keep
 current the required support (most likely just instructions about how to
-compile and maybe a modification or two to the Makefile).
+compile and make a modification or two to the Makefile).
 
 ### Compatible Devices
 
@@ -571,17 +571,6 @@ After making and saving changes, reboot the router.
 - Extention cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
 
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
-
------
-
-To-Do:
-
-- Detect and alert users when Airplane Mode is on.
-- Test for installation in VM's.
-- Reduce the size of the README while keeping the needed information.
-- Optimize scripts.
-
------
 
 #### [Go to Main Menu](https://github.com/morrownr/USB-WiFi)
 

@@ -149,6 +149,10 @@ if [ "$sproc" -gt 1 ]; then
 	then
 		sproc=2
 	fi
+	if [ "$SMEM" -lt 700000 ]
+	then
+		sproc=1
+	fi
 fi
 
 # display number of in-use processing units / total processing units
@@ -170,11 +174,19 @@ if command -v dkms >/dev/null 2>&1; then
 	echo ": ""${dkms_ver}"
 fi
 
-# display secure mode status if SecureBoot is enabled and if mokutil is installed
+# display secure mode status
 if command -v mokutil >/dev/null 2>&1; then
 	if mokutil --sb-state | grep -i  enabled >/dev/null 2>&1; then
-		echo ": SecureBoot enabled - read FAQ about SecureBoot"
+		echo ": SecureBoot enabled"
 	fi
+	if mokutil --sb-state | grep -i  disabled >/dev/null 2>&1; then
+		echo ": SecureBoot disabled"
+	fi
+	if mokutil --sb-state | grep -i  EFI >/dev/null 2>&1; then
+		echo ": EFI variables are not supported on this system"
+	fi
+else
+	echo ": mokutil not installed"
 fi
 
 
