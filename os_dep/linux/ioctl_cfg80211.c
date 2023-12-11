@@ -5037,7 +5037,11 @@ static int cfg80211_rtw_add_beacon(struct wiphy *wiphy, struct net_device *ndev,
 	}
 	rtw_mi_scan_abort(adapter, _TRUE);
 	rtw_mi_buddy_set_scan_deny(adapter, 300);
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 7, 0)
+	ret = rtw_add_beacon(adapter, info->beacon.head, info->beacon.head_len, info->beacon.tail, info->beacon.tail_len);
+#else
 	ret = rtw_add_beacon(adapter, info->head, info->head_len, info->tail, info->tail_len);
+#endif
 
 exit:
 	return ret;
@@ -5152,13 +5156,21 @@ static int cfg80211_rtw_change_beacon(struct wiphy *wiphy, struct net_device *nd
 
 	// In cases like WPS, the proberesp and assocresp IEs vary from the beacon, and need to be explicitly set
 	if(ret == 0) {
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 7, 0)
+		if(info->beacon.proberesp_ies && info->beacon.proberesp_ies_len > 0) {
+			rtw_cfg80211_set_mgnt_wpsp2pie(ndev, (char *)info->beacon.proberesp_ies, info->beacon.proberesp_ies_len, 0x2/*PROBE_RESP*/);
+#else
 		if(info->proberesp_ies && info->proberesp_ies_len > 0) {
-			rtw_cfg80211_set_mgnt_wpsp2pie(ndev, (char *)info->proberesp_ies,
-				info->proberesp_ies_len, 0x2/*PROBE_RESP*/);
+			rtw_cfg80211_set_mgnt_wpsp2pie(ndev, (char *)info->proberesp_ies, info->proberesp_ies_len, 0x2/*PROBE_RESP*/);
+#endif
 		}
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 7, 0)
+		if(info->beacon.assocresp_ies && info->beacon.assocresp_ies_len > 0) {
+			rtw_cfg80211_set_mgnt_wpsp2pie(ndev, (char *)info->beacon.assocresp_ies, info->beacon.assocresp_ies_len, 0x4/*ASSOC_RESP*/);
+#else
 		if(info->assocresp_ies && info->assocresp_ies_len > 0) {
-			rtw_cfg80211_set_mgnt_wpsp2pie(ndev, (char *)info->assocresp_ies,
-				info->assocresp_ies_len, 0x4/*ASSOC_RESP*/);
+			rtw_cfg80211_set_mgnt_wpsp2pie(ndev, (char *)info->assocresp_ies, info->assocresp_ies_len, 0x4/*ASSOC_RESP*/);
+#endif
 		}
 	}
 
