@@ -27,6 +27,9 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 
+# Need to install
+apt install debhelper dpkg-dev dkms libelf-dev bc -y
+
 SCRIPT_NAME="install-driver.sh"
 SCRIPT_VERSION="20230227"
 MODULE_NAME="8814au"
