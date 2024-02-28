@@ -64,11 +64,11 @@ retailers. Please help.
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.2 (Realtek)
-- Kernels: 5.3  - 6.7 (community support)
+- Kernels: 5.3  - 6.8 (community support)
 
 ### Tested Compilers
 
-- gcc 9, 10, 11 and 12
+- gcc 10, 11 and 12
 
 ### Tested Linux Distributions
 
