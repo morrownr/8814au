@@ -64,7 +64,7 @@ retailers. Please help.
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.2 (Realtek)
-- Kernels: 5.3  - 6.8 (community support)
+- Kernels: 5.3  - 6.9 (community support)
 
 ### Tested Compilers
 
