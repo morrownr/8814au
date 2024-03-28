@@ -44,10 +44,6 @@ retailers. Please help.
 - VHT control (allows 80 MHz channel width in AP mode)
 - USB mode control
 
-### Not supported
-
-- hcxdumptool
-
 ### A FAQ is available in this repo with the name `FAQ.md`
 
 - Please read the FAQ and this document before posting issues.
