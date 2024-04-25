@@ -77,7 +77,7 @@ be provided via PR or message in Issues.
 
 - [Debian](https://www.debian.org/) (kernels 5.10, 5.15 and 6.1)
 
-- [Fedora](https://getfedora.org) Fedora 38 (6.2.13-300)
+- [Fedora](https://getfedora.org) Fedora 38 (6.2.13-300), Fedora 39 (6.8.7-200)
 
 - [Kali Linux](https://www.kali.org/) (kernel 5.10)
 
