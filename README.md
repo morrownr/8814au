@@ -1,3 +1,26 @@
+Notice: This notice is to let you know that a new mac80211 compatible
+rtl8814au driver is available for testing. The plan is to upstream it to
+the Linux Mainline kernel when testing shows the driver is stabile and
+relatively bug free. We need your help to test and report.
+
+The driver is available for testing at the following repo:
+
+https://github.com/lwfinger/rtw88
+
+Remember to first remove the driver in this repo or from whatever repo
+you may have installed. You can run the following to remove it if using
+this repo:
+
+$ sudo sh remove-driver.sh
+
+My plan is to take this repo offline once the new driver is stabilized
+in the Linux Mainline kernel as this driver has never been a very good
+driver. It has just been the only thing we have had.
+
+Regards,
+
+@morrownr
+
 ## 8814au ( 8814au.ko ) :rocket:
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8814AU Chipset
