@@ -81,15 +81,15 @@ the hardware to test the above.
 
 ### Compatible Kernels
 
-- Kernels: 4.19 - 5.2 (Realtek)
-- Kernels: 5.3  - 6.9 (community support)
+- Kernels: 5.4 - 5.2  (Realtek)
+- Kernels: 5.3 - 6.13 (community support)
 
-Note: Kernels earlier than 4.19 may work but are not tested or
+Note: Kernels earlier than 5.4 may work but are not tested or
 supported.
 
 ### Tested Compilers
 
-- gcc 11, 12 and 13
+- gcc 12, 13 and 14
 
 ### Tested Linux Distributions
 

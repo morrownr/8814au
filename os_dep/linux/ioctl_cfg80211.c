@@ -6060,7 +6060,10 @@ static int	cfg80211_rtw_set_channel(struct wiphy *wiphy
 #endif /*#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 6, 0))*/
 
 static int cfg80211_rtw_set_monitor_channel(struct wiphy *wiphy
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 8, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0))
+	, struct net_device *dev
+	, struct cfg80211_chan_def *chandef
+#elif (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 8, 0))
 	, struct cfg80211_chan_def *chandef
 #else
 	, struct ieee80211_channel *chan
