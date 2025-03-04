@@ -1,9 +1,11 @@
 Notice: This notice is to let you know that a new mac80211 compatible
-rtl8814au driver is available for testing. The plan is to upstream it to
-the Linux Mainline kernel when testing shows the driver is stabile and
-relatively bug free. We need your help to test and report.
+rtl8814au driver is available. It is currently being upstreamed into
+the Linux Mainline kernel. Testing shows the driver is stabile and
+relatively bug free. It is a much better quality driver than the one in
+this repo. It is expected that the driver will be available in kernel
+6.15.
 
-The driver is available for testing at the following repo:
+The driver can be installed now at the following repo:
 
 https://github.com/lwfinger/rtw88
 
@@ -13,9 +15,8 @@ this repo:
 
 $ sudo sh remove-driver.sh
 
-My plan is to take this repo offline once the new driver is stabilized
-in the Linux Mainline kernel as this driver has never been a very good
-driver. It has just been the only thing we have had.
+My plan is to discontinue maintenance updates on this repo with the
+update for kernel 6.14.
 
 Regards,
 
