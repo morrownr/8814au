@@ -14,6 +14,13 @@ If you decide to use the new driver, remember to first remove the driver
 in this repo. You can run the following to remove it:
 
 $ sudo sh remove-driver.sh
+
+It has been my pleasure to maintain this driver for the last several
+years. Thanks to all of those who helped.
+
+Remember: Ask not what your operating system can do for you, but
+what you can do for your operating system.
+
 Regards,
 
 @morrownr
