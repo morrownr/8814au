@@ -1,23 +1,19 @@
-Notice: This notice is to let you know that a new mac80211 compatible
-rtl8814au driver is available. It is currently being upstreamed into
-the Linux Mainline kernel. Testing shows the driver is stabile and
-relatively bug free. It is a much better quality driver than the one in
-this repo. It is expected that the driver will be available in kernel
-6.15.
-
-The driver can be installed now at the following repo:
+Notice: A new standards compliant (mac80211), in-kernel driver for
+rtl8814au chipset based adapters and modules has been merged into
+Linux kernels 6.15 and 6.16. If your distro uses kernel 6.16 or later,
+there is no need to install this driver. The new driver is part of the
+rtw88 series of drivers. The new in-kernel driver is Linux Standards
+compliant (mac80211) and is a much better driver than this one. This
+driver will no longer get API related updates beyond kernel 6.14. If
+you use a kernel prior to 6.15, it is possible to use the new standards
+compliant driver by going to the following repo:
 
 https://github.com/lwfinger/rtw88
 
-Remember to first remove the driver in this repo or from whatever repo
-you may have installed. You can run the following to remove it if using
-this repo:
+If you decide to use the new driver, remember to first remove the driver
+in this repo. You can run the following to remove it:
 
 $ sudo sh remove-driver.sh
-
-My plan is to discontinue maintenance updates on this repo with the
-update for kernel 6.14.
-
 Regards,
 
 @morrownr
@@ -83,7 +79,7 @@ the hardware to test the above.
 ### Compatible Kernels
 
 - Kernels: 5.4 - 5.2  (Realtek)
-- Kernels: 5.3 - 6.13 (community support)
+- Kernels: 5.3 - 6.14 (community support)
 
 Note: Kernels earlier than 5.4 may work but are not tested or
 supported.
@@ -98,8 +94,6 @@ Note: The information in this section depends largely on user reports
 which can be provided via PR or message in Issues.
 
 - [Arch Linux](https://www.archlinux.org) (kernels 5.4, 5.11 and 6.6)
-
-- [Armbian](https://www.armbian.com/) (kernel 5.15) (Rock 4 SE (Rock 4b image with xfce))
 
 - [Debian](https://www.debian.org/) (kernels 5.10, 5.15, 6.1 and 6.6)
 
