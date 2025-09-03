@@ -1,11 +1,11 @@
 Notice: A new standards compliant (mac80211), in-kernel driver for
 rtl8814au chipset based adapters and modules has been merged into
-Linux kernels 6.15 and 6.16. If your distro uses kernel 6.16 or later,
+Linux kernel 6.16. If your distro uses kernel 6.16 or later,
 there is no need to install this driver. The new driver is part of the
 rtw88 series of drivers. The new in-kernel driver is Linux Standards
 compliant (mac80211) and is a much better driver than this one. This
 driver will no longer get API related updates beyond kernel 6.14. If
-you use a kernel prior to 6.15, it is possible to use the new standards
+you use a kernel prior to 6.16, it is possible to use the new standards
 compliant driver by going to the following repo:
 
 https://github.com/lwfinger/rtw88
