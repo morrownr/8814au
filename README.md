@@ -1,4 +1,4 @@
-<img align="left" src="https://i.imgur.com/VfPLKSf.png" width="140">
+<img align="left" src="https://raw.githubusercontent.com/joseguzman1337/8814au/main/Gemini_Generated_Image_v0p2mpv0p2mpv0p2.png" width="140">
 
 # 8814au
 
