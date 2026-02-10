@@ -6,7 +6,7 @@
 
 [![license](https://img.shields.io/badge/license-GPL-brightgreen.svg)](https://github.com/joseguzman1337/8814au/blob/main/LICENSE) ![kernel](https://img.shields.io/badge/kernel-5.4--6.14-blue.svg) ![arch](https://img.shields.io/badge/arch-x86__64%20%7C%20arm%20%7C%20arm64-orange.svg) ![dkms](https://img.shields.io/badge/DKMS-supported-purple.svg)
 
-Maintained fork of [morrownr/8814au](https://github.com/morrownr/8814au). USB WiFi driver for RTL8814AU-based adapters with community patches for kernels 5.4–6.14.
+Actively maintained fork of [morrownr/8814au](https://github.com/morrownr/8814au). USB WiFi driver for RTL8814AU-based adapters with community patches for kernels 5.4–6.14, Feb 2026.
 
 <br clear="left">
 
@@ -277,5 +277,5 @@ Kernels 5.4–6.14 supported. Compilers: gcc 12, 13, 14.
 
 <p align="center">
   Original project by <a href="https://github.com/morrownr">@morrownr</a><br>
-  Fork maintained by <a href="https://github.com/joseguzman1337">@joseguzman1337</a>
+  Fork maintained by <a href="https://github.com/joseguzman1337">@joseguzman1337</a> & <a href="https://claude.ai">Claude</a>
 </p>
