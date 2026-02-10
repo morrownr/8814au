@@ -4,15 +4,11 @@
 
 **Linux Driver for USB WiFi Adapters based on the RTL8814AU Chipset**
 
-[![license](https://img.shields.io/badge/license-GPL-brightgreen.svg)](https://github.com/joseguzman1337/8814au/blob/main/LICENSE) ![kernel](https://img.shields.io/badge/kernel-5.4--6.14-blue.svg) ![arch](https://img.shields.io/badge/arch-x86__64%20%7C%20arm%20%7C%20arm64-orange.svg) ![dkms](https://img.shields.io/badge/DKMS-supported-purple.svg)
+[![license](https://img.shields.io/badge/license-GPL-brightgreen.svg)](https://github.com/joseguzman1337/8814au/blob/main/LICENSE) ![kernel](https://img.shields.io/badge/kernel-5.4--6.18.x-blue.svg) ![arch](https://img.shields.io/badge/arch-x86__64%20%7C%20arm%20%7C%20arm64-orange.svg) ![dkms](https://img.shields.io/badge/DKMS-supported-purple.svg)
 
-Actively maintained fork of [morrownr/8814au](https://github.com/morrownr/8814au). USB WiFi driver for RTL8814AU-based adapters supporting kernels 5.4–6.14, Feb 2026.
+Actively maintained fork of [morrownr/8814au](https://github.com/morrownr/8814au). USB WiFi driver for RTL8814AU-based adapters supporting kernels 5.4–6.18.x, Feb 2026.
 
 <br clear="left">
-
----
-
-> **Note:** A new in-kernel mac80211 driver for rtl8814au has been merged into **Linux 6.16**. If your distro ships kernel 6.16+, you do not need this driver. See [lwfinger/rtw88](https://github.com/lwfinger/rtw88) for backports to older kernels.
 
 ---
 
@@ -269,7 +265,7 @@ sudo ./remove-driver.sh
 | Ubuntu 22.04 / 22.10 | 5.15, 5.19, 6.2, 6.5 |
 | Void Linux | 5.18 |
 
-Kernels 5.4–6.14 supported. Compilers: gcc 12, 13, 14.
+Kernels 5.4–6.18.x supported. Compilers: gcc 12, 13, 14.
 
 </details>
 
