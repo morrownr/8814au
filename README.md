@@ -265,7 +265,7 @@ sudo ./remove-driver.sh
 | Ubuntu 22.04 / 22.10 | 5.15, 5.19, 6.2, 6.5 |
 | Void Linux | 5.18 |
 
-Kernels 5.4–6.18.x supported. Compilers: gcc 12, 13, 14.
+Kernels 5.4–6.18.x supported. Compilers: gcc 12, 13, 14, 15.
 
 </details>
 
