@@ -1,0 +1,73 @@
+name: Import upstream issues
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_owner:
+        description: Upstream repository owner
+        required: true
+        default: morrownr
+      source_repo:
+        description: Upstream repository name
+        required: true
+        default: 8814au
+      state:
+        description: Import issue state
+        required: true
+        default: open
+      dry_run:
+        description: "true = preview only, false = create/update issues in this fork"
+        required: true
+        default: "true"
+
+jobs:
+  import-issues:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Import issues from upstream
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SOURCE_OWNER: ${{ github.event.inputs.source_owner }}
+          SOURCE_REPO: ${{ github.event.inputs.source_repo }}
+          STATE: ${{ github.event.inputs.state }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          TARGET_OWNER: ${{ github.repository_owner }}
+          TARGET_REPO: ${{ github.event.repository.name }}
+        run: |
+          set -eu
+          EXTRA_FLAGS=""
+          if [ "$DRY_RUN" = "true" ]; then
+            EXTRA_FLAGS="--dry-run"
+          fi
+          python3 tools/import_upstream_issues.py \
+            --source-owner "$SOURCE_OWNER" \
+            --source-repo "$SOURCE_REPO" \
+            --target-owner "$TARGET_OWNER" \
+            --target-repo "$TARGET_REPO" \
+            --token "$GH_TOKEN" \
+            --state "$STATE" \
+            $EXTRA_FLAGS
+
+      - name: Upload migration artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-import-artifacts
+          path: |
+            imported-issue-map.json
+            auto-close-keywords.md
+
+      - name: Job summary
+        run: |
+          {
+            echo "## Issue import complete"
+            echo
+            echo "Use the lines below in your single fix PR description to auto-close imported issues:"
+            echo
+            cat auto-close-keywords.md
+          } >> "$GITHUB_STEP_SUMMARY"
