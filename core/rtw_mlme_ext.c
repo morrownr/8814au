@@ -12184,7 +12184,11 @@ static void rtw_mlmeext_disconnect(_adapter *padapter)
 		self_action = MLME_ADHOC_STOPPED;
 	else {
 		RTW_INFO("state:0x%x\n", MLME_STATE(padapter));
-		rtw_warn_on(1);
+		/*
+		 * Driver reload and teardown paths can race with MLME transitions.
+		 * Fall back to a safe STA disconnect action instead of asserting.
+		 */
+		self_action = MLME_STA_DISCONNECTED;
 	}
 
 	/* set_opmode_cmd(padapter, infra_client_with_mlme); */
@@ -16760,4 +16764,3 @@ exit:
 	return _SUCCESS;
 #endif /* CONFIG_IOCTL_CFG80211 */
 }
-

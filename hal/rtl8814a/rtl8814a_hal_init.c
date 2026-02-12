@@ -3155,7 +3155,7 @@ void SetBeaconRelatedRegisters8814A(PADAPTER padapter)
 static void hw_var_set_monitor(PADAPTER Adapter, u8 variable, u8 *val)
 {
 	u32	rcr_bits;
-	u16	value_rxfltmap2;
+	u16	value_rxfltmap0, value_rxfltmap1, value_rxfltmap2;
 	HAL_DATA_TYPE *pHalData = GET_HAL_DATA(Adapter);
 	struct mlme_priv *pmlmepriv = &(Adapter->mlmepriv);
 
@@ -3170,19 +3170,25 @@ static void hw_var_set_monitor(PADAPTER Adapter, u8 variable, u8 *val)
 		/* Append FCS */
 		rcr_bits |= RCR_APPFCS;
 #endif
-#if 0
 		/*
-		   CRC and ICV packet will drop in recvbuf2recvframe()
-		   We no turn on it.
+		 * In monitor mode we prefer visibility over validation so capture tools
+		 * can observe control traffic even when frames have bad CRC/ICV.
+		 * The previous value is restored when leaving monitor mode.
 		 */
 		rcr_bits |= (RCR_ACRC32 | RCR_AICV);
-#endif
 
 		rtw_hal_get_hwreg(Adapter, HW_VAR_RCR, (u8 *)&pHalData->rcr_backup);
+		pHalData->rxfltmap0_backup = rtw_read16(Adapter, REG_RXFLTMAP0);
+		pHalData->rxfltmap1_backup = rtw_read16(Adapter, REG_RXFLTMAP1);
+		pHalData->rxfltmap2_backup = rtw_read16(Adapter, REG_RXFLTMAP2);
 		rtw_hal_set_hwreg(Adapter, HW_VAR_RCR, (u8 *)&rcr_bits);
 
-		/* Receive all data frames */
+		/* Receive all mgnt/control/data frames in monitor mode. */
+		value_rxfltmap0 = 0xFFFF;
+		value_rxfltmap1 = 0xFFFF;
 		value_rxfltmap2 = 0xFFFF;
+		rtw_write16(Adapter, REG_RXFLTMAP0, value_rxfltmap0);
+		rtw_write16(Adapter, REG_RXFLTMAP1, value_rxfltmap1);
 		rtw_write16(Adapter, REG_RXFLTMAP2, value_rxfltmap2);
 
 #if 0
@@ -3206,6 +3212,9 @@ static void hw_var_set_opmode(PADAPTER Adapter, u8 variable, u8 *val)
 	if (isMonitor == _TRUE) {
 		/* reset RCR from backup */
 		rtw_hal_set_hwreg(Adapter, HW_VAR_RCR, (u8 *)&pHalData->rcr_backup);
+		rtw_write16(Adapter, REG_RXFLTMAP0, pHalData->rxfltmap0_backup);
+		rtw_write16(Adapter, REG_RXFLTMAP1, pHalData->rxfltmap1_backup);
+		rtw_write16(Adapter, REG_RXFLTMAP2, pHalData->rxfltmap2_backup);
 		rtw_hal_rcr_set_chk_bssid(Adapter, MLME_ACTION_NONE);
 		isMonitor = _FALSE;
 	}

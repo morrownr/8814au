@@ -19,10 +19,19 @@ on:
         description: "true = preview only, false = create/update issues in this fork"
         required: true
         default: "true"
+      max_issues:
+        description: "Optional cap (0 = all)"
+        required: true
+        default: "0"
+
+concurrency:
+  group: import-upstream-issues-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   import-issues:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       issues: write
       contents: read
@@ -39,6 +48,7 @@ jobs:
           DRY_RUN: ${{ github.event.inputs.dry_run }}
           TARGET_OWNER: ${{ github.repository_owner }}
           TARGET_REPO: ${{ github.event.repository.name }}
+          MAX_ISSUES: ${{ github.event.inputs.max_issues }}
         run: |
           set -eu
           EXTRA_FLAGS=""
@@ -52,6 +62,7 @@ jobs:
             --target-repo "$TARGET_REPO" \
             --token "$GH_TOKEN" \
             --state "$STATE" \
+            --max-issues "$MAX_ISSUES" \
             $EXTRA_FLAGS
 
       - name: Upload migration artifacts

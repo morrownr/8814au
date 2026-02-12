@@ -422,7 +422,7 @@ u8 rtw_cfg80211_ch_switch_notify(_adapter *adapter, u8 ch, u8 bw, u8 offset,
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 19, 0))
 	if (started) {
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 11, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 11, 0)) || defined(RHEL_RELEASE_CODE)
 
 		/* --- cfg80211_ch_switch_started_notfiy() ---
 		 *  A new parameter, bool quiet, is added from Linux kernel v5.11,
@@ -6169,6 +6169,14 @@ static int cfg80211_rtw_set_monitor_channel(struct wiphy *wiphy
 
 	rtw_set_chbw_cmd(padapter, target_channal, target_width, target_offset, RTW_CMDF_WAIT_ACK);
 
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 5, 0))
+	/*
+	 * Keep cfg80211's channel state in sync so `iw dev <if> info` reports
+	 * current monitor channel/bandwidth after channel changes.
+	 */
+	rtw_cfg80211_ch_switch_notify(padapter, target_channal, target_width, target_offset, _TRUE, _FALSE);
+#endif
+
 	return 0;
 }
 /*
@@ -10023,10 +10031,10 @@ static struct cfg80211_ops rtw_cfg80211_ops = {
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 37)) || defined(COMPAT_KERNEL_RELEASE)
 	.mgmt_tx = cfg80211_rtw_mgmt_tx,
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 8, 0))
-	.update_mgmt_frame_registrations = cfg80211_rtw_update_mgmt_frame_register,
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 8, 0)) || defined(RHEL_RELEASE_CODE)
+		.update_mgmt_frame_registrations = cfg80211_rtw_update_mgmt_frame_register,
 #else
-	.mgmt_frame_register = cfg80211_rtw_mgmt_frame_register,
+		.mgmt_frame_register = cfg80211_rtw_mgmt_frame_register,
 #endif
 #elif (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 34) && LINUX_VERSION_CODE <= KERNEL_VERSION(2, 6, 35))
 	.action = cfg80211_rtw_mgmt_tx,

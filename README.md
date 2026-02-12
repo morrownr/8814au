@@ -62,7 +62,7 @@ See `supported-device-IDs` for full list.
 <summary><b>Arch / Garuda / Manjaro</b> — pacman + DKMS</summary>
 
 ```bash
-sudo pacman -S --noconfirm linux-headers dkms git bc iw
+sudo pacman -S --noconfirm linux-headers dkms git iw
 git clone https://github.com/joseguzman1337/8814au.git
 cd 8814au
 sudo ./install-driver.sh
@@ -76,7 +76,7 @@ Note: If using Manjaro on RasPi4B/5B, use `linux-rpi4-headers` instead.
 <summary><b>Ubuntu / Debian / Kali</b> — apt</summary>
 
 ```bash
-sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf-dev rfkill iw
+sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev rfkill iw
 git clone https://github.com/joseguzman1337/8814au.git
 cd 8814au
 sudo ./install-driver.sh
@@ -114,7 +114,7 @@ sudo ./install-driver.sh
 <summary><b>Raspberry Pi OS</b> — apt</summary>
 
 ```bash
-sudo apt install -y raspberrypi-kernel-headers build-essential bc dkms git
+sudo apt install -y raspberrypi-kernel-headers build-essential dkms git
 git clone https://github.com/joseguzman1337/8814au.git
 cd 8814au
 sudo ./install-driver.sh
@@ -219,6 +219,76 @@ sudo ./remove-driver.sh
 
 ---
 
+## Troubleshooting
+
+<details>
+<summary><b>Arch/modern kernel binding conflict (AWUS1900/RTL8814AU)</b></summary>
+
+Some modern kernels include an in-kernel `rtw88_8814au` driver that may bind to the same USB IDs as this out-of-tree `8814au` driver.
+If both are active, behavior can be inconsistent.
+
+Check current runtime state without changing anything:
+
+```bash
+./tools/runtime-healthcheck.sh
+```
+
+If the report shows both `8814au` and `rtw88_8814au` loaded, your system is in a mixed-driver state.
+This repo now installs a blacklist file for `rtw88_8814au` during `install-driver.sh` to avoid future conflicts.
+
+For maintenance windows where reboot is not allowed, you can hot-switch USB binding between drivers:
+
+```bash
+sudo ./tools/hot-switch-driver.sh --to native
+sudo ./tools/hot-switch-driver.sh --to oot
+```
+
+The script captures pre/post snapshots for each action step under `/tmp/rtl8814au-switch-*`.
+
+To reassess issue-sensitive behavior one-by-one across native vs out-of-tree binding:
+
+```bash
+sudo ./tools/hotplug-issue-suite.sh
+```
+
+This produces a Markdown report plus per-step artifacts under `/tmp/rtl8814au-issue-suite-*`.
+
+</details>
+
+<details>
+<summary><b>Zero-reboot runtime validation (multi-host)</b></summary>
+
+This repository now includes a zero-reboot validation path for issue-focused diagnostics in certified environments where kernel/OS state must remain unchanged.
+
+Available tools:
+
+- `tools/runtime-healthcheck.sh`: baseline interface/driver/USB/rfkill/NetworkManager checks
+- `tools/hot-switch-driver.sh`: live bind switch between native `rtw88_8814au` and out-of-tree `8814au` with pre/post snapshots
+- `tools/hotplug-issue-suite.sh`: issue-oriented hot-switch regression run
+- `tools/runtime-issue-suite.sh`: runtime reassessment for upstream reports focused on runtime failures (#120, #117, #115, #106)
+- `tools/injection-selftest.sh`: non-destructive monitor/injection smoke test with time-windowed kernel log checks
+
+All scripts preserve current kernel version and avoid reboot as part of normal operation.
+
+</details>
+
+<details>
+<summary><b>`iw dev &lt;if&gt; info` missing channel/bandwidth fields</b></summary>
+
+If channel fields are missing, first confirm link state:
+
+```bash
+ip -br link
+iw dev
+```
+
+Some kernel/driver combinations omit channel details while the interface is `DOWN`.
+The runtime healthcheck script prints this hint and the current interface state.
+
+</details>
+
+---
+
 ## WiFi Router Recommendations
 
 <details>
@@ -244,6 +314,22 @@ sudo ./remove-driver.sh
 - Avoid USB 3.1 Gen 2 ports — most adapters tested with Gen 1 only
 - Extension cables must match USB version; test without cable if issues arise
 - RTL8814AU adapters draw significant power — a powered USB hub may help
+
+</details>
+
+<details>
+<summary><b>Tx power expectations (RTL8814AU)</b></summary>
+
+- Driver/module settings cannot legally override country regulatory limits.
+- Reported dBm values are not a direct “watt slider”; adapter firmware, regulatory domain, and AP environment all affect effective range.
+- For range improvements, prioritize antenna placement, USB 3.0 signal quality, and channel planning before changing power-related options.
+
+</details>
+
+<details>
+<summary><b>Linux Mint connection stability hint</b></summary>
+
+If roaming instability appears after driver upgrades, test pinning BSSID for the target network in NetworkManager and verify MAC randomization settings for that connection profile.
 
 </details>
 
@@ -273,7 +359,8 @@ Kernels 5.4–6.18.x supported. Compilers: gcc 12, 13, 14, 15.
 
 <p align="center">
   Original project by <a href="https://github.com/morrownr">@morrownr</a><br>
-  Fork maintained by <a href="https://github.com/joseguzman1337">@joseguzman1337</a> & <a href="https://claude.ai">Claude</a>
+  Fork maintained by <a href="https://github.com/joseguzman1337">@joseguzman1337</a> & <a href="https://claude.ai">Claude</a><br>
+  Runtime issue-resolution engineering and validation automation by <a href="https://openai.com">Codex (GPT-5)</a>
 </p>
 
 ## Maintenance Workflow
@@ -284,7 +371,7 @@ Because PR auto-close keywords only close issues in the same repository, this fo
 
 1. Open **Actions → Backlog reset (fork-safe) → Run workflow**.
 2. Run with `dry_run=true` to preview.
-3. Run again with `dry_run=false` to create imported issues in this fork.
+3. Optionally set `max_issues` (for phased imports), then run again with `dry_run=false` to create imported issues in this fork.
 4. Download `auto-close-keywords.md` from workflow artifacts and paste its `Closes #...` lines into your PR description.
 
-The workflow uses `tools/import_upstream_issues.py` and `GITHUB_TOKEN` (`issues: write`).
+The workflow uses `tools/import_upstream_issues.py` (note the `.py` extension) and `GITHUB_TOKEN` (`issues: write`).

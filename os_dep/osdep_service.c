@@ -1291,7 +1291,7 @@ u32 _rtw_down_sema(_sema *sema)
 inline void thread_exit(_completion *comp)
 {
 #ifdef PLATFORM_LINUX
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 17, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 17, 0)) || defined(RHEL_RELEASE_CODE)
 	kthread_complete_and_exit(comp, 0);
 #else
 	complete_and_exit(comp, 0);
@@ -3223,4 +3223,3 @@ int hexstr2bin(const char *hex, u8 *buf, size_t len)
 	}
 	return 0;
 }
-

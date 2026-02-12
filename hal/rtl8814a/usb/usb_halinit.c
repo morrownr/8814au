@@ -23,6 +23,12 @@
 
 #endif
 
+/*
+ * Prevent endless reconnect loops when forced USB mode switch disconnect
+ * is repeatedly triggered during probe.
+ */
+static u8 usb_mode_switch_disconnect_once;
+
 static void
 _ConfigChipOutEP_8814(
 		PADAPTER	pAdapter,
@@ -1823,9 +1829,13 @@ u8 SetHwReg8814AU(PADAPTER Adapter, u8 variable, u8 *val)
 					rtw_write8(Adapter, 0x70, 0x2);
 					rtw_write8(Adapter, 0x3e, 0x1);
 					rtw_write8(Adapter, 0x3d, 0x3);
-					/* usb disconnect */
-					rtw_write8(Adapter, 0x5, 0x80);
-					*val = _TRUE;
+					if (!usb_mode_switch_disconnect_once) {
+						/* usb disconnect */
+						rtw_write8(Adapter, 0x5, 0x80);
+						usb_mode_switch_disconnect_once = _TRUE;
+						*val = _TRUE;
+					} else
+						RTW_INFO("%s: skip repeated USB mode-switch disconnect\n", __func__);
 				}
 			} else if (IS_SUPER_SPEED_USB(Adapter)) {
 				rtw_write8(Adapter, 0x70, rtw_read8(Adapter, 0x70) & (~BIT(1)));
@@ -1839,9 +1849,13 @@ u8 SetHwReg8814AU(PADAPTER Adapter, u8 variable, u8 *val)
 					rtw_write8(Adapter, 0x70, 0x2);
 					rtw_write8(Adapter, 0x3e, 0x1);
 					rtw_write8(Adapter, 0x3d, 0x3);
-					/* usb disconnect */
-					rtw_write8(Adapter, 0x5, 0x80);
-					*val = _TRUE;
+					if (!usb_mode_switch_disconnect_once) {
+						/* usb disconnect */
+						rtw_write8(Adapter, 0x5, 0x80);
+						usb_mode_switch_disconnect_once = _TRUE;
+						*val = _TRUE;
+					} else
+						RTW_INFO("%s: skip repeated USB mode-switch disconnect\n", __func__);
 				}
 			} else if (IS_HIGH_SPEED_USB(Adapter)) {
 				rtw_write8(Adapter, 0x70, rtw_read8(Adapter, 0x70) & (~BIT(1)));

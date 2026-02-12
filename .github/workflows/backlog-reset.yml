@@ -15,10 +15,19 @@ on:
         description: "true = preview import only, false = import issues to this fork"
         required: true
         default: "true"
+      max_issues:
+        description: "Optional cap (0 = all open upstream issues)"
+        required: true
+        default: "0"
+
+concurrency:
+  group: backlog-reset-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   import-and-prepare-autoclose:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       issues: write
       contents: read
@@ -31,6 +40,7 @@ jobs:
           DRY_RUN: ${{ github.event.inputs.dry_run }}
           TARGET_OWNER: ${{ github.repository_owner }}
           TARGET_REPO: ${{ github.event.repository.name }}
+          MAX_ISSUES: ${{ github.event.inputs.max_issues }}
         run: |
           set -eu
           EXTRA=""
@@ -42,6 +52,7 @@ jobs:
             --target-repo "$TARGET_REPO" \
             --token "$GH_TOKEN" \
             --state open \
+            --max-issues "$MAX_ISSUES" \
             $EXTRA
       - uses: actions/upload-artifact@v4
         with:

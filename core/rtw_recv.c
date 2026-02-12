@@ -3923,8 +3923,10 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	if (pattrib->mfrag)
 		hdr_buf[rt_len] |= IEEE80211_RADIOTAP_F_FRAG;
 
-	/* always append FCS */
-	hdr_buf[rt_len] |= IEEE80211_RADIOTAP_F_FCS;
+		/*
+		 * Do not claim FCS is appended unless frame bytes actually include it.
+		 * Unconditionally setting F_FCS can mislead userspace capture length parsing.
+		 */
 
 	if (0)
 		hdr_buf[rt_len] |= IEEE80211_RADIOTAP_F_DATAPAD;
@@ -4981,4 +4983,3 @@ void dump_rx_bh_tk(void *sel, struct recv_priv *recv)
 	);
 }
 #endif /* DBG_RX_BH_TRACKING */
-

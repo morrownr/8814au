@@ -4490,12 +4490,20 @@ s32 rtw_monitor_xmit_entry(struct sk_buff *skb, struct net_device *ndev)
 		len -= consume;
 	}
 #else /* CONFIG_MONITOR_MODE_XMIT */
-
-	if (rtap_len != 12) {
-		RTW_INFO("radiotap len (should be 14): %d\n", rtap_len);
+	if (rtap_len < sizeof(struct ieee80211_radiotap_header)) {
+		RTW_INFO("radiotap len too short: %d\n", rtap_len);
 		goto fail;
 	}
-	_rtw_pktfile_read(&pktfile, dummybuf, rtap_len-sizeof(struct ieee80211_radiotap_header));
+	if (rtap_len > sizeof(dummybuf) + sizeof(struct ieee80211_radiotap_header)) {
+		int remain = rtap_len - sizeof(struct ieee80211_radiotap_header);
+		while (remain) {
+			int consume = remain > sizeof(dummybuf) ? sizeof(dummybuf) : remain;
+			_rtw_pktfile_read(&pktfile, dummybuf, consume);
+			remain -= consume;
+		}
+	} else {
+		_rtw_pktfile_read(&pktfile, dummybuf, rtap_len - sizeof(struct ieee80211_radiotap_header));
+	}
 	len = len - rtap_len;
 #endif /* CONFIG_MONITOR_MODE_XMIT */
 #endif /* CONFIG_CUSTOMER_ALIBABA_GENERAL */

@@ -39,6 +39,7 @@ MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 DRV_NAME="rtl${MODULE_NAME}"
 DRV_DIR="$(pwd)"
 OPTIONS_FILE="${MODULE_NAME}.conf"
+CONFLICT_BLACKLIST_FILE="blacklist-native-8814au.conf"
 
 # check to ensure sudo was used to start the script
 if [ "$(id -u)" -ne 0 ]; then
@@ -74,14 +75,6 @@ fi
 if ! command -v gcc >/dev/null 2>&1; then
 	echo "A required package is not installed."
 	echo "Please install the following package: gcc"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
-
-# check to ensure bc is installed
-if ! command -v bc >/dev/null 2>&1; then
-	echo "A required package is not installed."
-	echo "Please install the following package: bc"
 	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
@@ -195,6 +188,15 @@ echo
 
 echo "Checking for previously installed drivers."
 
+if command -v lsmod >/dev/null 2>&1; then
+	if lsmod | grep -q '^8814au\b' && lsmod | grep -q '^rtw88_8814au\b'; then
+		echo ": ---------------------------"
+		echo "Warning: both 8814au and rtw88_8814au are currently loaded."
+		echo "This mixed-driver runtime state can cause unstable behavior."
+		echo "The install will proceed, but runtime changes may require rebind/replug/reboot by operator policy."
+	fi
+fi
+
 # check for and remove non-dkms installations
 # standard naming
 if [ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]; then
@@ -250,9 +252,14 @@ if command -v dkms >/dev/null 2>&1; then
 	if dkms status | grep -i  ${DRV_NAME}; then
 		echo ": ---------------------------"
 		echo
-# need to add code here to delete any DRV_VERSION
-		echo "Removing a dkms installation."
-		dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
+		echo "Removing existing dkms installations for ${DRV_NAME}."
+		dkms status | awk -F, -v drv="${DRV_NAME}" '$1 ~ "^"drv"/" {print $1}' | while read -r modver
+		do
+			ver="${modver#${DRV_NAME}/}"
+			if [ -n "${ver}" ]; then
+				dkms remove -m ${DRV_NAME} -v "${ver}" --all >/dev/null 2>&1 || true
+			fi
+		done
 		echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
 		rm -f /etc/modprobe.d/${OPTIONS_FILE}
 		echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
@@ -267,6 +274,16 @@ echo
 echo "Starting installation."
 echo "Installing ${OPTIONS_FILE} to /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
+
+# Prevent driver binding conflicts with the in-kernel rtl8814au implementation.
+if modinfo rtw88_8814au >/dev/null 2>&1; then
+	echo "Detected in-kernel rtw88_8814au module."
+	echo "Blacklisting rtw88_8814au to avoid device binding conflicts."
+	cat > /etc/modprobe.d/${CONFLICT_BLACKLIST_FILE} << EOF
+# Installed by ${SCRIPT_NAME} to avoid conflicts with out-of-tree ${MODULE_NAME}
+blacklist rtw88_8814au
+EOF
+fi
 
 # determine if dkms is installed and run the appropriate installation routines
 if ! command -v dkms >/dev/null 2>&1; then
@@ -319,7 +336,16 @@ else
 
 # 	the dkms add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
 	echo "Copying source files to /usr/src/${DRV_NAME}-${DRV_VERSION}"
-	cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
+	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+	mkdir -p /usr/src/${DRV_NAME}-${DRV_VERSION}
+	cp -a "${DRV_DIR}/." /usr/src/${DRV_NAME}-${DRV_VERSION}/
+
+	if [ ! -f "/usr/src/${DRV_NAME}-${DRV_VERSION}/include/drv_types.h" ]; then
+		echo "An error occurred while staging DKMS source files."
+		echo "Missing expected file: /usr/src/${DRV_NAME}-${DRV_VERSION}/include/drv_types.h"
+		echo "Please report this error."
+		exit 1
+	fi
 
 	dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
 	RESULT=$?

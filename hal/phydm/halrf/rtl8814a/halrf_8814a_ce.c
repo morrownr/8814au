@@ -670,7 +670,7 @@ void set_tx_agc_bb_swing_offset(struct dm_struct *dm,
 
 				tx_power_index_offest = 63 - tx_power_index;
 
-				rtn = get_tssi_mode_tx_agc_bb_swing_offset(dm, method, (enum rf_path)rf_path, offset_vaule, tx_power_index_offest);
+		rtn = get_tssi_mode_tx_agc_bb_swing_offset(dm, method, (enum rf_path)rf_path, offset_vaule, tx_power_index_offest);
 
 				RF_DBG(dm, DBG_RF_TX_PWR_TRACK,
 				       " tx_agc_index = %d   tx_bb_swing_index = %d rtn=%d\n",
@@ -679,11 +679,16 @@ void set_tx_agc_bb_swing_offset(struct dm_struct *dm,
 				       cali_info->bb_swing_idx_ofdm[rf_path],
 				       rtn);
 
-				if (rtn == true) {
-					odm_set_bb_reg(dm, REG_A_TX_AGC, TXAGC_BITMASK, cali_info->absolute_ofdm_swing_idx[rf_path]);
-					odm_set_bb_reg(dm, REG_A_BBSWING, BBSWING_BITMASK, tx_scaling_table_jaguar[cali_info->bb_swing_idx_ofdm[rf_path]]); /*set BBswing*/
-				} else
-					RF_DBG(dm, DBG_RF_TX_PWR_TRACK, "TXAGC And BB Swing are the same path=%d\n", rf_path);
+		if (rtn == true) {
+			/* Defensive clamp: bb_swing_idx_ofdm can be corrupted across suspend/hibernate cycles,
+			 * leading to OOB index into tx_scaling_table_jaguar (see upstream issue #103).
+			 */
+			if (cali_info->bb_swing_idx_ofdm[rf_path] >= TXSCALE_TABLE_SIZE)
+				cali_info->bb_swing_idx_ofdm[rf_path] = cali_info->default_ofdm_index;
+			odm_set_bb_reg(dm, REG_A_TX_AGC, TXAGC_BITMASK, cali_info->absolute_ofdm_swing_idx[rf_path]);
+			odm_set_bb_reg(dm, REG_A_BBSWING, BBSWING_BITMASK, tx_scaling_table_jaguar[cali_info->bb_swing_idx_ofdm[rf_path]]); /*set BBswing*/
+		} else
+			RF_DBG(dm, DBG_RF_TX_PWR_TRACK, "TXAGC And BB Swing are the same path=%d\n", rf_path);
 
 				RF_DBG(dm, DBG_RF_TX_PWR_TRACK,
 				       " ========================================================\n");
@@ -1248,30 +1253,38 @@ void power_tracking_by_mix_mode(struct dm_struct *dm,
 		       rf_path, cali_info->absolute_ofdm_swing_idx[rf_path],
 		       tx_power_index);
 
-		switch (rf_path) {
-		case RF_PATH_A:
-			get_mix_mode_tx_agc_bb_swing_offset(dm, method, (enum rf_path)rf_path, tx_power_index_offest);
-			odm_set_bb_reg(dm, REG_A_TX_AGC, TXAGC_BITMASK, cali_info->absolute_ofdm_swing_idx[rf_path]);
-			odm_set_bb_reg(dm, REG_A_BBSWING, BBSWING_BITMASK, tx_scaling_table_jaguar[cali_info->bb_swing_idx_ofdm[rf_path]]); /*set BBswing*/
-			break;
+			switch (rf_path) {
+			case RF_PATH_A:
+				get_mix_mode_tx_agc_bb_swing_offset(dm, method, (enum rf_path)rf_path, tx_power_index_offest);
+				if (cali_info->bb_swing_idx_ofdm[rf_path] >= TXSCALE_TABLE_SIZE)
+					cali_info->bb_swing_idx_ofdm[rf_path] = cali_info->default_ofdm_index;
+				odm_set_bb_reg(dm, REG_A_TX_AGC, TXAGC_BITMASK, cali_info->absolute_ofdm_swing_idx[rf_path]);
+				odm_set_bb_reg(dm, REG_A_BBSWING, BBSWING_BITMASK, tx_scaling_table_jaguar[cali_info->bb_swing_idx_ofdm[rf_path]]); /*set BBswing*/
+				break;
 
-		case RF_PATH_B:
-			get_mix_mode_tx_agc_bb_swing_offset(dm, method, (enum rf_path)rf_path, tx_power_index_offest);
-			odm_set_bb_reg(dm, REG_B_TX_AGC, TXAGC_BITMASK, cali_info->absolute_ofdm_swing_idx[rf_path]);
-			odm_set_bb_reg(dm, REG_B_BBSWING, BBSWING_BITMASK, tx_scaling_table_jaguar[cali_info->bb_swing_idx_ofdm[rf_path]]); /*set BBswing*/
-			break;
+			case RF_PATH_B:
+				get_mix_mode_tx_agc_bb_swing_offset(dm, method, (enum rf_path)rf_path, tx_power_index_offest);
+				if (cali_info->bb_swing_idx_ofdm[rf_path] >= TXSCALE_TABLE_SIZE)
+					cali_info->bb_swing_idx_ofdm[rf_path] = cali_info->default_ofdm_index;
+				odm_set_bb_reg(dm, REG_B_TX_AGC, TXAGC_BITMASK, cali_info->absolute_ofdm_swing_idx[rf_path]);
+				odm_set_bb_reg(dm, REG_B_BBSWING, BBSWING_BITMASK, tx_scaling_table_jaguar[cali_info->bb_swing_idx_ofdm[rf_path]]); /*set BBswing*/
+				break;
 
-		case RF_PATH_C:
-			get_mix_mode_tx_agc_bb_swing_offset(dm, method, (enum rf_path)rf_path, tx_power_index_offest);
-			odm_set_bb_reg(dm, REG_C_TX_AGC, TXAGC_BITMASK, cali_info->absolute_ofdm_swing_idx[rf_path]);
-			odm_set_bb_reg(dm, REG_C_BBSWING, BBSWING_BITMASK, tx_scaling_table_jaguar[cali_info->bb_swing_idx_ofdm[rf_path]]); /*set BBswing*/
-			break;
+			case RF_PATH_C:
+				get_mix_mode_tx_agc_bb_swing_offset(dm, method, (enum rf_path)rf_path, tx_power_index_offest);
+				if (cali_info->bb_swing_idx_ofdm[rf_path] >= TXSCALE_TABLE_SIZE)
+					cali_info->bb_swing_idx_ofdm[rf_path] = cali_info->default_ofdm_index;
+				odm_set_bb_reg(dm, REG_C_TX_AGC, TXAGC_BITMASK, cali_info->absolute_ofdm_swing_idx[rf_path]);
+				odm_set_bb_reg(dm, REG_C_BBSWING, BBSWING_BITMASK, tx_scaling_table_jaguar[cali_info->bb_swing_idx_ofdm[rf_path]]); /*set BBswing*/
+				break;
 
-		case RF_PATH_D:
-			get_mix_mode_tx_agc_bb_swing_offset(dm, method, (enum rf_path)rf_path, tx_power_index_offest);
-			odm_set_bb_reg(dm, REG_D_TX_AGC, TXAGC_BITMASK, cali_info->absolute_ofdm_swing_idx[rf_path]);
-			odm_set_bb_reg(dm, REG_D_BBSWING, BBSWING_BITMASK, tx_scaling_table_jaguar[cali_info->bb_swing_idx_ofdm[rf_path]]); /*set BBswing*/
-			break;
+			case RF_PATH_D:
+				get_mix_mode_tx_agc_bb_swing_offset(dm, method, (enum rf_path)rf_path, tx_power_index_offest);
+				if (cali_info->bb_swing_idx_ofdm[rf_path] >= TXSCALE_TABLE_SIZE)
+					cali_info->bb_swing_idx_ofdm[rf_path] = cali_info->default_ofdm_index;
+				odm_set_bb_reg(dm, REG_D_TX_AGC, TXAGC_BITMASK, cali_info->absolute_ofdm_swing_idx[rf_path]);
+				odm_set_bb_reg(dm, REG_D_BBSWING, BBSWING_BITMASK, tx_scaling_table_jaguar[cali_info->bb_swing_idx_ofdm[rf_path]]); /*set BBswing*/
+				break;
 
 		default:
 			RF_DBG(dm, DBG_RF_TX_PWR_TRACK,

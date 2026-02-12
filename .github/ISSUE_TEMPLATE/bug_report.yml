@@ -1,0 +1,55 @@
+name: Bug report
+about: Report reproducible driver build/runtime issues
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This project only tracks reproducible defects. For setup help, use GitHub Discussions.
+  - type: input
+    id: distro
+    attributes:
+      label: Linux distribution
+      placeholder: Ubuntu 24.04 / Arch / Fedora 41 / etc.
+    validations:
+      required: true
+  - type: input
+    id: kernel
+    attributes:
+      label: Kernel version
+      placeholder: output of uname -r
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Adapter model
+      placeholder: ALFA AWUS1900 / ASUS USB-AC68 / etc.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Run ...
+        2. Run ...
+        3. Observe failure ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Build/runtime logs
+      description: Paste full output from install/build/dmesg relevant to the problem.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmations
+      options:
+        - label: I tested with current main branch.
+          required: true
+        - label: I reviewed README and FAQ before opening this issue.
+          required: true

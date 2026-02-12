@@ -380,6 +380,9 @@ typedef struct hal_com_data {
 	u16				BasicRateSet;
 	u32				ReceiveConfig;
 	u32				rcr_backup; /* used for switching back from monitor mode */
+	u16				rxfltmap0_backup; /* monitor mode restore */
+	u16				rxfltmap1_backup; /* monitor mode restore */
+	u16				rxfltmap2_backup; /* monitor mode restore */
 	u8				rx_tsf_addr_filter_config; /* for 8822B/8821C USE */
 	BOOLEAN			bSwChnl;
 	BOOLEAN			bSetChnlBW;

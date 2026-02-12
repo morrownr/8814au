@@ -8,8 +8,8 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
 import time
+import sys
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -19,7 +19,11 @@ API_ROOT = "https://api.github.com"
 USER_AGENT = "8814au-maintenance-script"
 
 
-def github_request(method: str, url: str, token: str, payload: Dict | None = None) -> Dict | List:
+def encode_component(value: str) -> str:
+    return urllib.parse.quote(value, safe="")
+
+
+def github_request(method: str, url: str, token: str, payload: Dict | None = None, retries: int = 3) -> Dict | List:
     headers = {
         "Accept": "application/vnd.github+json",
         "Authorization": f"Bearer {token}",
@@ -32,20 +36,28 @@ def github_request(method: str, url: str, token: str, payload: Dict | None = Non
         headers["Content-Type"] = "application/json"
 
     req = urllib.request.Request(url, data=body, headers=headers, method=method)
-    try:
-        with urllib.request.urlopen(req) as resp:
-            raw = resp.read().decode("utf-8")
-            return json.loads(raw) if raw else {}
-    except urllib.error.HTTPError as exc:
-        details = exc.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"GitHub API {method} {url} failed ({exc.code}): {details}") from exc
+    attempt = 0
+    while True:
+        attempt += 1
+        try:
+            with urllib.request.urlopen(req) as resp:
+                raw = resp.read().decode("utf-8")
+                return json.loads(raw) if raw else {}
+        except urllib.error.HTTPError as exc:
+            details = exc.read().decode("utf-8", errors="replace")
+            if exc.code in (403, 429) and attempt <= retries:
+                time.sleep(min(2**attempt, 10))
+                continue
+            raise RuntimeError(f"GitHub API {method} {url} failed ({exc.code}): {details}") from exc
 
 
 def list_open_issues(owner: str, repo: str, token: str) -> Iterable[Dict]:
+    owner_q = encode_component(owner)
+    repo_q = encode_component(repo)
     page = 1
     while True:
         query = urllib.parse.urlencode({"state": "open", "per_page": 100, "page": page})
-        url = f"{API_ROOT}/repos/{owner}/{repo}/issues?{query}"
+        url = f"{API_ROOT}/repos/{owner_q}/{repo_q}/issues?{query}"
         items = github_request("GET", url, token)
         if not items:
             break
@@ -56,10 +68,12 @@ def list_open_issues(owner: str, repo: str, token: str) -> Iterable[Dict]:
 
 
 def close_issue(owner: str, repo: str, issue_number: int, token: str, comment: str) -> None:
-    comment_url = f"{API_ROOT}/repos/{owner}/{repo}/issues/{issue_number}/comments"
+    owner_q = encode_component(owner)
+    repo_q = encode_component(repo)
+    comment_url = f"{API_ROOT}/repos/{owner_q}/{repo_q}/issues/{issue_number}/comments"
     github_request("POST", comment_url, token, {"body": comment})
 
-    issue_url = f"{API_ROOT}/repos/{owner}/{repo}/issues/{issue_number}"
+    issue_url = f"{API_ROOT}/repos/{owner_q}/{repo_q}/issues/{issue_number}"
     github_request("PATCH", issue_url, token, {"state": "closed"})
 
 
@@ -94,14 +108,10 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
 
-    issues = list(list_open_issues(args.owner, args.repo, args.token))
-    if not issues:
-        print("No open issues found.")
-        return 0
-
-    print(f"Found {len(issues)} open issues in {args.owner}/{args.repo}.")
-
-    for issue in issues:
+    print(f"Processing open issues in {args.owner}/{args.repo}...")
+    issues_processed = 0
+    for issue in list_open_issues(args.owner, args.repo, args.token):
+        issues_processed += 1
         number = issue["number"]
         title = issue["title"]
         print(f"- #{number}: {title}")
@@ -110,10 +120,14 @@ def main() -> int:
         close_issue(args.owner, args.repo, number, args.token, args.comment)
         time.sleep(args.sleep_seconds)
 
+    if issues_processed == 0:
+        print("No open issues found.")
+        return 0
+
     if args.dry_run:
-        print("Dry run complete. No issues were modified.")
+        print(f"Dry run complete. Found {issues_processed} issues. No issues were modified.")
     else:
-        print("Completed closing all open issues.")
+        print(f"Completed closing all {issues_processed} open issues.")
 
     return 0
 

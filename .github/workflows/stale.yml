@@ -1,0 +1,25 @@
+name: Stale issue triage
+
+on:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          stale-issue-message: >-
+            Marking this issue as stale due to inactivity. If this problem still exists on the latest main branch,
+            add updated reproduction details and logs.
+          close-issue-message: >-
+            Closing stale issue due to inactivity. Reopen with fresh logs and exact reproduction steps if needed.
+          days-before-stale: 45
+          days-before-close: 14
+          stale-issue-label: stale
+          exempt-issue-labels: pinned,security

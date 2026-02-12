@@ -38,6 +38,7 @@ MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
 OPTIONS_FILE="${MODULE_NAME}.conf"
+CONFLICT_BLACKLIST_FILE="blacklist-native-8814au.conf"
 
 # check to ensure sudo was used to start the script
 if [ "$(id -u)" -ne 0 ]; then
@@ -79,6 +80,13 @@ echo ": ${KVER} (kernel version)"
 echo ": ---------------------------"
 echo
 
+if command -v lsmod >/dev/null 2>&1; then
+	if lsmod | grep -q '^8814au\b' && lsmod | grep -q '^rtw88_8814au\b'; then
+		echo "Warning: both 8814au and rtw88_8814au are currently loaded."
+		echo "Runtime behavior may stay mixed until operator-controlled rebind/replug/reboot."
+	fi
+fi
+
 # check for and remove non-dkms installations
 # standard naming
 if [ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]; then
@@ -108,27 +116,21 @@ fi
 # determine if dkms is installed and run the appropriate routines
 if command -v dkms >/dev/null 2>&1; then
 	echo "Removing a dkms installation."
-	#  2>/dev/null suppresses the output of dkms
-	dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all 2>/dev/null
-	RESULT=$?
-	#echo "Result=${RESULT}"
-
-	# RESULT will be 3 if there are no instances of module to remove
-	# however we still need to remove various files or the install script
-	# may complain.
-	if [ "$RESULT" = "0" ] || [ "$RESULT" = "3" ]; then
-		if [ "$RESULT" = "0" ]; then
-			echo "${DRV_NAME}/${DRV_VERSION} has been removed"
+	# Remove all installed versions for this module to prevent stale dkms entries.
+	dkms status | awk -F, -v drv="${DRV_NAME}" '$1 ~ "^"drv"/" {print $1}' | while read -r modver
+	do
+		ver="${modver#${DRV_NAME}/}"
+		if [ -n "${ver}" ]; then
+			dkms remove -m ${DRV_NAME} -v "${ver}" --all >/dev/null 2>&1 || true
+			echo "${DRV_NAME}/${ver} has been removed"
 		fi
-	else
-		echo "An error occurred. dkms remove error:  ${RESULT}"
-		echo "Please report this error."
-		exit $RESULT
-	fi
+	done
 fi
 
 echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
 rm -f /etc/modprobe.d/${OPTIONS_FILE}
+echo "Removing ${CONFLICT_BLACKLIST_FILE} from /etc/modprobe.d"
+rm -f /etc/modprobe.d/${CONFLICT_BLACKLIST_FILE}
 echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 make clean >/dev/null 2>&1

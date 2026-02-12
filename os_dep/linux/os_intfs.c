@@ -1908,7 +1908,7 @@ int rtw_os_ndev_register(_adapter *adapter, const char *name)
 	u8 rtnl_lock_needed = rtw_rtnl_lock_needed(dvobj);
 
 #ifdef CONFIG_RTW_NAPI
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 0)) || defined(RHEL_RELEASE_CODE)
 	netif_napi_add_weight(ndev, &adapter->napi, rtw_recv_napi_poll, RTL_NAPI_WEIGHT);
 #else
 	netif_napi_add(ndev, &adapter->napi, rtw_recv_napi_poll, RTL_NAPI_WEIGHT);
@@ -4215,10 +4215,11 @@ void rtw_ndev_destructor(struct net_device *ndev)
 {
 	RTW_INFO(FUNC_NDEV_FMT"\n", FUNC_NDEV_ARG(ndev));
 
-#ifdef CONFIG_IOCTL_CFG80211
-	if (ndev->ieee80211_ptr)
-		rtw_mfree((u8 *)ndev->ieee80211_ptr, sizeof(struct wireless_dev));
-#endif
+	/*
+	 * The cfg80211 wdev is released through cfg80211 resource unregister/free
+	 * paths. Avoid direct struct-member access here for vendor kernels that
+	 * remove or hide ieee80211_ptr in net_device layout.
+	 */
 	free_netdev(ndev);
 }
 
