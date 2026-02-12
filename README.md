@@ -275,3 +275,16 @@ Kernels 5.4–6.18.x supported. Compilers: gcc 12, 13, 14, 15.
   Original project by <a href="https://github.com/morrownr">@morrownr</a><br>
   Fork maintained by <a href="https://github.com/joseguzman1337">@joseguzman1337</a> & <a href="https://claude.ai">Claude</a>
 </p>
+
+## Maintenance Workflow
+
+### Import upstream issues into this fork and auto-close via one PR
+
+Because PR auto-close keywords only close issues in the same repository, this fork includes a workflow that imports upstream issues first, then generates close-keyword lines for your single fix PR.
+
+1. Open **Actions → Backlog reset (fork-safe) → Run workflow**.
+2. Run with `dry_run=true` to preview.
+3. Run again with `dry_run=false` to create imported issues in this fork.
+4. Download `auto-close-keywords.md` from workflow artifacts and paste its `Closes #...` lines into your PR description.
+
+The workflow uses `tools/import_upstream_issues.py` and `GITHUB_TOKEN` (`issues: write`).

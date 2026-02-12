@@ -1,0 +1,51 @@
+name: Backlog reset (fork-safe)
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_owner:
+        description: Upstream repository owner
+        required: true
+        default: morrownr
+      source_repo:
+        description: Upstream repository name
+        required: true
+        default: 8814au
+      dry_run:
+        description: "true = preview import only, false = import issues to this fork"
+        required: true
+        default: "true"
+
+jobs:
+  import-and-prepare-autoclose:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SOURCE_OWNER: ${{ github.event.inputs.source_owner }}
+          SOURCE_REPO: ${{ github.event.inputs.source_repo }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          TARGET_OWNER: ${{ github.repository_owner }}
+          TARGET_REPO: ${{ github.event.repository.name }}
+        run: |
+          set -eu
+          EXTRA=""
+          if [ "$DRY_RUN" = "true" ]; then EXTRA="--dry-run"; fi
+          python3 tools/import_upstream_issues.py \
+            --source-owner "$SOURCE_OWNER" \
+            --source-repo "$SOURCE_REPO" \
+            --target-owner "$TARGET_OWNER" \
+            --target-repo "$TARGET_REPO" \
+            --token "$GH_TOKEN" \
+            --state open \
+            $EXTRA
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backlog-reset-artifacts
+          path: |
+            imported-issue-map.json
+            auto-close-keywords.md
